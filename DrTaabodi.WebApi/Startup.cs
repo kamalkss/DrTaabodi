@@ -37,7 +37,7 @@ namespace DrTaabodi.WebApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddControllers();
-            
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DrTaabodi.WebApi", Version = "v1" });

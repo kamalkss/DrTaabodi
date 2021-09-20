@@ -86,12 +86,12 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("UpdatedData")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UsrId1")
+                    b.Property<Guid?>("UsrTblUsrId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("QnAId");
 
-                    b.HasIndex("UsrId1");
+                    b.HasIndex("UsrTblUsrId");
 
                     b.ToTable("QnATbl");
                 });
@@ -346,11 +346,11 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.QnATbl", b =>
                 {
-                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", "UsrId")
+                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", "UsrTbl")
                         .WithMany()
-                        .HasForeignKey("UsrId1");
+                        .HasForeignKey("UsrTblUsrId");
 
-                    b.Navigation("UsrId");
+                    b.Navigation("UsrTbl");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -11,8 +11,8 @@ namespace DrTaabodi.Services.UserTable
     {
         public bool SaveChanges();
         public List<UsrTbl> GetAllUsers();
-        public UsrTbl GetUserById(int id);
+        public UsrTbl GetUserById(Guid id);
         public ServiceResponse<UsrTbl> CreateUsr(UsrTbl WebUser);
-        public ServiceResponse<bool> UpdateUserStatus(int id, UserStatus UsrStatus);
+        public ServiceResponse<bool> UpdateUserStatus(Guid id, UserStatus UsrStatus);
     }
 }

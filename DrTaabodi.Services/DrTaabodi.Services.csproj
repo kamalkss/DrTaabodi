@@ -5,11 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="QnATable\" />
-    <Folder Include="PostTable\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DrTaabodi.Data\DrTaabodi.Data.csproj" />
   </ItemGroup>
 

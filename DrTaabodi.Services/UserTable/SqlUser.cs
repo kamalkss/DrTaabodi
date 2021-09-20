@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace DrTaabodi.Services.UserTable
@@ -29,7 +30,7 @@ namespace DrTaabodi.Services.UserTable
             return _context.UsrTbl.ToList();
         }
 
-        public UsrTbl GetUserById(int id)
+        public UsrTbl GetUserById(Guid id)
         {
             return _context.UsrTbl.Find(id);
         }
@@ -57,13 +58,13 @@ namespace DrTaabodi.Services.UserTable
                 {
                     IsSucceess = false,
                     Data = null,
-                    Messege = "New user not Added",
+                    Messege = e.Message,
                     Time = DateTime.UtcNow
                 };
             }
         }
 
-        public ServiceResponse<bool> UpdateUserStatus(int id, UserStatus UsrStatus)
+        public ServiceResponse<bool> UpdateUserStatus(Guid id, UserStatus UsrStatus)
         {
             
             var WebUser = _context.UsrTbl.Find(id);
@@ -88,7 +89,7 @@ namespace DrTaabodi.Services.UserTable
                 {
                     IsSucceess = false,
                     Data = false,
-                    Messege = " user not Updated",
+                    Messege = e.Message,
                     Time = DateTime.UtcNow
                 };
             }

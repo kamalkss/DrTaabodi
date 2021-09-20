@@ -212,14 +212,14 @@ namespace DrTaabodi.Data.Migrations
                     UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Question = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
                     Answer = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    UsrId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    UsrTblUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_QnATbl", x => x.QnAId);
                     table.ForeignKey(
-                        name: "FK_QnATbl_UsrTbl_UsrId1",
-                        column: x => x.UsrId1,
+                        name: "FK_QnATbl_UsrTbl_UsrTblUsrId",
+                        column: x => x.UsrTblUsrId,
                         principalTable: "UsrTbl",
                         principalColumn: "UsrId",
                         onDelete: ReferentialAction.Restrict);
@@ -275,9 +275,9 @@ namespace DrTaabodi.Data.Migrations
                 column: "UserUsrId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QnATbl_UsrId1",
+                name: "IX_QnATbl_UsrTblUsrId",
                 table: "QnATbl",
-                column: "UsrId1");
+                column: "UsrTblUsrId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
