@@ -2,6 +2,7 @@
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
+using DrTaabodi.Services;
 using DrTaabodi.Services.UserTable;
 using DrTaabodi.WebApi.DTO.Users;
 using Microsoft.AspNetCore.Mvc;
@@ -36,11 +37,23 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok(_mapper.Map<ReadUsers>(Users));
         }
 
-        [HttpGet("/Api/users/{id}")]
+        [HttpGet("/api/users/{id}")]
         public ActionResult<UsrTbl> GetUser(Guid Id)
         {
             var User = _UserService.GetUserById(Id);
             return Ok(_mapper.Map<ReadUsers>(User));
+        }
+
+        [HttpPost("/api/users/")]
+        public ActionResult<ServiceResponse<UsrTbl>> CreateUser([FromBody] CreateUsers User)
+        {
+            _logger.LogInformation("Create User Log");
+            User.CreatedDate = DateTime.UtcNow;
+            User.UpdatedData = DateTime.UtcNow;
+            var MapUser = _mapper.Map<UsrTbl>(User);
+            var NewUsr = _UserService.CreateUsr(MapUser);
+            
+            return Ok(NewUsr);
         }
 
     }
