@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Security.Cryptography;
+using System.Text;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
@@ -50,6 +52,13 @@ namespace DrTaabodi.WebApi.Controllers
             _logger.LogInformation("Create User Log");
             User.CreatedDate = DateTime.UtcNow;
             User.UpdatedData = DateTime.UtcNow;
+            
+            using (MD5 md5Hash = MD5.Create())
+            {
+                string hash = GetMd5Hash(md5Hash, User.PassCode);
+                User.PassCode = hash;
+            }
+            
             var MapUser = _mapper.Map<UsrTbl>(User);
             var NewUsr = _UserService.CreateUsr(MapUser);
 
@@ -64,6 +73,17 @@ namespace DrTaabodi.WebApi.Controllers
             var userStaus = updateuser.UsrStatus;
             var updateduser = _UserService.UpdateUserStatus(id, userStaus);
             return Ok(updateduser);
+        }
+        static string GetMd5Hash(MD5 md5Hash, string input)
+        {
+            // Convert the input string to a byte array and compute the hash.
+            byte[] data = md5Hash.ComputeHash(Encoding.UTF8.GetBytes(input));
+            StringBuilder sBuilder = new StringBuilder();
+            for (int i = 0; i < data.Length; i++)
+            {
+                sBuilder.Append(data[i].ToString("x2"));
+            }
+            return sBuilder.ToString();
         }
     }
 }
