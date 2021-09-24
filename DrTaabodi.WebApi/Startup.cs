@@ -14,6 +14,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data;
+using DrTaabodi.Services.PostTable;
+using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
 
 namespace DrTaabodi.WebApi
@@ -37,6 +39,8 @@ namespace DrTaabodi.WebApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
             services.AddControllers();
+            services.AddScoped<IUser, SqlUser>();
+            services.AddScoped<IPost, SqlPost>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
@@ -65,6 +69,8 @@ namespace DrTaabodi.WebApi
             {
                 endpoints.MapControllers();
             });
+            app.UseStaticFiles();
+            app.UseRouting();
         }
     }
 }

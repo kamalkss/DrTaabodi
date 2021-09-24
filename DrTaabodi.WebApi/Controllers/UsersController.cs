@@ -11,17 +11,17 @@ using Microsoft.Extensions.Logging;
 
 namespace DrTaabodi.WebApi.Controllers
 {
-    [Route("api/users")]
+    [Route("/api/users")]
     [ApiController]
-    public class UsersController:ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IUser _UserService;
         private readonly DrTaabodiDbContext _db;
         private readonly IMapper _mapper;
         private readonly ILogger<UsersController> _logger;
 
-        
-        public UsersController(ILogger<UsersController> logger,DrTaabodiDbContext db,IUser user,IMapper mapper)
+
+        public UsersController(ILogger<UsersController> logger, DrTaabodiDbContext db, IUser user, IMapper mapper)
         {
             _logger = logger;
             _db = db;
@@ -29,32 +29,41 @@ namespace DrTaabodi.WebApi.Controllers
             _mapper = mapper;
         }
 
-        [HttpPost]
-        public ActionResult<UsrTbl> GetAllUsers()
+        [HttpGet]
+        public ActionResult<ReadUsers> GetAllUsers()
         {
             _logger.LogInformation("Get All Users");
             var Users = _UserService.GetAllUsers();
-            return Ok(_mapper.Map<ReadUsers>(Users));
+            return Ok(_mapper.Map<ReadUsers>(User));
         }
 
-        [HttpGet("/api/users/{id}")]
-        public ActionResult<UsrTbl> GetUser(Guid Id)
+        [HttpGet("{id}")]
+        public ActionResult<ReadUsers> GetUser(Guid Id)
         {
             var User = _UserService.GetUserById(Id);
             return Ok(_mapper.Map<ReadUsers>(User));
         }
 
-        [HttpPost("/api/users/")]
-        public ActionResult<ServiceResponse<UsrTbl>> CreateUser([FromBody] CreateUsers User)
+        [HttpPost]
+        public ActionResult<ServiceResponse<CreateUsers>> CreateUser([FromBody] CreateUsers User)
         {
             _logger.LogInformation("Create User Log");
             User.CreatedDate = DateTime.UtcNow;
             User.UpdatedData = DateTime.UtcNow;
             var MapUser = _mapper.Map<UsrTbl>(User);
             var NewUsr = _UserService.CreateUsr(MapUser);
-            
+
             return Ok(NewUsr);
         }
 
+        [HttpPatch]
+        public ActionResult<ReadUsers> Update_User([FromBody] ReadUsers updateuser)
+        {
+            _logger.LogInformation("UpdateUserStatus");
+            var id = updateuser.UsrId;
+            var userStaus = updateuser.UsrStatus;
+            var updateduser = _UserService.UpdateUserStatus(id, userStaus);
+            return Ok(updateduser);
+        }
     }
 }

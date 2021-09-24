@@ -13,7 +13,7 @@ namespace DrTaabodi.Services.PostTable
         public List<PstTbl> GetAllPosts();
         public PstTbl GetPostById(Guid id);
         public ServiceResponse<PstTbl> CreatePost(PstTbl WebPost);
-        public ServiceResponse<bool> UpdatePostType(Guid id, PstType UsrStatus);
-        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstStatus UsrStatus);
+        public ServiceResponse<bool> UpdatePostType(Guid id, PstType PostType);
+        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstStatus postStatus);
     }
 }

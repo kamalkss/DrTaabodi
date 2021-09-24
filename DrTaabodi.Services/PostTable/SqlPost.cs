@@ -15,13 +15,13 @@ namespace DrTaabodi.Services.PostTable
     {
         private readonly DrTaabodiDbContext _context;
         private readonly ILogger<SqlPost> _logger;
-        private readonly UsrTbl _usrTbl;
+        //private readonly PstTbl _pstTbl;
 
-        public SqlPost(DrTaabodiDbContext _db, ILogger<SqlPost> logger,UsrTbl usrTbl)
+        public SqlPost(DrTaabodiDbContext _db, ILogger<SqlPost> logger)
         {
             _context = _db;
             _logger = logger;
-            _usrTbl = usrTbl;
+           // _pstTbl = pstTbl;
         }
         public bool SaveChanges()
         {
