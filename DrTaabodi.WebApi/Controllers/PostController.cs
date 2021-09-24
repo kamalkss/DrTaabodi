@@ -21,9 +21,9 @@ namespace DrTaabodi.WebApi.Controllers
         private readonly IPost _post;
         private readonly DrTaabodiDbContext _db;
         private readonly IMapper _mapper;
-        private readonly ILogger<UsersController> _logger;
+        private readonly ILogger<PostController> _logger;
 
-        public PostController(ILogger<UsersController> logger, DrTaabodiDbContext db, IUser user, IMapper mapper,IPost post)
+        public PostController(ILogger<PostController> logger, DrTaabodiDbContext db, IUser user, IMapper mapper,IPost post)
         {
             _logger = logger;
             _db = db;
@@ -32,16 +32,13 @@ namespace DrTaabodi.WebApi.Controllers
             _post = post;
         }
 
-        [HttpPost]
+        [HttpGet]
         public ActionResult<ReadPosts> GetAllPost()
         {
             _logger.LogInformation("read all Posts");
-            var posts = _post.GetAllPosts().Select(pi=>new ReadUsers
-            {
-                UsrId = pi.User.UsrId
-            });
+            var posts = _post.GetAllPosts();
 
-            return Ok(_mapper.Map<ReadPosts>(posts));
+            return Ok(posts);
         }
 
         [HttpGet("{id}")]
@@ -62,6 +59,25 @@ namespace DrTaabodi.WebApi.Controllers
             var newPost = _post.CreatePost(mapPost);
             
             return Ok(newPost);
+        }
+
+        [HttpPatch("/postStatus/")]
+        public ActionResult<ReadPosts> updatePostStatus([FromBody] ReadPosts Post)
+        {
+            _logger.LogInformation("Update Post Status");
+            var id = Post.PstId;
+            var PostStatus = Post.PstStatus;
+            var UpdatedPost = _post.UpdatePostStatus(id, PostStatus);
+            return Ok(_mapper.Map<PstTbl>(UpdatedPost));
+        }
+        [HttpPatch("/posttype/")]
+        public ActionResult<ReadPosts> updatePostType([FromBody] ReadPosts Post)
+        {
+            _logger.LogInformation("Update Post Status");
+            var id = Post.PstId;
+            var PostStatus = Post.PstType;
+            var UpdatedPost = _post.UpdatePostType(id, PostStatus);
+            return Ok(_mapper.Map<PstTbl>(UpdatedPost));
         }
     }
 }

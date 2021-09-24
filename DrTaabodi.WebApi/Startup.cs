@@ -15,8 +15,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data;
 using DrTaabodi.Services.PostTable;
+using DrTaabodi.Services.QnATable;
 using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace DrTaabodi.WebApi
 {
@@ -32,19 +34,22 @@ namespace DrTaabodi.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddDbContext<Data.DatabaseContext.DrTaabodiDbContext>(options => options.UseSqlServer
-                (Configuration.GetConnectionString("DrNullConnttion")));
+            (Configuration.GetConnectionString("DrNullConnttion")));
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+                s.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
             services.AddControllers();
             services.AddScoped<IUser, SqlUser>();
             services.AddScoped<IPost, SqlPost>();
+            services.AddScoped<IQnA, SqlQna>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DrTaabodi.WebApi", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DrTaabodi", Version = "v1" });
             });
             services.AddControllersWithViews();
         }

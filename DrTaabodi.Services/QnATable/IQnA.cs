@@ -15,5 +15,6 @@ namespace DrTaabodi.Services.QnATable
         public ServiceResponse<QnATbl> CreateQnATbl(QnATbl WebPost);
         public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, string Question);
         public ServiceResponse<bool> UpdateQnATblAnswer(Guid id, string  Answer);
+        public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer,string Question);
     }
 }

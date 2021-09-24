@@ -127,5 +127,36 @@ namespace DrTaabodi.Services.QnATable
                 };
             }
         }
+
+        public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question)
+        {
+            var WebPost = _context.QnATbl.Find(id);
+            _logger.LogInformation("Log For Update Qna");
+            try
+            {
+                WebPost.Answer = Answer;
+                WebPost.Question = Question;
+                WebPost.UpdatedData = DateTime.UtcNow;
+                _context.QnATbl.Add(WebPost);
+                SaveChanges();
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = true,
+                    Data = true,
+                    Messege = " Qna Updated",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = false,
+                    Data = false,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
+        }
     }
 }
