@@ -12,6 +12,8 @@ namespace DrTaabodi.WebApi.Profiles
             CreateMap<UsrTbl, ReadUsers>();
             CreateMap<CreateUsers, UsrTbl>();
             CreateMap<ReadUsers, UsrTbl>();
+            CreateMap<Login, UsrTbl>();
+            CreateMap<UsrTbl, Login > ();
         }
     }
 }

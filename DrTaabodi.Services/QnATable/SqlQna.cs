@@ -15,13 +15,13 @@ namespace DrTaabodi.Services.QnATable
     {
         private readonly DrTaabodiDbContext _context;
         private readonly ILogger<SqlQna> _logger;
-        private readonly UsrTbl _usrTbl;
+        
 
-        public SqlQna(DrTaabodiDbContext _db, ILogger<SqlQna> logger, UsrTbl usrTbl)
+        public SqlQna(DrTaabodiDbContext _db, ILogger<SqlQna> logger)
         {
             _context = _db;
             _logger = logger;
-            _usrTbl = usrTbl;
+            
         }
         public bool SaveChanges()
         {
@@ -46,7 +46,7 @@ namespace DrTaabodi.Services.QnATable
             {
                 WebPost.UpdatedData = DateTime.UtcNow;
                 WebPost.CreatedDate = DateTime.UtcNow; ;
-                _context.Add(WebPost);
+                _context.QnATbl.Add(WebPost);
                 SaveChanges();
                 return new ServiceResponse<QnATbl>
                 {

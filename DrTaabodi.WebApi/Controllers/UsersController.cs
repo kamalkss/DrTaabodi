@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
@@ -7,7 +8,9 @@ using DrTaabodi.Data.Models;
 using DrTaabodi.Services;
 using DrTaabodi.Services.UserTable;
 using DrTaabodi.WebApi.DTO.Users;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using BCryptNet = BCrypt.Net.BCrypt;
 using Microsoft.Extensions.Logging;
 
 
@@ -36,7 +39,7 @@ namespace DrTaabodi.WebApi.Controllers
         {
             _logger.LogInformation("Get All Users");
             var Users = _UserService.GetAllUsers();
-            return Ok(_mapper.Map<ReadUsers>(User));
+            return Ok(Users);
         }
 
         [HttpGet("{id}")]
@@ -50,8 +53,7 @@ namespace DrTaabodi.WebApi.Controllers
         public ActionResult<ServiceResponse<CreateUsers>> CreateUser([FromBody] CreateUsers User)
         {
             _logger.LogInformation("Create User Log");
-            User.CreatedDate = DateTime.UtcNow;
-            User.UpdatedData = DateTime.UtcNow;
+            
             
             using (MD5 md5Hash = MD5.Create())
             {
@@ -64,7 +66,33 @@ namespace DrTaabodi.WebApi.Controllers
 
             return Ok(NewUsr);
         }
+        [AllowAnonymous]
+        [HttpPost("authenticate")]
+        public ActionResult<CreateUsers> Authenticate([FromBody] Login model)
+        {
+            var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
+            if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
+                throw new Exception("Username or password is incorrect");
+            return Ok(_mapper.Map<ReadUsers>(usergot));
+        }
 
+        [AllowAnonymous]
+        [HttpPost("register")]
+        public ActionResult<ReadUsers> Register([FromBody] CreateUsers model)
+        {
+            _logger.LogInformation("Create User Log");
+            if (_db.Users.Any(x => x.UserName == model.UserName))
+                throw new Exception("Username '" + model.UserName + "' is already taken");
+
+            // map model to new user object
+            var MapUser = _mapper.Map<UsrTbl>(model);
+
+            // hash password
+            MapUser.PassCode = BCryptNet.HashPassword(model.PassCode);
+            var NewUsr = _UserService.CreateUsr(MapUser);
+
+            return Ok(NewUsr);
+        }
         [HttpPatch]
         public ActionResult<ReadUsers> Update_User([FromBody] ReadUsers updateuser)
         {
@@ -73,6 +101,7 @@ namespace DrTaabodi.WebApi.Controllers
             var userStaus = updateuser.UsrStatus;
             var updateduser = _UserService.UpdateUserStatus(id, userStaus);
             return Ok(updateduser);
+
         }
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
