@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrTaabodi.Data.DatabaseContext;
+﻿using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
-using DrTaabodi.Services.PostTable;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DrTaabodi.Services.QnATable
 {
@@ -15,13 +12,13 @@ namespace DrTaabodi.Services.QnATable
     {
         private readonly DrTaabodiDbContext _context;
         private readonly ILogger<SqlQna> _logger;
-        
+
 
         public SqlQna(DrTaabodiDbContext _db, ILogger<SqlQna> logger)
         {
             _context = _db;
             _logger = logger;
-            
+
         }
         public bool SaveChanges()
         {

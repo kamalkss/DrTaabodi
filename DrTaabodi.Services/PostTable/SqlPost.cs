@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrTaabodi.Data.DatabaseContext;
+﻿using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
-using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace DrTaabodi.Services.PostTable
 {
-    public class SqlPost:IPost
+    public class SqlPost : IPost
     {
         private readonly DrTaabodiDbContext _context;
         private readonly ILogger<SqlPost> _logger;
@@ -21,7 +18,7 @@ namespace DrTaabodi.Services.PostTable
         {
             _context = _db;
             _logger = logger;
-           // _pstTbl = pstTbl;
+            // _pstTbl = pstTbl;
         }
         public bool SaveChanges()
         {
@@ -46,7 +43,7 @@ namespace DrTaabodi.Services.PostTable
             try
             {
                 WebPost.UpdatedData = DateTime.UtcNow;
-                WebPost.CreatedDate = DateTime.UtcNow;;
+                WebPost.CreatedDate = DateTime.UtcNow; ;
                 _context.Add(WebPost);
                 SaveChanges();
                 return new ServiceResponse<PstTbl>

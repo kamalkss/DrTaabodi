@@ -1,12 +1,9 @@
-﻿using System;
+﻿using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.Models;
+using Microsoft.Extensions.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DrTaabodi.Data.DatabaseContext;
-using DrTaabodi.Data.Models;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace DrTaabodi.Services.UserTable
 {
@@ -66,7 +63,7 @@ namespace DrTaabodi.Services.UserTable
 
         public ServiceResponse<bool> UpdateUserStatus(Guid id, UserStatus UsrStatus)
         {
-            
+
             var WebUser = _context.UsrTbl.Find(id);
             _logger.LogInformation("Log For Update User");
             try
