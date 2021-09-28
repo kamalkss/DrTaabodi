@@ -47,6 +47,89 @@ namespace DrTaabodi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "PostCategoryTbl",
+                columns: table => new
+                {
+                    PostCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PostCategoryParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostCategoryId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostCategoryTbl", x => x.PostCategoryId);
+                    table.ForeignKey(
+                        name: "FK_PostCategoryTbl_PostCategoryTbl_PostCategoryId1",
+                        column: x => x.PostCategoryId1,
+                        principalTable: "PostCategoryTbl",
+                        principalColumn: "PostCategoryId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostTypeTbl",
+                columns: table => new
+                {
+                    PostTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PostTypeParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostTypeId1 = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostTypeTbl", x => x.PostTypeId);
+                    table.ForeignKey(
+                        name: "FK_PostTypeTbl_PostTypeTbl_PostTypeId1",
+                        column: x => x.PostTypeId1,
+                        principalTable: "PostTypeTbl",
+                        principalColumn: "PostTypeId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PstTbl",
+                columns: table => new
+                {
+                    PstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PstContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PstTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PstDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PostParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PstTbleParentPstId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PstTbl", x => x.PstId);
+                    table.ForeignKey(
+                        name: "FK_PstTbl_PstTbl_PstTbleParentPstId",
+                        column: x => x.PstTbleParentPstId,
+                        principalTable: "PstTbl",
+                        principalColumn: "PstId",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QnATbl",
+                columns: table => new
+                {
+                    QnAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Question = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
+                    Answer = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QnATbl", x => x.QnAId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "UsrTbl",
                 columns: table => new
                 {
@@ -172,57 +255,99 @@ namespace DrTaabodi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PstTbl",
+                name: "PostCategoryTblPstTbl",
                 columns: table => new
                 {
-                    PstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PstContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PstTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PstDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PstStatus = table.Column<int>(type: "int", nullable: false),
-                    PstType = table.Column<int>(type: "int", nullable: false),
-                    PstTbleParentPstId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    PostCategoryTablePostCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostTablePstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PstTbl", x => x.PstId);
+                    table.PrimaryKey("PK_PostCategoryTblPstTbl", x => new { x.PostCategoryTablePostCategoryId, x.PostTablePstId });
                     table.ForeignKey(
-                        name: "FK_PstTbl_PstTbl_PstTbleParentPstId",
-                        column: x => x.PstTbleParentPstId,
+                        name: "FK_PostCategoryTblPstTbl_PostCategoryTbl_PostCategoryTablePostCategoryId",
+                        column: x => x.PostCategoryTablePostCategoryId,
+                        principalTable: "PostCategoryTbl",
+                        principalColumn: "PostCategoryId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostCategoryTblPstTbl_PstTbl_PostTablePstId",
+                        column: x => x.PostTablePstId,
                         principalTable: "PstTbl",
                         principalColumn: "PstId",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_PstTbl_UsrTbl_UserUsrId",
-                        column: x => x.UserUsrId,
-                        principalTable: "UsrTbl",
-                        principalColumn: "UsrId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "QnATbl",
+                name: "PostTypeTblPstTbl",
                 columns: table => new
                 {
-                    QnAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Question = table.Column<string>(type: "nvarchar(250)", maxLength: 250, nullable: false),
-                    Answer = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: false),
-                    UsrTblUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    PostTablePstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    PostTypeTablePostTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_QnATbl", x => x.QnAId);
+                    table.PrimaryKey("PK_PostTypeTblPstTbl", x => new { x.PostTablePstId, x.PostTypeTablePostTypeId });
                     table.ForeignKey(
-                        name: "FK_QnATbl_UsrTbl_UsrTblUsrId",
-                        column: x => x.UsrTblUsrId,
+                        name: "FK_PostTypeTblPstTbl_PostTypeTbl_PostTypeTablePostTypeId",
+                        column: x => x.PostTypeTablePostTypeId,
+                        principalTable: "PostTypeTbl",
+                        principalColumn: "PostTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PostTypeTblPstTbl_PstTbl_PostTablePstId",
+                        column: x => x.PostTablePstId,
+                        principalTable: "PstTbl",
+                        principalColumn: "PstId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PstTblUsrTbl",
+                columns: table => new
+                {
+                    PostTablePstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserTableUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PstTblUsrTbl", x => new { x.PostTablePstId, x.UserTableUsrId });
+                    table.ForeignKey(
+                        name: "FK_PstTblUsrTbl_PstTbl_PostTablePstId",
+                        column: x => x.PostTablePstId,
+                        principalTable: "PstTbl",
+                        principalColumn: "PstId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PstTblUsrTbl_UsrTbl_UserTableUsrId",
+                        column: x => x.UserTableUsrId,
                         principalTable: "UsrTbl",
                         principalColumn: "UsrId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "QnATblUsrTbl",
+                columns: table => new
+                {
+                    QuestionAndAnswerTableQnAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserTableUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QnATblUsrTbl", x => new { x.QuestionAndAnswerTableQnAId, x.UserTableUsrId });
+                    table.ForeignKey(
+                        name: "FK_QnATblUsrTbl_QnATbl_QuestionAndAnswerTableQnAId",
+                        column: x => x.QuestionAndAnswerTableQnAId,
+                        principalTable: "QnATbl",
+                        principalColumn: "QnAId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QnATblUsrTbl_UsrTbl_UserTableUsrId",
+                        column: x => x.UserTableUsrId,
+                        principalTable: "UsrTbl",
+                        principalColumn: "UsrId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -265,19 +390,39 @@ namespace DrTaabodi.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_PostCategoryTbl_PostCategoryId1",
+                table: "PostCategoryTbl",
+                column: "PostCategoryId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostCategoryTblPstTbl_PostTablePstId",
+                table: "PostCategoryTblPstTbl",
+                column: "PostTablePstId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostTypeTbl_PostTypeId1",
+                table: "PostTypeTbl",
+                column: "PostTypeId1");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PostTypeTblPstTbl_PostTypeTablePostTypeId",
+                table: "PostTypeTblPstTbl",
+                column: "PostTypeTablePostTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PstTbl_PstTbleParentPstId",
                 table: "PstTbl",
                 column: "PstTbleParentPstId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PstTbl_UserUsrId",
-                table: "PstTbl",
-                column: "UserUsrId");
+                name: "IX_PstTblUsrTbl_UserTableUsrId",
+                table: "PstTblUsrTbl",
+                column: "UserTableUsrId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_QnATbl_UsrTblUsrId",
-                table: "QnATbl",
-                column: "UsrTblUsrId");
+                name: "IX_QnATblUsrTbl_UserTableUsrId",
+                table: "QnATblUsrTbl",
+                column: "UserTableUsrId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -298,16 +443,34 @@ namespace DrTaabodi.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "PstTbl");
+                name: "PostCategoryTblPstTbl");
 
             migrationBuilder.DropTable(
-                name: "QnATbl");
+                name: "PostTypeTblPstTbl");
+
+            migrationBuilder.DropTable(
+                name: "PstTblUsrTbl");
+
+            migrationBuilder.DropTable(
+                name: "QnATblUsrTbl");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "PostCategoryTbl");
+
+            migrationBuilder.DropTable(
+                name: "PostTypeTbl");
+
+            migrationBuilder.DropTable(
+                name: "PstTbl");
+
+            migrationBuilder.DropTable(
+                name: "QnATbl");
 
             migrationBuilder.DropTable(
                 name: "UsrTbl");

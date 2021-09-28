@@ -19,6 +19,64 @@ namespace DrTaabodi.Data.Migrations
                 .HasAnnotation("ProductVersion", "5.0.10")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
+                {
+                    b.Property<Guid>("PostCategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PostCategoryId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostCategoryParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedData")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PostCategoryId");
+
+                    b.HasIndex("PostCategoryId1");
+
+                    b.ToTable("PostCategoryTbl");
+                });
+
+            modelBuilder.Entity("DrTaabodi.Data.Models.PostTypeTbl", b =>
+                {
+                    b.Property<Guid>("PostTypeId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("PostTypeId1")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PostTypeName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("PostTypeParentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("UpdatedData")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PostTypeId");
+
+                    b.HasIndex("PostTypeId1");
+
+                    b.ToTable("PostTypeTbl");
+                });
+
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
                 {
                     b.Property<Guid>("PstId")
@@ -28,6 +86,9 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid>("PostParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PstContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -36,9 +97,6 @@ namespace DrTaabodi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PstStatus")
-                        .HasColumnType("int");
-
                     b.Property<Guid?>("PstTbleParentPstId")
                         .HasColumnType("uniqueidentifier");
 
@@ -46,20 +104,12 @@ namespace DrTaabodi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("PstType")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("UpdatedData")
                         .HasColumnType("datetime2");
-
-                    b.Property<Guid?>("UserUsrId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PstId");
 
                     b.HasIndex("PstTbleParentPstId");
-
-                    b.HasIndex("UserUsrId");
 
                     b.ToTable("PstTbl");
                 });
@@ -86,12 +136,7 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("UpdatedData")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("UsrTblUsrId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("QnAId");
-
-                    b.HasIndex("UsrTblUsrId");
 
                     b.ToTable("QnATbl");
                 });
@@ -329,28 +374,91 @@ namespace DrTaabodi.Data.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
+            modelBuilder.Entity("PostCategoryTblPstTbl", b =>
+                {
+                    b.Property<Guid>("PostCategoryTablePostCategoryId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostTablePstId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PostCategoryTablePostCategoryId", "PostTablePstId");
+
+                    b.HasIndex("PostTablePstId");
+
+                    b.ToTable("PostCategoryTblPstTbl");
+                });
+
+            modelBuilder.Entity("PostTypeTblPstTbl", b =>
+                {
+                    b.Property<Guid>("PostTablePstId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PostTypeTablePostTypeId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PostTablePstId", "PostTypeTablePostTypeId");
+
+                    b.HasIndex("PostTypeTablePostTypeId");
+
+                    b.ToTable("PostTypeTblPstTbl");
+                });
+
+            modelBuilder.Entity("PstTblUsrTbl", b =>
+                {
+                    b.Property<Guid>("PostTablePstId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserTableUsrId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("PostTablePstId", "UserTableUsrId");
+
+                    b.HasIndex("UserTableUsrId");
+
+                    b.ToTable("PstTblUsrTbl");
+                });
+
+            modelBuilder.Entity("QnATblUsrTbl", b =>
+                {
+                    b.Property<Guid>("QuestionAndAnswerTableQnAId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserTableUsrId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("QuestionAndAnswerTableQnAId", "UserTableUsrId");
+
+                    b.HasIndex("UserTableUsrId");
+
+                    b.ToTable("QnATblUsrTbl");
+                });
+
+            modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PostCategoryTbl", "PostCategory")
+                        .WithMany()
+                        .HasForeignKey("PostCategoryId1");
+
+                    b.Navigation("PostCategory");
+                });
+
+            modelBuilder.Entity("DrTaabodi.Data.Models.PostTypeTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PostTypeTbl", "PostType")
+                        .WithMany()
+                        .HasForeignKey("PostTypeId1");
+
+                    b.Navigation("PostType");
+                });
+
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
                 {
                     b.HasOne("DrTaabodi.Data.Models.PstTbl", "PstTbleParent")
                         .WithMany()
                         .HasForeignKey("PstTbleParentPstId");
 
-                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", "User")
-                        .WithMany()
-                        .HasForeignKey("UserUsrId");
-
                     b.Navigation("PstTbleParent");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("DrTaabodi.Data.Models.QnATbl", b =>
-                {
-                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", "UsrTbl")
-                        .WithMany()
-                        .HasForeignKey("UsrTblUsrId");
-
-                    b.Navigation("UsrTbl");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -400,6 +508,66 @@ namespace DrTaabodi.Data.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PostCategoryTblPstTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PostCategoryTbl", null)
+                        .WithMany()
+                        .HasForeignKey("PostCategoryTablePostCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
+                        .WithMany()
+                        .HasForeignKey("PostTablePstId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PostTypeTblPstTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
+                        .WithMany()
+                        .HasForeignKey("PostTablePstId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DrTaabodi.Data.Models.PostTypeTbl", null)
+                        .WithMany()
+                        .HasForeignKey("PostTypeTablePostTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("PstTblUsrTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
+                        .WithMany()
+                        .HasForeignKey("PostTablePstId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", null)
+                        .WithMany()
+                        .HasForeignKey("UserTableUsrId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("QnATblUsrTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.QnATbl", null)
+                        .WithMany()
+                        .HasForeignKey("QuestionAndAnswerTableQnAId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("DrTaabodi.Data.Models.UsrTbl", null)
+                        .WithMany()
+                        .HasForeignKey("UserTableUsrId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

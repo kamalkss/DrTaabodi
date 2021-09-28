@@ -27,12 +27,12 @@ namespace DrTaabodi.Services.QnATable
 
         public List<QnATbl> GetAllQnATbls()
         {
-            return _context.QnATbl.Include(c => c.UsrTbl).ToList();
+            return _context.QnATbl.Include(c => c.UserTable).ToList();
         }
 
         public QnATbl GetQnATblById(Guid id)
         {
-            return _context.QnATbl.Include(u => u.UsrTbl)
+            return _context.QnATbl.Include(u => u.UserTable)
                 .FirstOrDefault(q => q.QnAId == id);
         }
 

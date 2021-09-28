@@ -9,6 +9,11 @@ namespace DrTaabodi.Data.Models
 {
     public class UsrTbl
     {
+        public UsrTbl()
+        {
+            this.PostTable = new HashSet<PstTbl>();
+            this.QuestionAndAnswerTable = new HashSet<QnATbl>();
+        }
         [Key][Required] public Guid UsrId { get; set; }
         [Required] public DateTime CreatedDate { get; set; }
         [Required] public DateTime UpdatedData { get; set; }
@@ -18,6 +23,9 @@ namespace DrTaabodi.Data.Models
         public string UsrFamily { get; set; }
         public string UsrEmail { get; set; }
         public UserStatus UsrStatus { get; set; }
+        public virtual ICollection<PstTbl> PostTable { get; set; }
+        public virtual ICollection<QnATbl> QuestionAndAnswerTable { get; set; }
+
     }
 
     public enum UserStatus

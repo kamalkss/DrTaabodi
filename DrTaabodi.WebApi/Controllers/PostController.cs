@@ -53,9 +53,16 @@ namespace DrTaabodi.WebApi.Controllers
         public ActionResult<ServiceResponse<CreatePosts>> CreatePost([FromBody] CreatePosts Post)
         {
             _logger.LogInformation("Create Post");
+            //CreatePosts Posts = new CreatePosts();
             Post.CreatedDate = DateTime.UtcNow;
             Post.UpdatedData = DateTime.UtcNow;
+            Post.User = _UserService.GetUserById(Post.User.UsrId);
+            
             var mapPost = _mapper.Map<PstTbl>(Post);
+            mapPost.UserTable.Add(Post.User);
+            //var userPost = _mapper.Map<UsrTbl>(Post.usr);
+
+            //mapPost.UserTable.Add(Post.User);
             var newPost = _post.CreatePost(mapPost);
             
             return Ok(newPost);

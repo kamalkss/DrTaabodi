@@ -28,12 +28,12 @@ namespace DrTaabodi.Services.PostTable
         public List<PstTbl> GetAllPosts()
         {
             return _context.PstTbl
-                .Include(c => c.User).ToList();
+                .Include(c => c.UserTable).ToList();
         }
 
         public PstTbl GetPostById(Guid id)
         {
-            return _context.PstTbl.Include(c => c.User).
+            return _context.PstTbl.Include(c => c.UserTable).
                 FirstOrDefault(p => p.PstId == id);
         }
 
@@ -43,7 +43,9 @@ namespace DrTaabodi.Services.PostTable
             try
             {
                 WebPost.UpdatedData = DateTime.UtcNow;
-                WebPost.CreatedDate = DateTime.UtcNow; ;
+                WebPost.CreatedDate = DateTime.UtcNow;
+                var user = WebPost.UserTable;
+
                 _context.Add(WebPost);
                 SaveChanges();
                 return new ServiceResponse<PstTbl>
@@ -72,7 +74,7 @@ namespace DrTaabodi.Services.PostTable
             _logger.LogInformation("Log For Update Post");
             try
             {
-                WebPost.PstType = UsrStatus;
+                //WebPost.PstType = UsrStatus;
                 WebPost.UpdatedData = DateTime.UtcNow;
                 _context.PstTbl.Add(WebPost);
                 SaveChanges();
@@ -102,7 +104,7 @@ namespace DrTaabodi.Services.PostTable
             _logger.LogInformation("Log For Update Post");
             try
             {
-                WebPost.PstStatus = UsrStatus;
+                //WebPost.PstStatus = UsrStatus;
                 WebPost.UpdatedData = DateTime.UtcNow;
                 _context.PstTbl.Add(WebPost);
                 SaveChanges();
