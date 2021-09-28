@@ -34,7 +34,7 @@ namespace DrTaabodi.Data.Models
         public virtual ICollection<PostCategoryTbl> PostCategoryTable { get; set; }
         public virtual ICollection<UsrTbl> UserTable { get; set; }
         //public virtual ICollection<PostTblRelations> PostTable { get; set; }
-       // public virtual ICollection<PostTblRelations> PostTableParent { get; set; }
+        //public virtual ICollection<PostTblRelations> PostTableParent { get; set; }
     }
 
     public class PostTblRelations

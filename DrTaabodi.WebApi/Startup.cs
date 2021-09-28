@@ -37,6 +37,7 @@ namespace DrTaabodi.WebApi
 
             services.AddDbContext<Data.DatabaseContext.DrTaabodiDbContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("DrNullConnttion")));
+
             services.AddControllers().AddNewtonsoftJson(s =>
             {
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();

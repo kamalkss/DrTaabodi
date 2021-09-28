@@ -21,7 +21,7 @@ namespace DrTaabodi.Data.Models
         [Required] public DateTime CreatedDate { get; set; }
         [Required] public DateTime UpdatedData { get; set; }
 
-        [ForeignKey(nameof(PostCategoryTbl))]public Guid PostCategoryParentId {  get; set; }
+        [ForeignKey(nameof(PostCategoryTbl))] public Guid PostCategoryParentId { get; set; }
         public PostCategoryTbl PostCategory { get; set; }
 
         public virtual ICollection<PstTbl> PostTable { get; set; }

@@ -11,6 +11,7 @@ namespace DrTaabodi.Services.PostTable
         public PstTbl GetPostById(Guid id);
         public ServiceResponse<PstTbl> CreatePost(PstTbl WebPost);
         public ServiceResponse<bool> UpdatePostType(Guid id, PstType PostType);
-        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstStatus postStatus);
+        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstTbl postStatus);
+        public ServiceResponse<bool> AddPostParent(Guid id, PstTbl postStatus);
     }
 }

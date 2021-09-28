@@ -28,12 +28,18 @@ namespace DrTaabodi.Services.PostTable
         public List<PstTbl> GetAllPosts()
         {
             return _context.PstTbl
-                .Include(c => c.UserTable).ToList();
+                .Include(c => c.UserTable)
+                .Include(c=>c.PstTbleParent)
+                .Include(c=>c.PostTypeTable)
+                .Include(c=>c.PostCategoryTable).ToList();
         }
 
         public PstTbl GetPostById(Guid id)
         {
-            return _context.PstTbl.Include(c => c.UserTable).
+            return _context.PstTbl.Include(c => c.UserTable)
+                .Include(c => c.PstTbleParent)
+                .Include(c => c.PostTypeTable)
+                .Include(c => c.PostCategoryTable).
                 FirstOrDefault(p => p.PstId == id);
         }
 
@@ -44,7 +50,7 @@ namespace DrTaabodi.Services.PostTable
             {
                 WebPost.UpdatedData = DateTime.UtcNow;
                 WebPost.CreatedDate = DateTime.UtcNow;
-                var user = WebPost.UserTable;
+                //var user = WebPost.UserTable;
 
                 _context.Add(WebPost);
                 SaveChanges();
@@ -98,7 +104,7 @@ namespace DrTaabodi.Services.PostTable
             }
         }
 
-        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstStatus UsrStatus)
+        public ServiceResponse<bool> UpdatePostStatus(Guid id, PstTbl UsrStatus)
         {
             var WebPost = _context.PstTbl.Find(id);
             _logger.LogInformation("Log For Update Post");
@@ -107,6 +113,39 @@ namespace DrTaabodi.Services.PostTable
                 //WebPost.PstStatus = UsrStatus;
                 WebPost.UpdatedData = DateTime.UtcNow;
                 _context.PstTbl.Add(WebPost);
+                SaveChanges();
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = true,
+                    Data = true,
+                    Messege = " Post Updated",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = false,
+                    Data = false,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
+        }
+
+        
+
+        public ServiceResponse<bool> AddPostParent(Guid id, PstTbl postStatus)
+        {
+            var  Child = _context.PstTbl.Find(id);
+            var Parent = _context.PstTbl.Find(postStatus.PstTbleParent.PstId);
+            _logger.LogInformation("Log For Update Post");
+            try
+            {
+                //WebPost.PstType = UsrStatus;
+                Child.UpdatedData = DateTime.UtcNow;
+                _context.PstTbl.Add(Child);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {

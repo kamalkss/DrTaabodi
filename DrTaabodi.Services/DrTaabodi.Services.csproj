@@ -12,4 +12,8 @@
     <ProjectReference Include="..\DrTaabodi.Data\DrTaabodi.Data.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="PostTypeTable\" />
+  </ItemGroup>
+
 </Project>

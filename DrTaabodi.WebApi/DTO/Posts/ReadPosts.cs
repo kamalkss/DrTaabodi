@@ -7,7 +7,7 @@ namespace DrTaabodi.WebApi.DTO.Posts
     public class ReadPosts
     {
         public Guid PstId { get; set; }
-        public ReadUsers User { get; set; }
+        public UsrTbl User { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdatedData { get; set; }
 
