@@ -28,13 +28,14 @@ namespace DrTaabodi.Data.Models
 
         [ForeignKey(nameof(PstTbl))]
         public Guid PostParentId { get; set; }
-        public PstTbl PstTbleParent { get; set; }
+
+       // public ICollection<PstTbl> PstTbleParent { get; set; } = new List<PstTbl>();
 
         public virtual ICollection<PostTypeTbl> PostTypeTable { get; set; }
         public virtual ICollection<PostCategoryTbl> PostCategoryTable { get; set; }
         public virtual ICollection<UsrTbl> UserTable { get; set; }
-        //public virtual ICollection<PostTblRelations> PostTable { get; set; }
-        //public virtual ICollection<PostTblRelations> PostTableParent { get; set; }
+        public virtual ICollection<PstTbl> ChildDependencies { get; set; } = new List<PstTbl>();
+        public virtual ICollection<PstTbl> ParentDependencies { get; set; } = new List<PstTbl>();
     }
 
     public class PostTblRelations

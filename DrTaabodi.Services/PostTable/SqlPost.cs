@@ -29,7 +29,7 @@ namespace DrTaabodi.Services.PostTable
         {
             return _context.PstTbl
                 .Include(c => c.UserTable)
-                .Include(c=>c.PstTbleParent)
+                //.Include(c=>c.p)
                 .Include(c=>c.PostTypeTable)
                 .Include(c=>c.PostCategoryTable).ToList();
         }
@@ -37,7 +37,7 @@ namespace DrTaabodi.Services.PostTable
         public PstTbl GetPostById(Guid id)
         {
             return _context.PstTbl.Include(c => c.UserTable)
-                .Include(c => c.PstTbleParent)
+                //.Include(c => c.PstTbleParent)
                 .Include(c => c.PostTypeTable)
                 .Include(c => c.PostCategoryTable).
                 FirstOrDefault(p => p.PstId == id);
@@ -74,7 +74,7 @@ namespace DrTaabodi.Services.PostTable
             }
         }
 
-        public ServiceResponse<bool> UpdatePostType(Guid id, PstType UsrStatus)
+        public ServiceResponse<bool> UpdatePostType(Guid id, PstTbl UsrStatus)
         {
             var WebPost = _context.PstTbl.Find(id);
             _logger.LogInformation("Log For Update Post");
@@ -112,7 +112,7 @@ namespace DrTaabodi.Services.PostTable
             {
                 //WebPost.PstStatus = UsrStatus;
                 WebPost.UpdatedData = DateTime.UtcNow;
-                _context.PstTbl.Add(WebPost);
+                _context.PstTbl.Update(WebPost);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {
@@ -139,7 +139,7 @@ namespace DrTaabodi.Services.PostTable
         public ServiceResponse<bool> AddPostParent(Guid id, PstTbl postStatus)
         {
             var  Child = _context.PstTbl.Find(id);
-            var Parent = _context.PstTbl.Find(postStatus.PstTbleParent.PstId);
+            //var Parent = _context.PstTbl.Find(postStatus.PstTbleParent.PstId);
             _logger.LogInformation("Log For Update Post");
             try
             {

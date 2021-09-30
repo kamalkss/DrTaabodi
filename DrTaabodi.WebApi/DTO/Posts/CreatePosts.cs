@@ -8,7 +8,7 @@ namespace DrTaabodi.WebApi.DTO.Posts
     public class CreatePosts
     {
          
-         public UsrTbl User { get; set; }
+         public Guid User { get; set; }
          public DateTime CreatedDate { get; set; }
          public DateTime UpdatedData { get; set; }
 
@@ -18,6 +18,6 @@ namespace DrTaabodi.WebApi.DTO.Posts
          public PstStatus PstStatus { get; set; }
          public PstType PstType { get; set; }
 
-        public PstTbl PstTbleParent { get; set; }
+        public Guid PstTbleParent { get; set; }
     }
 }

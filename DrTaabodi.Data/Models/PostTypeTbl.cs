@@ -21,8 +21,8 @@ namespace DrTaabodi.Data.Models
         [Required] public DateTime UpdatedData { get; set; }
 
 
-        [ForeignKey(nameof(PostTypeTbl))] public Guid PostTypeParentId { get; set; }
-        public PostTypeTbl PostType { get; set; }
+       //  public Guid PostTypeParentId { get; set; }
+         [ForeignKey(nameof(PostTypeTbl))] public PostTypeTbl PostTypeParent { get; set; }
 
         public virtual ICollection<PstTbl> PostTable { get; set; }
         //public virtual ICollection<PostTypeRelations> PostType { get; set; }

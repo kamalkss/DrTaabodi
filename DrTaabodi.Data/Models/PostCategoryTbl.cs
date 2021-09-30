@@ -21,12 +21,14 @@ namespace DrTaabodi.Data.Models
         [Required] public DateTime CreatedDate { get; set; }
         [Required] public DateTime UpdatedData { get; set; }
 
-        [ForeignKey(nameof(PostCategoryTbl))] public Guid PostCategoryParentId { get; set; }
-        public PostCategoryTbl PostCategory { get; set; }
+        public Guid? ParentId { get; set; }
+
+        //[ForeignKey(nameof(PostCategoryTbl))] public Guid PostCategoryParentId { get; set; }
+        //public PostCategoryTbl PostCategory { get; set; }
 
         public virtual ICollection<PstTbl> PostTable { get; set; }
-        //public virtual ICollection<PostCategoryTblRelation> PostCategory { get; set; }
-        //public virtual ICollection<PostCategoryTblRelation> PostCategoryParent { get; set; }
+        public virtual ICollection<PostCategoryTblRelation> PostCategory { get; set; }
+        public virtual ICollection<PostCategoryTblRelation> PostCategoryParent { get; set; }
 
 
 

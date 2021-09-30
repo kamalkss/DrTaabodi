@@ -71,21 +71,49 @@ namespace DrTaabodi.Services.PostCategoryTable
 
         public ServiceResponse<bool> UpdatePostType(Guid id, PostTypeTbl WebPost)
         {
-            throw new NotImplementedException();
-        }
-
-        public ServiceResponse<bool> AddParent(Guid id, PostTypeTbl WebPost)
-        {
             var ChildPostType = _context.PostTypeTbl.Find(id);
-            var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
+            //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
             _logger.LogInformation("Log for Create Post Parent");
             try
             {
                 ChildPostType.UpdatedData = DateTime.UtcNow;
                 //ChildPostType.PostType = Parent;
+                
 
+                _context.Add(ChildPostType);
+                SaveChanges();
+                return new ServiceResponse<bool>
+                {
+                    Data = true,
+                    IsSucceess = true,
+                    Messege = "PosyType Updated Added",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    Data = false,
+                    IsSucceess = false,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
+        }
 
-                _context.Add(WebPost);
+        public ServiceResponse<bool> EditParent(Guid id, Guid ParentId)
+        {
+            var ChildPostType = _context.PostTypeTbl.Find(id);
+            //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
+            _logger.LogInformation("Log for Create Post Parent");
+            try
+            {
+                ChildPostType.UpdatedData = DateTime.UtcNow;
+                //ChildPostType.PostType = Parent;
+               // ChildPostType.PostTypeParentId = ParentId;
+
+                _context.Add(ChildPostType);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {
