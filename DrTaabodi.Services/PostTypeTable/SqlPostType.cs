@@ -9,7 +9,7 @@ using DrTaabodi.Services.PostTable;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace DrTaabodi.Services.PostCategoryTable
+namespace DrTaabodi.Services.PostTypeTable
 {
     public class SqlPostType : IPostType
     {
@@ -80,7 +80,7 @@ namespace DrTaabodi.Services.PostCategoryTable
                 //ChildPostType.PostType = Parent;
                 
 
-                _context.Add(ChildPostType);
+                _context.Update(ChildPostType);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {

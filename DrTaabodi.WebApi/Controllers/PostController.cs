@@ -66,7 +66,7 @@ namespace DrTaabodi.WebApi.Controllers
             if (Post.User != null)
                 mapPost.UserTable.Add(_UserService.GetUserById(Post.User));
             if (Post.PstTbleParent != null)
-                mapPost.PostParentId = Post.PstTbleParent;
+                mapPost.PstTblParent.Add(_post.GetPostById(Post.PstTbleParent));
             //if (Post.PstTbleParent != null)
             //    mapPost.PstTbleParent.
             

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DrTaabodi.Data.Models;
 
-namespace DrTaabodi.Services.PostCategoryTable
+namespace DrTaabodi.Services.PostTypeTable
 {
     public interface IPostType
     {
