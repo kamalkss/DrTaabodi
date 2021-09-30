@@ -9,15 +9,10 @@ namespace DrTaabodi.WebApi.DTO.Posts
     {
          
          public Guid User { get; set; }
-         public DateTime CreatedDate { get; set; }
-         public DateTime UpdatedData { get; set; }
-
          public string PstContent { get; set; }
          public string PstTitle { get; set; }
          public string PstDescription { get; set; }
-         public PstStatus PstStatus { get; set; }
-         public PstType PstType { get; set; }
 
-        public Guid PstTbleParent { get; set; }
+         public Guid PstTbleParent { get; set; }
     }
 }

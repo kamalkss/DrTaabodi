@@ -9,9 +9,7 @@ namespace DrTaabodi.WebApi.DTO.PostType
     {
         [Required] public Guid PostTypeId { get; set; }
         [Required] public string PostTypeName { get; set; }
-        [Required] public DateTime CreatedDate { get; set; }
-        [Required] public DateTime UpdatedData { get; set; }
-        public virtual ICollection<PostTypeTbl> PostTypeParent { get; set; }
-        public  Guid PostTableId { get; set; }
+        public  Guid ParentId { get; set; }
+        public Guid PostId { get; set; }
     }
 }

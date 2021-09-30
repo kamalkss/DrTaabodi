@@ -63,9 +63,9 @@ namespace DrTaabodi.WebApi.Controllers
             var mapPost = _mapper.Map<PstTbl>(Post);
 
 
-            if (Post.User != null)
+            if (Post.User != null && Post.User != Guid.Empty && Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 mapPost.UserTable.Add(_UserService.GetUserById(Post.User));
-            if (Post.PstTbleParent != null)
+            if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty && Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 mapPost.PstTblParent.Add(_post.GetPostById(Post.PstTbleParent));
             //if (Post.PstTbleParent != null)
             //    mapPost.PstTbleParent.

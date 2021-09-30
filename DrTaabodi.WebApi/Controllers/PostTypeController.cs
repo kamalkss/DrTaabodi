@@ -19,10 +19,10 @@ namespace DrTaabodi.WebApi.Controllers
     {
         private readonly IPost _postService;
         private readonly IPostType _postTypeService;
-        private readonly ILogger _logger;
+        private readonly ILogger<PostTypeController> _logger;
         private readonly IMapper _mapper;
 
-        public PostTypeController(IPost Post, IPostType PostType, ILogger logger, IMapper mapper)
+        public PostTypeController(IPost Post, IPostType PostType, ILogger<PostTypeController> logger, IMapper mapper)
         {
             _logger = logger;
             _mapper = mapper;
@@ -52,8 +52,10 @@ namespace DrTaabodi.WebApi.Controllers
                 return BadRequest(ModelState);
             }
             var MapPost = _mapper.Map<PostTypeTbl>(PostType);
-            if (PostType.PostTableId != null && PostType.PostTableId!=Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(PostType.PostTableId));
+            if (PostType.ParentId!=Guid.Empty && PostType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                MapPost.PostTypeParent.Add(_postTypeService.GetPostById(PostType.ParentId));
+            if(PostType.PostId!=Guid.Empty)
+                MapPost.PostTable.Add(_postService.GetPostById(PostType.PostId));
             var NewPost = _postTypeService.CreatePostType(MapPost);
             return Ok(NewPost);
         }
@@ -65,8 +67,10 @@ namespace DrTaabodi.WebApi.Controllers
                 return BadRequest(ModelState);
             var Post = _postTypeService.GetPostById(postType.PostTypeId);
             var MapPost = _mapper.Map<PostTypeTbl>(postType);
-            if(postType.PostTableId != Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(postType.PostTableId));
+            if(postType.ParentId != Guid.Empty && postType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                MapPost.PostTypeParent.Add(_postTypeService.GetPostById(postType.ParentId));
+            if (postType.PostId != Guid.Empty)
+                MapPost.PostTable.Add(_postService.GetPostById(postType.PostId));
             var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
             return Ok(UpdatedPost);
         }

@@ -47,9 +47,7 @@ namespace DrTaabodi.WebApi.Controllers
         public ActionResult<ServiceResponse<CreateQnAs>> CreateQna([FromBody] CreateQnAs CreateQna)
         {
             _logger.LogInformation("Create a qna");
-            CreateQna.CreatedDate = DateTime.UtcNow;
-            CreateQna.UpdatedData = DateTime.UtcNow;
-
+            
             var mapQna = _mapper.Map<QnATbl>(CreateQna);
             var newQna = _qnA.CreateQnATbl(mapQna);
             return Ok(newQna);
