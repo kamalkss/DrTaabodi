@@ -4,7 +4,7 @@ using DrTaabodi.WebApi.DTO.PostType;
 
 namespace DrTaabodi.WebApi.Profiles
 {
-    public class PostTypeProfile:Profile
+    public class PostTypeProfile : Profile
     {
         public PostTypeProfile()
         {

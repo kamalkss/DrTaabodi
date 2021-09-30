@@ -12,8 +12,4 @@
     <ProjectReference Include="..\DrTaabodi.Data\DrTaabodi.Data.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="PostCategoryTable\" />
-  </ItemGroup>
-
 </Project>

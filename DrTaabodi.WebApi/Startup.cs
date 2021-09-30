@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data;
+using DrTaabodi.Services.PostCategoryTable;
 using DrTaabodi.Services.PostTable;
 using DrTaabodi.Services.PostTypeTable;
 using DrTaabodi.Services.QnATable;
@@ -52,6 +53,7 @@ namespace DrTaabodi.WebApi
             services.AddScoped<IPost, SqlPost>();
             services.AddScoped<IQnA, SqlQna>();
             services.AddScoped<IPostType, SqlPostType>();
+            services.AddScoped<IPostCategory, SqlPostCategory>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
