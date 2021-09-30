@@ -12,5 +12,6 @@ namespace DrTaabodi.WebApi.DTO.PostType
         [Required] public DateTime UpdatedData { get; set; }
         public virtual ICollection<PostTypeTbl> PostTypeParent { get; set; }
         public virtual ICollection<PstTbl> PostTable { get; set; }
+        public Guid PostTableId { get; set; }
     }
 }

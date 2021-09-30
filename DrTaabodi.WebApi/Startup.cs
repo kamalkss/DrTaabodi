@@ -15,6 +15,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data;
 using DrTaabodi.Services.PostTable;
+using DrTaabodi.Services.PostTypeTable;
 using DrTaabodi.Services.QnATable;
 using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
@@ -50,6 +51,7 @@ namespace DrTaabodi.WebApi
             services.AddScoped<IUser, SqlUser>();
             services.AddScoped<IPost, SqlPost>();
             services.AddScoped<IQnA, SqlQna>();
+            services.AddScoped<IPostType, SqlPostType>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {

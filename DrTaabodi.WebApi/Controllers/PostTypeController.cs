@@ -47,9 +47,28 @@ namespace DrTaabodi.WebApi.Controllers
         [HttpPost]
         public ActionResult<ServiceResponse<CreatePostType>> CreatePost([FromBody] CreatePostType PostType)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
             var MapPost = _mapper.Map<PostTypeTbl>(PostType);
+            if (PostType.PostTableId != null && PostType.PostTableId!=Guid.Empty)
+                MapPost.PostTable.Add(_postService.GetPostById(PostType.PostTableId));
             var NewPost = _postTypeService.CreatePostType(MapPost);
             return Ok(NewPost);
+        }
+
+        [HttpPatch]
+        public ActionResult<ServiceResponse<bool>> UpdatePostType([FromBody] ReadPostType postType)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var Post = _postTypeService.GetPostById(postType.PostTypeId);
+            var MapPost = _mapper.Map<PostTypeTbl>(postType);
+            if(postType.PostTableId != Guid.Empty)
+                MapPost.PostTable.Add(_postService.GetPostById(postType.PostTableId));
+            var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
+            return Ok(UpdatedPost);
         }
     }
 }
