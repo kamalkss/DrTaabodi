@@ -49,30 +49,30 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok(_mapper.Map<ReadUsers>(User));
         }
 
-        [HttpPost]
-        public ActionResult<ServiceResponse<CreateUsers>> CreateUser([FromBody] CreateUsers User)
-        {
-            _logger.LogInformation("Create User Log");
+        
+        //public ActionResult<ServiceResponse<CreateUsers>> CreateUser([FromBody] CreateUsers User)
+        //{
+        //    _logger.LogInformation("Create User Log");
             
             
-            using (MD5 md5Hash = MD5.Create())
-            {
-                string hash = GetMd5Hash(md5Hash, User.PassCode);
-                User.PassCode = hash;
-            }
+        //    using (MD5 md5Hash = MD5.Create())
+        //    {
+        //        string hash = GetMd5Hash(md5Hash, User.PassCode);
+        //        User.PassCode = hash;
+        //    }
             
-            var MapUser = _mapper.Map<UsrTbl>(User);
-            var NewUsr = _UserService.CreateUsr(MapUser);
+        //    var MapUser = _mapper.Map<UsrTbl>(User);
+        //    var NewUsr = _UserService.CreateUsr(MapUser);
 
-            return Ok(NewUsr);
-        }
+        //    return Ok(NewUsr);
+        //}
         [AllowAnonymous]
         [HttpPost("authenticate")]
         public ActionResult<CreateUsers> Authenticate([FromBody] Login model)
         {
             var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
             if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
-                throw new Exception("Username or password is incorrect");
+                return Unauthorized("Username or password is incorrect");
             return Ok(_mapper.Map<ReadUsers>(usergot));
         }
 
@@ -80,9 +80,11 @@ namespace DrTaabodi.WebApi.Controllers
         [HttpPost("register")]
         public ActionResult<ReadUsers> Register([FromBody] CreateUsers model)
         {
+
             _logger.LogInformation("Create User Log");
-            if (_db.Users.Any(x => x.UserName == model.UserName))
-                throw new Exception("Username '" + model.UserName + "' is already taken");
+
+            if (_db.UsrTbl.Any(x => x.UserName == model.UserName))
+                return Unauthorized("Username '" + model.UserName + "' is already taken");
 
             // map model to new user object
             var MapUser = _mapper.Map<UsrTbl>(model);
@@ -91,7 +93,7 @@ namespace DrTaabodi.WebApi.Controllers
             MapUser.PassCode = BCryptNet.HashPassword(model.PassCode);
             var NewUsr = _UserService.CreateUsr(MapUser);
 
-            return Ok(NewUsr);
+            return Ok(NewUsr.Data.UserName + " Is Created");
         }
         [HttpPatch]
         public ActionResult<ReadUsers> Update_User([FromBody] ReadUsers updateuser)
