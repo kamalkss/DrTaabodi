@@ -21,11 +21,6 @@ namespace DrTaabodi.Data.Models
         [Required] public DateTime UpdatedData { get; set; }
         [Required] [MaxLength(250)] public string Question { get; set; }
         [Required] [MaxLength(1000)] public string Answer { get; set; }
-
-        //[ForeignKey(nameof(UsrTbl))]
-        //public Guid UserId { get; set; }
-        //public UsrTbl UsrTbl { get; set; }
-
         public virtual ICollection<UsrTbl> UserTable { get; set; }
     }   
 }
