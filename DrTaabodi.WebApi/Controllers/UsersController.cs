@@ -73,7 +73,7 @@ namespace DrTaabodi.WebApi.Controllers
             var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
             if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
                 return Unauthorized("Username or password is incorrect");
-            return Ok(_mapper.Map<ReadUsers>(usergot));
+            return Ok($"User {usergot.UsrNickName} {usergot.UsrFamily} User Name : {usergot.UserName} with Id {usergot.UsrId} and Email {usergot.UsrEmail}");
         }
 
         [AllowAnonymous]
