@@ -73,6 +73,7 @@ namespace DrTaabodi.WebApi.Controllers
             var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
             if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
                 return Unauthorized("Username or password is incorrect");
+            //return Ok($"User {usergot.UsrNickName} {usergot.UsrFamily} User Name : {usergot.UserName} with Id {usergot.UsrId} and Email {usergot.UsrEmail}");
             return Ok(_mapper.Map<ReadUsers>(usergot));
         }
 
@@ -93,7 +94,7 @@ namespace DrTaabodi.WebApi.Controllers
             MapUser.PassCode = BCryptNet.HashPassword(model.PassCode);
             var NewUsr = _UserService.CreateUsr(MapUser);
 
-            return Ok(NewUsr.Data.UserName + " Is Created");
+            return Ok(_mapper.Map<ReadUsers>(NewUsr));
         }
         [HttpPatch]
         public ActionResult<ReadUsers> Update_User([FromBody] ReadUsers updateuser)
@@ -105,6 +106,7 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok(updateduser);
 
         }
+        // for future MD%
         static string GetMd5Hash(MD5 md5Hash, string input)
         {
             // Convert the input string to a byte array and compute the hash.
