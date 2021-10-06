@@ -1,0 +1,46 @@
+﻿#main-navigation {
+    color: #ffffff;
+    background: #00000000;
+    transition: linear 500ms;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 999;
+    position: fixed;
+    height: 75px;
+    padding: 0px 15px;
+}
+
+    #main-navigation.scrolled {
+        background: #00000095;
+    }
+
+    #main-navigation .nav-link,
+    #main-navigation a {
+        color: white;
+        text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;
+    }
+
+        #main-navigation .nav-link:hover {
+            color: #eeeeee;
+            text-shadow: 0 0 2px #000000, 0 1px 2px #000000;
+        }
+
+        #main-navigation .nav-link.active {
+            background: #1e90ff;
+            box-shadow: 0 1px 2px 0 #00376c99;
+            text-shadow: none;
+            border-radius: 5px;
+            color: white;
+        }
+
+
+.page {
+    padding-top: 80px;
+}
+
+
+#clinics {
+    background: #cfe7ff url('/Resources/images/others/hospital.jpg') no-repeat center;
+    background-size: cover;
+}
