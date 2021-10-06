@@ -1,6 +1,8 @@
 ﻿using DrTaabodi.Data.Models;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace DrTaabodi.Services.QnATable
 {
@@ -13,5 +15,6 @@ namespace DrTaabodi.Services.QnATable
         public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, string Question);
         public ServiceResponse<bool> UpdateQnATblAnswer(Guid id, string Answer);
         public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question);
+
     }
 }

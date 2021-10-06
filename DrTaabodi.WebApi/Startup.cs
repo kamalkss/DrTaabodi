@@ -12,6 +12,8 @@ using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using DrTaabodi.Data;
 using DrTaabodi.Services.PostCategoryTable;
@@ -39,6 +41,16 @@ namespace DrTaabodi.WebApi
 
             services.AddDbContext<Data.DatabaseContext.DrTaabodiDbContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("DrNullConnttion")));
+
+            services.AddControllers()
+                .AddJsonOptions(ops =>
+                {
+                    ops.JsonSerializerOptions.IgnoreNullValues = true;
+                    ops.JsonSerializerOptions.WriteIndented = true;
+                    ops.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                    ops.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                    ops.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                });
 
             services.AddControllers().AddNewtonsoftJson(s =>
             {
