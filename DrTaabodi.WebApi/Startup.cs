@@ -55,7 +55,7 @@ namespace DrTaabodi.WebApi
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
                 s.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
             });
-            //
+            //Some comment about automapper and api
             services.AddControllers();
             services.AddScoped<IUser, SqlUser>();
             services.AddScoped<IPost, SqlPost>();
