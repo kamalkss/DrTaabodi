@@ -91,7 +91,7 @@ namespace DrTaabodi.WebApi
             app.UseCors("localhostVude");
 
             app.UseHttpsRedirection();
-
+            //This is comment about routing
             app.UseRouting();
 
             app.UseAuthorization();
