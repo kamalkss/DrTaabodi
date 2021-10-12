@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using DrTaabodi.Services;
 using DrTaabodi.Services.QnATable;
@@ -30,10 +31,10 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ReadQnAs> GetAllQna()
+        public ActionResult<ReadQnAs> GetAllQna([FromBody] QnAParametes qnaParameters)
         {
             _logger.LogInformation("Get all QnAs");
-            var Qna = _qnA.GetAllQnATbls();
+            var Qna = _qnA.GetAllQnATbls(qnaParameters);
             return Ok(Qna);
         }
 

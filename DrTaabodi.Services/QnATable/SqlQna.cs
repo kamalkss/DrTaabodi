@@ -1,4 +1,5 @@
 ﻿using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -25,9 +26,10 @@ namespace DrTaabodi.Services.QnATable
             return (_context.SaveChanges() >= 0);
         }
 
-        public List<QnATbl> GetAllQnATbls()
+        public IEnumerable<QnATbl> GetAllQnATbls(QnAParametes qnAParametes)
         {
-            return _context.QnATbl.Include(c => c.UserTable).ToList();
+            return _context.QnATbl.Include(c => c.UserTable).OrderBy(on => on.QnAId)
+                .Skip((qnAParametes.PageNumber - 1) * qnAParametes.PageSize).Take(qnAParametes.PageSize).ToList();
         }
 
         public QnATbl GetQnATblById(Guid id)
