@@ -7,7 +7,6 @@ using DrTaabodi.Data.Models;
 using DrTaabodi.Services;
 using DrTaabodi.Services.QnATable;
 using DrTaabodi.WebApi.DTO.QnAs;
-using DrTaabodi.WebApi.Generics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,14 +17,12 @@ namespace DrTaabodi.WebApi.Controllers
     public class QnAController:ControllerBase
     {
         private readonly DrTaabodiDbContext _db;
-        private readonly SqlFaqResponse _seResponse;
         private readonly IMapper _mapper;
         private readonly ILogger<QnAController> _logger;
         private readonly IQnA _qnA;
 
-        public QnAController(ILogger<QnAController> logger,DrTaabodiDbContext db,IMapper mapper,IQnA qna,SqlFaqResponse sqlFaqResponse)
+        public QnAController(ILogger<QnAController> logger,DrTaabodiDbContext db,IMapper mapper,IQnA qna)
         {
-            _seResponse = sqlFaqResponse;
             _logger = logger;
             _db = db;
             _mapper = mapper;
@@ -70,26 +67,7 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
 
-        [HttpGet(Name = nameof(GetHobbyListAsync))]
-        [ProducesResponseType(typeof(GetFaqResponse),200)]
-        [ProducesResponseType(typeof(ProblemDetails),400)]
-        public async Task<IActionResult> GetHobbyListAsync(
-            [FromQuery] UrlQueryParameters urlQueryParameters,
-            CancellationToken cancellationToken)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest();
-            }
-
-            var hobbies = await _seResponse.GetByPageAsync(
-                urlQueryParameters.Limit,
-                urlQueryParameters.Page,
-                cancellationToken);
-
-            return Ok(hobbies);
-        }
+       
 
     }
     public record UrlQueryParameters(int Limit = 50, int Page = 1);
