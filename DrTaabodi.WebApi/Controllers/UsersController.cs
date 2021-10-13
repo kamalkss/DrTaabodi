@@ -101,8 +101,8 @@ namespace DrTaabodi.WebApi.Controllers
         {
             _logger.LogInformation("UpdateUserStatus");
             var id = updateuser.UsrId;
-            var userStaus = updateuser.UsrStatus;
-            var updateduser = _UserService.UpdateUserStatus(id, userStaus);
+            var user = _mapper.Map<UsrTbl>(updateuser);
+            var updateduser = _UserService.UpdateUserStatus(id, user);
             return Ok(updateduser);
 
         }

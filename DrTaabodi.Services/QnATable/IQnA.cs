@@ -13,9 +13,9 @@ namespace DrTaabodi.Services.QnATable
         public IEnumerable<QnATbl> GetAllQnATbls(QnAParametes qnAParametes);
         public QnATbl GetQnATblById(Guid id);
         public ServiceResponse<QnATbl> CreateQnATbl(QnATbl WebPost);
-        public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, string Question);
-        public ServiceResponse<bool> UpdateQnATblAnswer(Guid id, string Answer);
-        public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question);
+        public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, QnATbl WebPost);
+        //public ServiceResponse<bool> UpdateQnATblAnswer(Guid id, string Answer);
+        //public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question);
         //public IEnumerable<QnATbl>
     }
 }

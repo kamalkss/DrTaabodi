@@ -61,9 +61,8 @@ namespace DrTaabodi.WebApi.Controllers
         {
             _logger.LogInformation("Update Qna");
             var id = UpdateQna.QnAId;
-            var question = UpdateQna.Question;
-            var answer = UpdateQna.Answer;
-            var updatedQna = _qnA.UpdateQnATblAnswerOrAnswer(id, answer, question);
+            var Qna = _mapper.Map<QnATbl>(UpdateQna);
+            var updatedQna = _qnA.UpdateQnATblQuestion(id, Qna);
             return Ok(_mapper.Map<QnATbl>(updatedQna));
         }
 

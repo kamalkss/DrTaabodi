@@ -61,16 +61,15 @@ namespace DrTaabodi.Services.UserTable
             }
         }
 
-        public ServiceResponse<bool> UpdateUserStatus(Guid id, UserStatus UsrStatus)
+        public ServiceResponse<bool> UpdateUserStatus(Guid id, UsrTbl WebUser)
         {
 
-            var WebUser = _context.UsrTbl.Find(id);
+            var UpdatedUser = _context.UsrTbl.Find(id);
             _logger.LogInformation("Log For Update User");
             try
             {
-                WebUser.UsrStatus = UsrStatus;
                 WebUser.UpdatedData = DateTime.UtcNow;
-                _context.UsrTbl.Add(WebUser);
+                _context.UsrTbl.Update(UpdatedUser);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {

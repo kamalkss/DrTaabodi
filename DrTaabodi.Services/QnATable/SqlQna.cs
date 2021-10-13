@@ -67,15 +67,15 @@ namespace DrTaabodi.Services.QnATable
             }
         }
 
-        public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, string Question)
+        public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, QnATbl WebPost)
         {
-            var WebPost = _context.QnATbl.Find(id);
+            var UpdatedPost = _context.QnATbl.Find(id);
             _logger.LogInformation("Log For Update Qna");
             try
             {
-                WebPost.Question = Question;
+                
                 WebPost.UpdatedData = DateTime.UtcNow;
-                _context.QnATbl.Add(WebPost);
+                _context.QnATbl.Add(UpdatedPost);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {
