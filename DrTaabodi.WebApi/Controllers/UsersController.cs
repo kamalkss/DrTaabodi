@@ -68,7 +68,7 @@ namespace DrTaabodi.WebApi.Controllers
         //}
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<CreateUsers> Authenticate([FromBody] Login model)
+        public ActionResult<Login> Authenticate([FromBody] Login model)
         {
             var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
             if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
@@ -79,7 +79,7 @@ namespace DrTaabodi.WebApi.Controllers
 
         [AllowAnonymous]
         [HttpPost("register")]
-        public ActionResult<ReadUsers> Register([FromBody] CreateUsers model)
+        public ActionResult<CreateUsers> Register([FromBody] CreateUsers model)
         {
 
             _logger.LogInformation("Create User Log");
@@ -94,7 +94,7 @@ namespace DrTaabodi.WebApi.Controllers
             MapUser.PassCode = BCryptNet.HashPassword(model.PassCode);
             var NewUsr = _UserService.CreateUsr(MapUser);
 
-            return Ok(_mapper.Map<ReadUsers>(NewUsr));
+            return Ok($"{model.UserName} Has Been Created");
         }
         [HttpPatch]
         public ActionResult<UpdateUser> Update_User([FromBody] UpdateUser updateuser)
