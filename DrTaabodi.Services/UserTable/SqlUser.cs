@@ -68,8 +68,10 @@ namespace DrTaabodi.Services.UserTable
             _logger.LogInformation("Log For Update User");
             try
             {
+                
                 WebUser.UpdatedData = DateTime.UtcNow;
-                _context.UsrTbl.Update(UpdatedUser);
+                _context.Entry(UpdatedUser).CurrentValues.SetValues(WebUser);
+              
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {

@@ -31,7 +31,7 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ReadQnAs> GetAllQna([FromBody] QnAParametes qnaParameters)
+        public ActionResult<QnAParametes> GetAllQna([FromBody] QnAParametes qnaParameters)
         {
             _logger.LogInformation("Get all QnAs");
             var Qna = _qnA.GetAllQnATbls(qnaParameters);

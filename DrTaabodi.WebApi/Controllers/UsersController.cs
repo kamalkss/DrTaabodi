@@ -97,7 +97,17 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok(_mapper.Map<ReadUsers>(NewUsr));
         }
         [HttpPatch]
-        public ActionResult<ReadUsers> Update_User([FromBody] ReadUsers updateuser)
+        public ActionResult<UpdateUser> Update_User([FromBody] UpdateUser updateuser)
+        {
+            _logger.LogInformation("UpdateUserStatus");
+            var id = updateuser.UsrId;
+            var user = _mapper.Map<UsrTbl>(updateuser);
+            var updateduser = _UserService.UpdateUserStatus(id, user);
+            return Ok(updateduser);
+
+        }
+        [HttpPatch("/UpdatePassword")]
+        public ActionResult<UpdatePassword> Update_Password([FromBody] UpdatePassword updateuser)
         {
             _logger.LogInformation("UpdateUserStatus");
             var id = updateuser.UsrId;

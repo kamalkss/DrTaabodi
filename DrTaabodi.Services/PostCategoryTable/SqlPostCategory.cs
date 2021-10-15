@@ -76,11 +76,11 @@ namespace DrTaabodi.Services.PostCategoryTable
             _logger.LogInformation("Log for Create Post Parent");
             try
             {
-                ChildPostType.UpdatedData = DateTime.UtcNow;
+                postStatus.UpdatedData = DateTime.UtcNow;
                 //ChildPostType.PostType = Parent;
 
 
-                _context.Update(ChildPostType);
+                _context.Entry(ChildPostType).CurrentValues.SetValues(postStatus);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {
