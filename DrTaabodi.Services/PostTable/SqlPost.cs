@@ -111,8 +111,12 @@ namespace DrTaabodi.Services.PostTable
             try
             {
                 //WebPost.PstStatus = UsrStatus;
-                WebPost.UpdatedData = DateTime.UtcNow;
-                _context.PstTbl.Update(WebPost);
+                UsrStatus.UpdatedData = DateTime.UtcNow;
+
+                _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+
+
+                //_context.PstTbl.Update(WebPost);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {

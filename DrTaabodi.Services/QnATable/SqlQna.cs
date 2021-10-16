@@ -73,9 +73,9 @@ namespace DrTaabodi.Services.QnATable
             _logger.LogInformation("Log For Update Qna");
             try
             {
-                
+
                 WebPost.UpdatedData = DateTime.UtcNow;
-                _context.QnATbl.Add(UpdatedPost);
+                _context.Entry(UpdatedPost).CurrentValues.SetValues(WebPost);
                 SaveChanges();
                 return new ServiceResponse<bool>
                 {
