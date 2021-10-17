@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.31710.8
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31613.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrTaabodi.WebApi", "DrTaabodi.WebApi\DrTaabodi.WebApi.csproj", "{07B38685-D3DF-450A-B4B0-C6B38B3FF239}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrTaabodi.WebApi", "DrTaabodi.WebApi\DrTaabodi.WebApi.csproj", "{07B38685-D3DF-450A-B4B0-C6B38B3FF239}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrTaabodi.Data", "DrTaabodi.Data\DrTaabodi.Data.csproj", "{9CF1CBDB-21DC-401F-A9F7-9A76CDD6C06B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrTaabodi.Data", "DrTaabodi.Data\DrTaabodi.Data.csproj", "{9CF1CBDB-21DC-401F-A9F7-9A76CDD6C06B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DrTaabodi.Services", "DrTaabodi.Services\DrTaabodi.Services.csproj", "{2D500102-CFA8-4769-94C6-87E97743E203}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DrTaabodi.Services", "DrTaabodi.Services\DrTaabodi.Services.csproj", "{2D500102-CFA8-4769-94C6-87E97743E203}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
