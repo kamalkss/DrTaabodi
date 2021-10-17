@@ -18,7 +18,7 @@
     #main-navigation .nav-link,
     #main-navigation a {
         color: white;
-        text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;
+        /*text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;*/
     }
 
         #main-navigation .nav-link:hover {
@@ -43,4 +43,9 @@
 #clinics {
     background: #cfe7ff url('/Resources/images/others/hospital.jpg') no-repeat center;
     background-size: cover;
+}
+
+
+#home-page{
+    
 }

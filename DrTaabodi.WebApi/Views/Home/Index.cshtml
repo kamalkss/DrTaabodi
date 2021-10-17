@@ -25,9 +25,6 @@
             <span class="fa fa-bars" style="font-size: 150%"></span>
         </div>
 
-        <h1 class="h5">
-            <a href="/" class="text-decoration-none">دکتر نال</a>
-        </h1>
 
         <ul class="nav mx-auto">
 
@@ -51,115 +48,40 @@
 
     </div>
 
-    <div class="vh-100" id="home-page" data-on-scroll-change>
-        <div id="carouselExampleControls" class="carousel slide h-100" data-bs-ride="carousel" data-bs-pause="false">
-
-            <div class="carousel-inner h-100">
-
-                @for (int i = 1; i < 4; i++)
-                {
-                    <div class="carousel-item h-100 @(i == 1 ? "active" : "") ">
-                        <img src="/Resources/images/slides/slide-@(i).jpg" class="d-block w-100 h-100 bg-secondary img-cover" alt="@i">
-                    </div>
-                }
-
-
-            </div>
-
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+    <div class="position-relative overflow-hidden" id="home-page" data-on-scroll-change style="max-height:70vh; margin-bottom: -50vh">
+        <img src="~/Resources/images/slides/slide-1.jpg" class="w-100 h-100 img-cover" />
+        <div class="position-absolute abs-fill" style="background:#00000040">
         </div>
     </div>
 
 
-    <div id="about-doctor" class="container pb-4 page" data-on-scroll-change>
+    <div id="biograpghy" class="position-relative container">
 
-        <div class="row">
-
-            <div class="col-md">
-
-                <h1>دکتر نال</h1>
-                <h5>
-                    تخصص های دکتر مورد نظر
-                </h5>
-
-                <p class="text-justify">
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                    توضیحات درباره پزشک و بیوگرافی پزشک.
-                </p>
-
+        <div class="row align-items-center mt-3 mx-auto" style="max-width: 750px">
+            <div class="col-sm-4">
+                <div class="aspect-100 rounded-circle" style="border:5px solid white">
+                    <img src="~/Resources/images/Doctor.png" class="img-cover" />
+                </div>
             </div>
+            <div class="col-sm">
 
-            <div class="col-md align-self-center d-flex flex-column align-items-center justify-content-center">
+                <h1 style="color: orange">
+                    دکتر علیرضا تعبدی
+                </h1>
 
-                <div style="width: 90%">
-
-                    <div class="aspect-60">
-                        <img src="~/Resources/images/slides/slide-1.jpg" class="img-cover shadow-sm rounded" id="about-doctor-picture" />
-                    </div>
-
-                    <div class="mt-3 row">
-
-                        <div class="col-md-4">
-                            <div class="aspect-60">
-                                <img src="~/Resources/images/slides/slide-2.jpg"
-                                     onclick="ShowImageOfDoctor(this)"
-                                     class="img-cover rounded shadow-sm cursor-pointer" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="aspect-60">
-                                <img src="~/Resources/images/slides/slide-3.jpg"
-                                     onclick="ShowImageOfDoctor(this)"
-                                     class="img-cover rounded shadow-sm cursor-pointer" />
-                            </div>
-                        </div>
-
-                        <div class="col-md-4">
-                            <div class="aspect-60">
-                                <img src="~/Resources/images/slides/slide-4.jpg"
-                                     onclick="ShowImageOfDoctor(this)"
-                                     class="img-cover rounded shadow-sm cursor-pointer" />
-                            </div>
-                        </div>
-
-                    </div>
-
+                <div style="color:#efefef">
+                    ارتوپد- استاد دانشگاه
                 </div>
 
-            </div>
+                <h3 class="text-justify mt-3" style="color:white">
+                    فلوشیپ دست و جراحی شانه و آرنج
+                </h3>
 
+            </div>
         </div>
+
+
+
 
     </div>
 

@@ -32,6 +32,7 @@ h1, h2, h3, h4, h5, h6 {
 [class^="aspect-"] {
     position: relative;
     width: 100%;
+    overflow: hidden;
 }
 
     [class^="aspect-"] > * {
@@ -51,4 +52,14 @@ h1, h2, h3, h4, h5, h6 {
 
 .aspect-100 {
     padding-top: 100%;
+}
+
+
+.abs-fill {
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%
 }
