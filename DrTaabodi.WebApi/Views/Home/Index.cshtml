@@ -250,6 +250,12 @@
         })
 
 
+
+        function ShowImageOfDoctor(elm) {
+            var src = document.getElementById('about-doctor-picture').src;
+            document.getElementById('about-doctor-picture').src = elm.src;
+            elm.src = src;
+        }
     </script>
 
 </body>
