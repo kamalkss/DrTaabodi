@@ -9,6 +9,7 @@
     position: fixed;
     height: 75px;
     padding: 0px 15px;
+    font-size: 0.8rem;
 }
 
     #main-navigation.scrolled {
@@ -19,6 +20,7 @@
     #main-navigation a {
         color: white;
         /*text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;*/
+        border-bottom:thin solid transparent;
     }
 
         #main-navigation .nav-link:hover {
@@ -27,11 +29,7 @@
         }
 
         #main-navigation .nav-link.active {
-            background: #1e90ff;
-            box-shadow: 0 1px 2px 0 #00376c99;
-            text-shadow: none;
-            border-radius: 5px;
-            color: white;
+          border-bottom:thin solid var(--bs-warning)
         }
 
 
@@ -46,6 +44,5 @@
 }
 
 
-#home-page{
-    
+#home-page {
 }
