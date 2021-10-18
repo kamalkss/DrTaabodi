@@ -76,7 +76,7 @@ namespace DrTaabodi.WebApi.Controllers
             //return Ok($"User {usergot.UsrNickName} {usergot.UsrFamily} User Name : {usergot.UserName} with Id {usergot.UsrId} and Email {usergot.UsrEmail}");
             return Ok(_mapper.Map<ReadUsers>(usergot));
         }
-
+        //Useless comments
         [AllowAnonymous]
         [HttpPost("register")]
         public ActionResult<CreateUsers> Register([FromBody] CreateUsers model)
