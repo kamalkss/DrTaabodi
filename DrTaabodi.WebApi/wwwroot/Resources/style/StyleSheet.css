@@ -51,6 +51,10 @@ h1, h2, h3, h4, h5, h6 {
         overflow: hidden;
     }
 
+.aspect-40 {
+    padding-top: 40%;
+}
+
 .aspect-60 {
     padding-top: 60%;
 }

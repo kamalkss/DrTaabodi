@@ -1,4 +1,9 @@
-﻿#main-navigation {
+﻿html {
+    scroll-padding-top: 75px;
+}
+
+#main-navigation {
+    height: 75px;
     color: #ffffff;
     background: #00000000;
     transition: linear 500ms;
@@ -20,7 +25,7 @@
     #main-navigation a {
         color: white;
         /*text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;*/
-        border-bottom:thin solid transparent;
+        border-bottom: thin solid transparent;
     }
 
         #main-navigation .nav-link:hover {
@@ -29,7 +34,7 @@
         }
 
         #main-navigation .nav-link.active {
-          border-bottom:thin solid var(--bs-warning)
+            border-bottom: thin solid var(--bs-warning)
         }
 
 
@@ -38,11 +43,39 @@
 }
 
 
-#clinics {
-    background: #cfe7ff url('/Resources/images/others/hospital.jpg') no-repeat center;
-    background-size: cover;
+#home-page {
 }
 
 
-#home-page {
+#about-doctor {
+    background: #f1f1f1;
+}
+
+
+#clinics {
+    /*   background: #cfe7ff url('/Resources/images/others/hospital.jpg') no-repeat center;
+    background-size: cover;*/
+}
+
+#main-map-container {
+    position: relative;
+    width: 100%;
+    padding-top: 60vh;
+}
+
+    #main-map-container * {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+        height: 100%
+    }
+
+#clinic-info {
+    position: relative;
+    margin-top: -10vh;
+    min-height: 25vh;
+    background-color: white;
 }
