@@ -177,8 +177,38 @@
     </div>
 
 
+    <div id="about-doctor" class="mt-4 min-vh-100 container pt-4" data-on-scroll-change>
 
-    <div id="clinics mt-4" data-on-scroll-change>
+        <div class="row">
+
+            <div class="col-sm p-4 d-flex align-items-center justify-content-center">
+                <div>
+                    <img src="~/Resources/images/taabodi.png" class="shadow" />
+                </div>
+            </div>
+
+            <div class="col-sm">
+
+                <h1>
+                    دکتر علیرضا تعبدی
+                </h1>
+
+                <div>
+                    ارتوپد- استاد دانشگاه
+                </div>
+
+                <h3 class="text-justify mt-3">
+                    فلوشیپ دست و جراحی شانه و آرنج
+                </h3>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="clinics" class="mt-4" data-on-scroll-change>
 
         <div class="min-vh-100 container page">
             <div class="row flex-row-reverse">
@@ -258,9 +288,12 @@
 
 
             $('[data-on-scroll-change]').each(function (indx, elm) {
-                if (window.scrollY >= elm.offsetTop && (elm.offsetTop + elm.offsetHeight) > window.scrollY)
+                const offsetTop = elm.offsetTop - 77;
+                const offsetBottom = elm.offsetTop + elm.offsetHeight - 77;
+
+                if (window.scrollY >= offsetTop && offsetBottom > window.scrollY)
                     $(`.nav-link[href="#${elm.id}"]:not(.active)`).addClass('active');
-                else if (elm.offsetTop < window.scrollY || (elm.offsetTop + elm.offsetHeight) >= window.scrollY)
+                else if (offsetTop < window.scrollY || offsetBottom >= window.scrollY)
                     $(`.nav-link[href="#${elm.id}"].active`).removeClass('active');
             })
         })
