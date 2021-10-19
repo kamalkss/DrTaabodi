@@ -113,9 +113,21 @@
     background-size: cover;
 }
 
-#contact-us-body{
+#contact-us-body {
     background: #ffffff99;
 }
+
+#footer {
+    background: var(--bs-secondary);
+    color: var(--bs-light) !important;
+    padding: 10px;
+    font-size: 0.8rem;
+}
+
+    #footer h1,
+    #footer .h1 {
+        font-size: 1.1rem
+    }
 
 @media (max-width: 576px) {
     #clinic-info {
