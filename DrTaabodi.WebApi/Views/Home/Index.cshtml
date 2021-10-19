@@ -33,11 +33,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#about-doctor">معرفی پزشک</a>
+                <a class="nav-link" href="#about-doctor">معرفی</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#clinics">مراکز فعالیت</a>
+                <a class="nav-link" href="#clinics">مرکز فعالیت</a>
             </li>
 
             <li class="nav-item">
@@ -301,8 +301,63 @@
     </div>
 
 
-    <div id="contact-us" data-on-scroll-change class="min-vh-100 container page">
-        2
+    <div id="contact-us" data-on-scroll-change class="min-vh-100 mt-4 d-flex justify-content-center align-items-center">
+
+        <div id="contact-us-body" class="container p-4 rounded">
+
+            <div class="row">
+
+                <div class="col-sm">
+                    <h5>
+                        شما از طریق فرم زیر میتوانید پیام خود را برای پزشک ارسال کنید:
+                    </h5>
+
+                    <form @@submit.prevent="onFormSubmit" v-if="!success">
+
+                        <div class="mt-2">
+                            <input type="text" class="form-control" v-model="model.fullname" required placeholder="نام و نام خانوادگی" />
+                        </div>
+
+                        <div class="mt-2">
+                            <input type="email" class="form-control" v-model="model.email" required placeholder="ایمیل" />
+                        </div>
+
+                        <div class="mt-2">
+                            <input type="text" class="form-control" v-model="model.subject" placeholder="موضوع" />
+                        </div>
+
+                        <div class="mt-2">
+                            <textarea class="form-control" v-model="model.message" required placeholder="پیام"></textarea>
+                        </div>
+
+
+                        <div class="mt-3">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <span class="fa fa-spin fa-sync" v-if="working"></span>
+                                ارسال پیام
+                            </button>
+                        </div>
+                    </form>
+
+                    <ul class="mt-3 text-danger">
+                        <li v-for="(x,k) in errors" :key="k">{{x}}</li>
+                    </ul>
+
+                    <div v-if="success" class="alert alert-light text-center">
+                        <h5>پیام شما با موفقیت ارسال شد</h5>
+                    </div>
+                </div>
+
+
+                <div class="col-sm">
+
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
 
@@ -314,6 +369,7 @@
 
     <script src="~/Resources/frameworks/bootstrap/js/bootstrap.min.js"></script>
     <script src="~/Resources/frameworks/jquery-3.6.0.min.js"></script>
+    <script src="~/Resources/frameworks/vue.min.js"></script>
     <script>
         const navbar = document.getElementById('main-navigation');
         const ChangeBorder = document.getElementById('biograpghy').offsetTop;
@@ -344,6 +400,36 @@
             document.getElementById('about-doctor-picture').src = elm.src;
             elm.src = src;
         }
+    </script>
+    <script>
+        new Vue({
+            data: {
+                working: false,
+                model: {},
+                success: false,
+                errors: {}
+            },
+            methods: {
+                onFormSubmit() {
+                    if (this.working)
+                        return;
+
+                    this.working = true;
+                    this.errors = {};
+                    $.ajax({
+                        url: '/api/contact-us',
+                        method: 'post',
+                        contentType: 'application/json',
+                        data: JSON.stringify(this.model),
+                        error: () => {
+                            this.errors = { 'server': 'خطا در پردازش، لطفا مجددا تلاش کنید' };
+                        },
+                        complete: () => this.working = false,
+                        success: () => this.success = true
+                    })
+                }
+            }
+        }).$mount('#contact-us-body');
     </script>
 
 </body>

@@ -84,33 +84,42 @@
     padding: 5px;
 }
 
-.social-icon{
+.social-icon {
     filter: grayscale(87%);
-    transition: 200ms;
-    position:relative;
+    transition: .7s;
+    position: relative;
 }
 
-.social-icon::after{
-    content : '';
-    position:absolute;
-    width: 10px;
-    height: 7px;
-    border-radius:50%;
-    background : #00000029;
-    bottom: -20px;
-    left: 0;
-    right: 0;
-    margin: auto;
+    .social-icon::after {
+        content: '';
+        position: absolute;
+        width: 10px;
+        height: 7px;
+        border-radius: 50%;
+        background: #00000029;
+        bottom: -20px;
+        left: 0;
+        right: 0;
+        margin: auto;
+    }
+
+    .social-icon:hover {
+        filter: none;
+    }
+
+
+#contact-us {
+    background: url('../images/contact-us.png') no-repeat center;
+    background-size: cover;
 }
 
-.social-icon:hover {
-    filter:none;
+#contact-us-body{
+    background: #ffffff99;
 }
 
-
-@media (max-width: 576px){
+@media (max-width: 576px) {
     #clinic-info {
-        width:auto;
+        width: auto;
         margin: 0 10px;
     }
 }

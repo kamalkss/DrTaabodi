@@ -18,8 +18,16 @@ namespace DrTaabodi.WebApi.Controllers
             this.configuration = configuration;
         }
 
+        public struct ContactUsStructure
+        {
+            public string fullname;
+            public string email;
+            public string subject;
+            public string message;
+        }
+
         [HttpPost]
-        public void sendMail(string fullname, string email, string subject, string message)
+        public void SendMail([FromBody] ContactUsStructure contact)
         {
             SmtpClient client = new SmtpClient();
             client.Host = configuration["SMTP:Host"];
@@ -27,9 +35,9 @@ namespace DrTaabodi.WebApi.Controllers
             client.Credentials = new NetworkCredential(configuration["SMTP:Username"] ?? "", configuration["SMTP:Password"] ?? "");
             client.EnableSsl = true;
 
-            MailMessage messageObject = new MailMessage(new MailAddress(email), new MailAddress(configuration["SMTP:MailAddress"]));
-            messageObject.Subject = subject;
-            messageObject.Body = message;
+            MailMessage messageObject = new MailMessage(new MailAddress(contact.email), new MailAddress(configuration["SMTP:MailAddress"]));
+            messageObject.Subject = contact.subject;
+            messageObject.Body = contact.message;
 
             client.Send(messageObject);
         }
