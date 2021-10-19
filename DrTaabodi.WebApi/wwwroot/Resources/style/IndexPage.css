@@ -79,3 +79,38 @@
     min-height: 25vh;
     background-color: white;
 }
+
+#clinic-socials .nav-link {
+    padding: 5px;
+}
+
+.social-icon{
+    filter: grayscale(87%);
+    transition: 200ms;
+    position:relative;
+}
+
+.social-icon::after{
+    content : '';
+    position:absolute;
+    width: 10px;
+    height: 7px;
+    border-radius:50%;
+    background : #00000029;
+    bottom: -20px;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+.social-icon:hover {
+    filter:none;
+}
+
+
+@media (max-width: 576px){
+    #clinic-info {
+        width:auto;
+        margin: 0 10px;
+    }
+}
