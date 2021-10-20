@@ -3,6 +3,7 @@ using DrTaabodi.Data.Models;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using AutoMapper;
 using System.Linq;
 
 namespace DrTaabodi.Services.UserTable
@@ -68,11 +69,24 @@ namespace DrTaabodi.Services.UserTable
             _logger.LogInformation("Log For Update User");
             try
             {
-                
-                WebUser.UpdatedData = DateTime.UtcNow;
-                _context.Entry(UpdatedUser).CurrentValues.SetValues(WebUser);
-              
+                //output = (val % 2 == 1) ? "Number is odd" : "Number is even";
+
+
+                var to_update = WebUser;
+                to_update.UpdatedData = DateTime.UtcNow;
+
+
+                to_update.PassCode = (WebUser.PassCode != null) ? WebUser.PassCode : UpdatedUser.PassCode;
+
+                _context.Entry(UpdatedUser).CurrentValues.SetValues(to_update);
+
+
                 SaveChanges();
+
+
+
+
+
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,
