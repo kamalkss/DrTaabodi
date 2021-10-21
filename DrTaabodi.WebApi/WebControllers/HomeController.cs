@@ -12,5 +12,11 @@ namespace DrTaabodi.WebControllers
         {
             return View();
         }
+
+        [Route("/FAQ")]
+        public IActionResult Qna()
+        {
+            return View();
+        }
     }
 }

@@ -1,399 +1,376 @@
-﻿@{
-    Layout = null;
-}
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-    <title>دکتر علیرضا تعبدی</title>
+﻿<div id="main-navigation" class="d-flex align-items-center">
 
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <link href="~/Resources/frameworks/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <link href="~/Resources/style/fonts/fonts.css" rel="stylesheet" />
-    <link href="~/Resources/style/StyleSheet.css" rel="stylesheet" />
-    <link href="~/Resources/style/IndexPage.css" rel="stylesheet" />
-    <link href="~/Resources/frameworks/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
-
-</head>
-<body>
-
-    <div id="main-navigation" class="d-flex align-items-center">
-
-        <div class="p-1 me-2 d-sm-none">
-            <span class="fa fa-bars" style="font-size: 150%"></span>
-        </div>
-
-
-        <ul class="nav mx-auto d-none d-sm-flex">
-
-            <li class="nav-item">
-                <a class="nav-link active" href="#home-page">خانه</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#about-doctor">معرفی</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#clinics">مرکز فعالیت</a>
-            </li>
-
-            <li class="nav-item">
-                <a class="nav-link" href="#contact-us">تماس با ما</a>
-            </li>
-
-        </ul>
-
-    </div>
-
-    <div class="position-relative overflow-hidden" id="home-page" data-on-scroll-change style="height:80vh; margin-bottom: -60vh">
-       @Html.Partial("~/Views/Home/Index/Carousel.cshtml")
-        <div class="position-absolute abs-fill" style="background:#00000099">
-        </div>
+    <div class="p-1 me-2 d-sm-none">
+        <span class="fa fa-bars" style="font-size: 150%"></span>
     </div>
 
 
-    <div id="biograpghy" class="position-relative container">
+    <ul class="nav mx-auto d-none d-sm-flex">
 
-        <div class="row align-items-center mt-3 mx-auto" style="max-width: 750px">
-            <div class="col-sm-4">
-                <div class="aspect-100 rounded-circle" style="border:5px solid white">
-                    <img src="~/Resources/images/Doctor.png" class="img-cover" />
+        <li class="nav-item">
+            <a class="nav-link active" href="#home-page">خانه</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#about-doctor">معرفی</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#clinics">مرکز فعالیت</a>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link" href="#contact-us">تماس با ما</a>
+        </li>
+
+    </ul>
+
+</div>
+
+<div class="position-relative overflow-hidden" id="home-page" data-on-scroll-change style="height:80vh; margin-bottom: -60vh">
+    @Html.Partial("~/Views/Home/Index/Carousel.cshtml")
+    <div class="position-absolute abs-fill" style="background:#00000099">
+    </div>
+</div>
+
+
+<div id="biograpghy" class="position-relative container">
+
+    <div class="row align-items-center mt-3 mx-auto" style="max-width: 750px">
+        <div class="col-sm-4">
+            <div class="aspect-100 rounded-circle" style="border:5px solid white">
+                <img src="~/Resources/images/Doctor.png" class="img-cover" />
+            </div>
+        </div>
+        <div class="col-sm text-center text-sm-start">
+
+            <h1 style="color: orange">
+                دکتر علیرضا تعبدی
+            </h1>
+
+            <div style="color:#efefef">
+                ارتوپد- استاد دانشگاه
+            </div>
+
+            <h3 class="text-justify mt-3" style="color:white">
+                فلوشیپ دست و جراحی شانه و آرنج
+            </h3>
+
+        </div>
+    </div>
+
+
+    <div class="mt-4 bg-white p-3 shadow-sm" style="min-height:30vh;">
+
+        <h1 class="h4 text-center mt-4">
+            خدمات قابل ارائه
+        </h1>
+
+
+        <div class="row justify-content-center mt-5" style="font-size: 0.9rem">
+
+
+            <div class="col-sm-4 mb-2 text-center">
+
+                <div class="mx-auto" style="max-width: 130px">
+                    <div class="aspect-60">
+                        <img src="~/Resources/images/icons/tendon.png" class="img-contain" />
+                    </div>
+                </div>
+
+                <div class="fw-bold mt-2" style="font-size:1.3rem">
+                    جراحی تاندون، عصب و شکستگی‌ها
+                </div>
+
+                <div class="mt-2 text-muted text-justify text-last-center">
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
                 </div>
             </div>
-            <div class="col-sm text-center text-sm-start">
 
-                <h1 style="color: orange">
+            <div class="col-sm-4 mb-2 text-center">
+
+                <div class="mx-auto" style="max-width: 130px">
+                    <div class="aspect-60">
+                        <img src="~/Resources/images/icons/childs.png" class="img-contain" />
+                    </div>
+                </div>
+
+                <div class="fw-bold mt-2" style="font-size:1.3rem">
+                    بیماری‌های مادرزادی دست در اطفال
+                </div>
+
+                <div class="mt-2 text-muted text-justify text-last-center">
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                </div>
+            </div>
+
+            <div class="col-sm-4 mb-2 text-center">
+
+                <div class="mx-auto" style="max-width: 130px">
+                    <div class="aspect-60">
+                        <img src="~/Resources/images/icons/hand-surguery.png" class="img-contain" />
+                    </div>
+                </div>
+
+                <div class="fw-bold mt-2" style="font-size:1.3rem">
+                    فلوشیپ دست و میکروسرجری
+                </div>
+
+                <div class="mt-2 text-muted text-justify text-last-center">
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                </div>
+            </div>
+
+            <div class="col-sm-4 mb-2 text-center">
+
+                <div class="mx-auto" style="max-width: 130px">
+                    <div class="aspect-60">
+                        <img src="~/Resources/images/icons/shoulder.png" class="img-contain" />
+                    </div>
+                </div>
+
+                <div class="fw-bold mt-2" style="font-size:1.3rem">
+                    جراحی شانه و آرنج
+                </div>
+
+                <div class="mt-2 text-muted text-justify text-last-center">
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                    توضیحات دربار مورد ذکر شده
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div id="about-doctor" class="mt-4" data-on-scroll-change>
+
+    <div class="container d-flex  min-vh-100">
+        <div class="row align-items-center m-auto">
+
+            <div class="col-sm p-4">
+                <div>
+                    <img src="~/Resources/images/taabodi.png" class="shadow" />
+                </div>
+            </div>
+
+            <div class="col-sm">
+
+                <h1>
                     دکتر علیرضا تعبدی
                 </h1>
 
-                <div style="color:#efefef">
+                <div>
                     ارتوپد- استاد دانشگاه
                 </div>
 
-                <h3 class="text-justify mt-3" style="color:white">
+                <h3 class="text-justify mt-3">
                     فلوشیپ دست و جراحی شانه و آرنج
                 </h3>
 
-            </div>
-        </div>
+                <ul class="mt-3">
+                    <li>
+                        رتبه برتر در امتحانات جامع پره انترنی دانشگاه علوم پزشکی شیراز ( ۱۳۸۱)
+                    </li>
 
+                    <li>
+                        رتبه اول امتحان پذیرش دستیاری در استان فارس (۱۳۸۵)
+                    </li>
 
-        <div class="mt-4 bg-white p-3 shadow-sm" style="min-height:30vh;">
+                    <li>
+                        رتبه برتر کشوری در امتحان بورد تخصصی جراحی استخوان و مفاصل (۱۳۸۹)
+                    </li>
 
-            <h1 class="h4 text-center mt-4">
-                خدمات قابل ارائه
-            </h1>
+                    <li>
+                        رتبه اول آزمون فلوشیپ فوق تخصصی جراحی دست و پیوند عصب و اندام از دانشگاه علوم پزشکی تهران
+                        (۱۳۹۷)
+                    </li>
 
+                    <li>
+                        عضو هیئت علمی دانشگاه علوم پزشکی البرز
+                    </li>
+                </ul>
 
-            <div class="row justify-content-center mt-5" style="font-size: 0.9rem">
-
-
-                <div class="col-sm-4 mb-2 text-center">
-
-                    <div class="mx-auto" style="max-width: 130px">
-                        <div class="aspect-60">
-                            <img src="~/Resources/images/icons/tendon.png" class="img-contain" />
-                        </div>
-                    </div>
-
-                    <div class="fw-bold mt-2" style="font-size:1.3rem">
-                        جراحی تاندون، عصب و شکستگی‌ها
-                    </div>
-
-                    <div class="mt-2 text-muted text-justify text-last-center">
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                    </div>
-                </div>
-
-                <div class="col-sm-4 mb-2 text-center">
-
-                    <div class="mx-auto" style="max-width: 130px">
-                        <div class="aspect-60">
-                            <img src="~/Resources/images/icons/childs.png" class="img-contain" />
-                        </div>
-                    </div>
-
-                    <div class="fw-bold mt-2" style="font-size:1.3rem">
-                        بیماری‌های مادرزادی دست در اطفال
-                    </div>
-
-                    <div class="mt-2 text-muted text-justify text-last-center">
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                    </div>
-                </div>
-
-                <div class="col-sm-4 mb-2 text-center">
-
-                    <div class="mx-auto" style="max-width: 130px">
-                        <div class="aspect-60">
-                            <img src="~/Resources/images/icons/hand-surguery.png" class="img-contain" />
-                        </div>
-                    </div>
-
-                    <div class="fw-bold mt-2" style="font-size:1.3rem">
-                        فلوشیپ دست و میکروسرجری
-                    </div>
-
-                    <div class="mt-2 text-muted text-justify text-last-center">
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                    </div>
-                </div>
-
-                <div class="col-sm-4 mb-2 text-center">
-
-                    <div class="mx-auto" style="max-width: 130px">
-                        <div class="aspect-60">
-                            <img src="~/Resources/images/icons/shoulder.png" class="img-contain" />
-                        </div>
-                    </div>
-
-                    <div class="fw-bold mt-2" style="font-size:1.3rem">
-                        جراحی شانه و آرنج
-                    </div>
-
-                    <div class="mt-2 text-muted text-justify text-last-center">
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                        توضیحات دربار مورد ذکر شده
-                    </div>
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    <div id="about-doctor" class="mt-4" data-on-scroll-change>
-
-        <div class="container d-flex  min-vh-100">
-            <div class="row align-items-center m-auto">
-
-                <div class="col-sm p-4">
-                    <div>
-                        <img src="~/Resources/images/taabodi.png" class="shadow" />
-                    </div>
-                </div>
-
-                <div class="col-sm">
-
-                    <h1>
-                        دکتر علیرضا تعبدی
-                    </h1>
-
-                    <div>
-                        ارتوپد- استاد دانشگاه
-                    </div>
-
-                    <h3 class="text-justify mt-3">
-                        فلوشیپ دست و جراحی شانه و آرنج
-                    </h3>
-
-                    <ul class="mt-3">
-                        <li>
-                            رتبه برتر در امتحانات جامع پره انترنی دانشگاه علوم پزشکی شیراز ( ۱۳۸۱)
-                        </li>
-
-                        <li>
-                            رتبه اول امتحان پذیرش دستیاری در استان فارس (۱۳۸۵)
-                        </li>
-
-                        <li>
-                            رتبه برتر کشوری در امتحان بورد تخصصی جراحی استخوان و مفاصل (۱۳۸۹)
-                        </li>
-
-                        <li>
-                            رتبه اول آزمون فلوشیپ فوق تخصصی جراحی دست و پیوند عصب و اندام از دانشگاه علوم پزشکی تهران
-                            (۱۳۹۷)
-                        </li>
-
-                        <li>
-                            عضو هیئت علمی دانشگاه علوم پزشکی البرز
-                        </li>
-                    </ul>
-
-                </div>
-
-            </div>
-        </div>
-
-    </div>
-
-
-    <div id="clinics" class="min-vh-100" data-on-scroll-change>
-        <div id="main-map-container">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5440.248380342926!2d50.98705591691015!3d35.82959895519955!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x1225af1cba137e44!2z2YXYt9ioINmB2YjZgiDYqtiu2LXYtduMINin2LHYqtmI2b7Yr9uMINis2LHYp9it24wg2K_Ys9iq2IzYtNin2YbZhyDZiNin2LHZhtisINiv2qnYqtixINi52YTbjNix2LbYpyDYqti52KjYr9uM!5e0!3m2!1sen!2sus!4v1634560357278!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
-        </div>
-
-        <div id="clinic-info" class="container p-3 shadow">
-
-            <div class="row mx-0 mt-4 align-items-center">
-                <div class="col-sm">
-                    <h4>آدرس:</h4>
-
-                    <p>
-                        کرج،
-                        روبروی بیمارستان مدنی، خیابان مهران، ساختمان جهانشهر ، بالای املاک خانه ما، طبقه 4، واحد9
-                    </p>
-
-                    <h4 class="mt-3">شماره های تماس</h4>
-                    <ul class="mt-3 nav flex-column" dir="ltr">
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="tel:09130066156">
-                                <span class="fa fa-mobile-alt me-2"></span>
-                                ۰۹۱۳-۰۰۶-۶۱۵۶
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="tel:02634419581">
-                                <span class="fa fa-phone-alt me-2"></span>
-                                ۰۲۶-۳۴۴۱۹۵۸۱
-                            </a>
-                        </li>
-
-                    </ul>
-
-                    <h4 class="mt-3">شبکه های اجتماعی</h4>
-                    <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                    </ul>
-                </div>
-
-                <div class="col-sm p-4">
-                    <img src="~/Resources/images/clinic.jpg" class="shadow-sm" />
-                </div>
             </div>
 
         </div>
     </div>
 
-
-    <div id="contact-us" data-on-scroll-change class="min-vh-100 mt-4 d-flex justify-content-center align-items-center">
-
-        <div id="contact-us-body" class="container p-4 rounded">
-
-            <div class="row">
-
-                <div class="col-sm mb-4">
-                    <h5>
-                        شما از طریق فرم زیر میتوانید پیام خود را برای پزشک ارسال کنید:
-                    </h5>
-
-                    <form @@submit.prevent="onFormSubmit" v-if="!success">
-
-                        <div class="mt-2">
-                            <input type="text" class="form-control" v-model="model.fullname" required placeholder="نام و نام خانوادگی" />
-                        </div>
-
-                        <div class="mt-2">
-                            <input type="email" class="form-control" v-model="model.email" required placeholder="ایمیل" />
-                        </div>
-
-                        <div class="mt-2">
-                            <input type="text" class="form-control" v-model="model.subject" placeholder="موضوع" />
-                        </div>
-
-                        <div class="mt-2">
-                            <textarea class="form-control" v-model="model.message" required placeholder="پیام"></textarea>
-                        </div>
+</div>
 
 
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary w-100">
-                                <span class="fa fa-spin fa-sync" v-if="working"></span>
-                                ارسال پیام
-                            </button>
-                        </div>
-                    </form>
+<div id="clinics" class="min-vh-100" data-on-scroll-change>
+    <div id="main-map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d5440.248380342926!2d50.98705591691015!3d35.82959895519955!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x1225af1cba137e44!2z2YXYt9ioINmB2YjZgiDYqtiu2LXYtduMINin2LHYqtmI2b7Yr9uMINis2LHYp9it24wg2K_Ys9iq2IzYtNin2YbZhyDZiNin2LHZhtisINiv2qnYqtixINi52YTbjNix2LbYpyDYqti52KjYr9uM!5e0!3m2!1sen!2sus!4v1634560357278!5m2!1sen!2sus" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
 
-                    <ul class="mt-3 text-danger">
-                        <li v-for="(x,k) in errors" :key="k">{{x}}</li>
-                    </ul>
+    <div id="clinic-info" class="container p-3 shadow">
 
-                    <div v-if="success" class="alert alert-light text-center">
-                        <h5>پیام شما با موفقیت ارسال شد</h5>
+        <div class="row mx-0 mt-4 align-items-center">
+            <div class="col-sm">
+                <h4>آدرس:</h4>
+
+                <p>
+                    کرج،
+                    روبروی بیمارستان مدنی، خیابان مهران، ساختمان جهانشهر ، بالای املاک خانه ما، طبقه 4، واحد9
+                </p>
+
+                <h4 class="mt-3">شماره های تماس</h4>
+                <ul class="mt-3 nav flex-column" dir="ltr">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="tel:09130066156">
+                            <span class="fa fa-mobile-alt me-2"></span>
+                            ۰۹۱۳-۰۰۶-۶۱۵۶
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="tel:02634419581">
+                            <span class="fa fa-phone-alt me-2"></span>
+                            ۰۲۶-۳۴۴۱۹۵۸۱
+                        </a>
+                    </li>
+
+                </ul>
+
+                <h4 class="mt-3">شبکه های اجتماعی</h4>
+                <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
+
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
+                        </a>
+                    </li>
+
+                </ul>
+            </div>
+
+            <div class="col-sm p-4">
+                <img src="~/Resources/images/clinic.jpg" class="shadow-sm" />
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="contact-us" data-on-scroll-change class="min-vh-100 mt-4 d-flex justify-content-center align-items-center">
+
+    <div id="contact-us-body" class="container p-4 rounded">
+
+        <div class="row">
+
+            <div class="col-sm mb-4">
+                <h5>
+                    شما از طریق فرم زیر میتوانید پیام خود را برای پزشک ارسال کنید:
+                </h5>
+
+                <form @@submit.prevent="onFormSubmit" v-if="!success">
+
+                    <div class="mt-2">
+                        <input type="text" class="form-control" v-model="model.fullname" required placeholder="نام و نام خانوادگی" />
                     </div>
+
+                    <div class="mt-2">
+                        <input type="email" class="form-control" v-model="model.email" required placeholder="ایمیل" />
+                    </div>
+
+                    <div class="mt-2">
+                        <input type="text" class="form-control" v-model="model.subject" placeholder="موضوع" />
+                    </div>
+
+                    <div class="mt-2">
+                        <textarea class="form-control" v-model="model.message" required placeholder="پیام"></textarea>
+                    </div>
+
+
+                    <div class="mt-3">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <span class="fa fa-spin fa-sync" v-if="working"></span>
+                            ارسال پیام
+                        </button>
+                    </div>
+                </form>
+
+                <ul class="mt-3 text-danger">
+                    <li v-for="(x,k) in errors" :key="k">{{x}}</li>
+                </ul>
+
+                <div v-if="success" class="alert alert-light text-center">
+                    <h5>پیام شما با موفقیت ارسال شد</h5>
                 </div>
+            </div>
 
 
-                <div class="col-sm">
+            <div class="col-sm">
 
-                    <h5>شماره های تماس</h5>
-                    <ul class="mt-3 nav flex-column" dir="ltr">
+                <h5>شماره های تماس</h5>
+                <ul class="mt-3 nav flex-column" dir="ltr">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="tel:09130066156">
-                                <span class="fa fa-mobile-alt me-2"></span>
-                                ۰۹۱۳-۰۰۶-۶۱۵۶
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="tel:09130066156">
+                            <span class="fa fa-mobile-alt me-2"></span>
+                            ۰۹۱۳-۰۰۶-۶۱۵۶
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="tel:02634419581">
-                                <span class="fa fa-phone-alt me-2"></span>
-                                ۰۲۶-۳۴۴۱۹۵۸۱
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="tel:02634419581">
+                            <span class="fa fa-phone-alt me-2"></span>
+                            ۰۲۶-۳۴۴۱۹۵۸۱
+                        </a>
+                    </li>
 
-                    </ul>
+                </ul>
 
-                    <h5 class="mt-3">شبکه های اجتماعی</h5>
-                    <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
+                <h5 class="mt-3">شبکه های اجتماعی</h5>
+                <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
 
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
+                        </a>
+                    </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
-                            </a>
-                        </li>
+                    <li class="nav-item">
+                        <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
+                            <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
+                        </a>
+                    </li>
 
-                    </ul>
-
-                </div>
+                </ul>
 
             </div>
 
@@ -401,86 +378,9 @@
 
     </div>
 
+</div>
 
-    <footer id="footer" class="text-secondary">
-
-        <div class="container mt-3">
-
-            <div class="row">
-
-                <div class="col-sm text-center text-sm-start">
-
-                    <h1>دکتر علیرضا تعبدی</h1>
-                    <p>
-                        ارتوپد- استاد دانشگاه
-                        فلوشیپ دست و جراحی شانه و آرنج
-                    </p>
-                </div>
-
-                <div class="col-sm my-3 my-sm-0">
-
-                    <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-secondary" href="https://www.instagram.com/Dr.alireza.taabbodi/">
-                                <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-                <div class="col-sm">
-
-                    <p class="text-center text-sm-start">
-                        کرج،
-                        روبروی بیمارستان مدنی، خیابان مهران، ساختمان جهانشهر ، بالای املاک خانه ما، طبقه 4، واحد9
-                    </p>
-
-                    <ul class="mt-3 nav">
-
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="tel:09130066156">
-                                <span class="fa fa-mobile-alt me-2"></span>
-                                ۰۹۱۳-۰۰۶-۶۱۵۶
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link text-light" href="tel:02634419581">
-                                <span class="fa fa-phone-alt me-2"></span>
-                                ۰۲۶-۳۴۴۱۹۵۸۱
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </footer>
-
-
-
-    <script src="~/Resources/frameworks/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Resources/frameworks/jquery-3.6.0.min.js"></script>
-    <script src="~/Resources/frameworks/vue.min.js"></script>
+@section scripts {
     <script>
         const navbar = document.getElementById('main-navigation');
         const ChangeBorder = document.getElementById('biograpghy').offsetTop;
@@ -542,6 +442,4 @@
             }
         }).$mount('#contact-us-body');
     </script>
-
-</body>
-</html>
+}
