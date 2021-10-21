@@ -2,10 +2,11 @@
 <html lang="ar" dir="rtl">
 <head>
     <title>
-       @if (ViewData["Title"] != null) {
-           @( ViewData["Title"] + " - ")
-       }
-    دکتر علیرضا تعبدی
+        @if (ViewData["Title"] != null)
+        {
+            @( ViewData["Title"] + " - ")
+        }
+        دکتر علیرضا تعبدی
     </title>
 
 
@@ -23,34 +24,39 @@
 
 
     <div class="min-vh-100 d-flex flex-column">
-        <div id="website-main-navigation" class="d-flex align-items-center">
 
-            <div class="p-1 me-2 d-sm-none">
-                <span class="fa fa-bars" style="font-size: 150%"></span>
+        @if (ViewBag.ShowMenu == null || ViewBag.ShowMenu == true)
+        {
+            <div id="website-main-navigation" class="d-flex align-items-center sticky-top">
+
+                <div class="p-1 me-2 d-sm-none">
+                    <span class="fa fa-bars" style="font-size: 150%"></span>
+                </div>
+
+
+                <ul class="nav mx-auto d-none d-sm-flex">
+
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/#home-page">خانه</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#about-doctor">معرفی</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="/#contact-us">تماس با ما</a>
+                    </li>
+
+                </ul>
+
             </div>
+        }
 
-
-            <ul class="nav mx-auto d-none d-sm-flex">
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="/#home-page">خانه</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/#about-doctor">معرفی</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="/#contact-us">تماس با ما</a>
-                </li>
-
-            </ul>
-
-        </div>
 
         @RenderBody()
 
