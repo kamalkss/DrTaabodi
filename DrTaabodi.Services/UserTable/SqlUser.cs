@@ -107,5 +107,44 @@ namespace DrTaabodi.Services.UserTable
             }
         }
 
+        public ServiceResponse<bool> UpdatePassword(Guid id, UsrTbl WebUser)
+        {
+            var UpdatedUser = _context.UsrTbl.Find(id);
+            _logger.LogInformation("Log For Update User");
+            try
+            {
+                //output = (val % 2 == 1) ? "Number is odd" : "Number is even";
+
+
+                var to_update = WebUser;
+                UpdatedUser.UpdatedData = DateTime.UtcNow;
+                //bullshir
+
+                UpdatedUser.PassCode = (WebUser.PassCode != null) ? WebUser.PassCode : UpdatedUser.PassCode;
+
+                _context.Entry(UpdatedUser).CurrentValues.SetValues(UpdatedUser);
+
+
+                SaveChanges();
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = true,
+                    Data = true,
+                    Messege = " user Updated",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = false,
+                    Data = false,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
+        }
+
     }
 }

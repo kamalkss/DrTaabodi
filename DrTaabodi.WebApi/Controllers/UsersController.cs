@@ -113,7 +113,7 @@ namespace DrTaabodi.WebApi.Controllers
             var id = updateuser.UsrId;
             var user = _mapper.Map<UsrTbl>(updateuser);
             user.PassCode = BCryptNet.HashPassword(updateuser.PassCode);
-            var updateduser = _UserService.UpdateUserStatus(id, user);
+            var updateduser = _UserService.UpdatePassword(id, user);
             return Ok(updateduser);
 
         }
