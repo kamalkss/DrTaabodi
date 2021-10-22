@@ -75,8 +75,12 @@ h1, h2, h3, h4, h5, h6 {
 
 
 #website-main-navigation {
-    background: var(--bs-secondary);
+    background: #6c757de1;
+    font-size:.85rem
 }
+    #website-main-navigation .navbar-brand{
+        font-size:1rem
+    }
 
     #website-main-navigation .nav-link {
         color: var(--bs-light);

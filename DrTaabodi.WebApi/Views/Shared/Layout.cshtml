@@ -27,34 +27,46 @@
 
         @if (ViewBag.ShowMenu == null || ViewBag.ShowMenu == true)
         {
-            <div id="website-main-navigation" class="d-flex align-items-center sticky-top">
+            <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="website-main-navigation">
+                <div class="container-fluid">
+                    <a class="navbar-brand d-flex align-items-center" href="/">
+                        <div class="" style="width: 40px">
+                            <div class="aspect-100 rounded-circle">
+                                <img src="~/Resources/images/Doctor.png" class="img-cover" />
+                            </div>
+                        </div>
+                        <div class="ms-1">دکتر علیرضا تعبدی</div>
+                    </a>
 
-                <div class="p-1 me-2 d-sm-none">
-                    <span class="fa fa-bars" style="font-size: 150%"></span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" href="/#home-page">خانه</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#about-doctor">معرفی</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/#contact-us">تماس با ما</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/FAQ">سوالات متداول</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-
-
-                <ul class="nav mx-auto d-none d-sm-flex">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/#home-page">خانه</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#about-doctor">معرفی</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="/#contact-us">تماس با ما</a>
-                    </li>
-
-                </ul>
-
-            </div>
+            </nav>
         }
 
 

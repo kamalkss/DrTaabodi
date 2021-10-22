@@ -1,5 +1,30 @@
 ﻿@model List<DrTaabodi.Data.Models.QnATbl>
-@{ 
+@{
     ViewData["Title"] = "سوالات متداول";
 }
 
+<div class="container mt-4">
+    <h1 >سوالات متداول</h1>
+    <p>
+       در این صفحه سوالات پرتکراری که ممکن است برای شما پیش بیاید پاسخ داده شده‌اند. در صورتی که جواب سوال خود را پیدا نکردید از طریق
+        <a href="/#contact-us">فرم تماس با ما</a>
+        و یا آدرس های اعلام شد و شبکه‌های اجتماعی سوال خود را مطرح کنید. 
+    </p>
+
+
+    <div class="mt-5">
+        @foreach (var item in Model)
+        {
+            <article class="alert alert-light mt-2 shadow-sm">
+                <h1 class="h5" data-bs-toggle="collapse" data-bs-target="#faq-answer-@item.QnAId" style="cursor:pointer">
+                    <span class="fa fa-angle-left ms-2"></span>
+                    @item.Question
+                </h1>
+
+                <p class="text-justify ps-4 collapse" id="faq-answer-@item.QnAId">
+                    @item.Answer
+                </p>
+            </article>
+        }
+    </div>
+</div>
