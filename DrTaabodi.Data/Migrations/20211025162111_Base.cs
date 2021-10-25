@@ -146,6 +146,20 @@ namespace DrTaabodi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "WebsiteOptionsTbls",
+                columns: table => new
+                {
+                    OptionId = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    OptionValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_WebsiteOptionsTbls", x => x.OptionId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -450,6 +464,9 @@ namespace DrTaabodi.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "QnATblUsrTbl");
+
+            migrationBuilder.DropTable(
+                name: "WebsiteOptionsTbls");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

@@ -22,6 +22,7 @@ namespace DrTaabodi.Data.DatabaseContext
         public virtual DbSet<UsrTbl> UsrTbl { get; set; }
         public virtual DbSet<PostCategoryTbl> PostCategoryTbl { get; set; }
         public virtual DbSet<PostTypeTbl> PostTypeTbl { get; set; }
+        public virtual DbSet<WebsiteOptionsTbl> WebsiteOptionsTbls { get; set; }
         //public virtual DbSet<PostTblRelations> PostTblRelations {  get; set; }
         //public virtual DbSet<PostTypeRelations> PostTypeRelations {  get; set; }
        // public virtual DbSet<PostCategoryTblRelation> PostCategoryTblRelations {  get; set; }
