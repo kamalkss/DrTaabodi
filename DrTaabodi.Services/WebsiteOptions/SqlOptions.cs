@@ -18,17 +18,39 @@ namespace DrTaabodi.Services.WebsiteOptions
         }
         public ServiceResponse<WebsiteOptionsTbl> CreateOption(WebsiteOptionsTbl WebUser)
         {
-            throw new NotImplementedException();
+            try
+            {
+                
+                _context.WebsiteOptionsTbls.Add(WebUser);
+                SaveChanges();
+                return new ServiceResponse<WebsiteOptionsTbl>
+                {
+                    IsSucceess = true,
+                    Data = WebUser,
+                    Messege = "New user Added",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<WebsiteOptionsTbl>
+                {
+                    IsSucceess = false,
+                    Data = null,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
         }
 
         public List<WebsiteOptionsTbl> GetWebsiteOptionsAsync()
         {
-            throw new NotImplementedException();
+            return _context.WebsiteOptionsTbls.ToList();
         }
 
         public WebsiteOptionsTbl GetWebsiteOptionsById(Guid Id)
         {
-            throw new NotImplementedException();
+            return _context.WebsiteOptionsTbls.FirstOrDefault(c => c.OptionId == Id);
         }
 
         public bool SaveChanges()
@@ -38,7 +60,29 @@ namespace DrTaabodi.Services.WebsiteOptions
 
         public ServiceResponse<bool> UpdateOption(Guid id, WebsiteOptionsTbl WebUser)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var UpdatedPost = _context.WebsiteOptionsTbls.Find(id);
+                _context.Entry(UpdatedPost).CurrentValues.SetValues(WebUser);
+                SaveChanges();
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = true,
+                    Data = true,
+                    Messege = "New user Added",
+                    Time = DateTime.UtcNow
+                };
+            }
+            catch (Exception e)
+            {
+                return new ServiceResponse<bool>
+                {
+                    IsSucceess = false,
+                    Data = false,
+                    Messege = e.Message,
+                    Time = DateTime.UtcNow
+                };
+            }
         }
     }
 }
