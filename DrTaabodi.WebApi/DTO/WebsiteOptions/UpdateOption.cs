@@ -1,21 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace DrTaabodi.Data.Models
+namespace DrTaabodi.WebApi.DTO.WebsiteOptions
 {
-    public class WebsiteOptionsTbl
+    public class UpdateOption
     {
-        [Key]
         [Required]
         public Guid OptionId { get; set; }
         [Required]
         public string OptionKey { get; set; }
         [Required]
         public string OptionValue { get; set; }
-
     }
 }
