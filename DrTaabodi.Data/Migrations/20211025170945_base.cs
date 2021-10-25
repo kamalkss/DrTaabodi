@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DrTaabodi.Data.Migrations
 {
-    public partial class Base : Migration
+    public partial class @base : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -149,8 +149,7 @@ namespace DrTaabodi.Data.Migrations
                 name: "WebsiteOptionsTbls",
                 columns: table => new
                 {
-                    OptionId = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OptionId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     OptionKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     OptionValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },

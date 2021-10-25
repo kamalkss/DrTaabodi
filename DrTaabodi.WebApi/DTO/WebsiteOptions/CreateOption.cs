@@ -1,4 +1,6 @@
-﻿namespace DrTaabodi.WebApi.DTO.WebsiteOptions
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace DrTaabodi.WebApi.DTO.WebsiteOptions
 {
     public class CreateOption
     {

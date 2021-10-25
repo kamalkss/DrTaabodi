@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrTaabodi.Data.Migrations
 {
     [DbContext(typeof(DrTaabodiDbContext))]
-    [Migration("20211025162111_Base")]
-    partial class Base
+    [Migration("20211025170945_base")]
+    partial class @base
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -173,10 +173,9 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.WebsiteOptionsTbl", b =>
                 {
-                    b.Property<int>("OptionId")
+                    b.Property<Guid>("OptionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("OptionKey")
                         .IsRequired()

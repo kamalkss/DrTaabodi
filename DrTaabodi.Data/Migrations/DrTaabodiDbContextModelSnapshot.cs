@@ -171,10 +171,9 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.WebsiteOptionsTbl", b =>
                 {
-                    b.Property<int>("OptionId")
+                    b.Property<Guid>("OptionId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("OptionKey")
                         .IsRequired()
