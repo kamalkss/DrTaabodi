@@ -15,6 +15,6 @@ namespace DrTaabodi.Services.WebsiteOptions
         public WebsiteOptionsTbl GetWebsiteOptionsById(string Id);
 
         public ServiceResponse<WebsiteOptionsTbl> CreateOption(WebsiteOptionsTbl WebUser);
-        public ServiceResponse<bool> UpdateOption(Guid id, WebsiteOptionsTbl WebUser);
+        public ServiceResponse<bool> UpdateOption(string id, WebsiteOptionsTbl WebUser);
     }
 }

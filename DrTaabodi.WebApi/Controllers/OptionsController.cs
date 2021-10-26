@@ -58,7 +58,7 @@ namespace DrTaabodi.WebApi.Controllers
             else
             {
                 var Mapped = _mapper.Map<WebsiteOptionsTbl>(postCategory);
-                var NewPost = _options.UpdateOption(postCategory.OptionId, Mapped);
+                var NewPost = _options.UpdateOption(postCategory.OptionKey, Mapped);
                 return Ok(NewPost);
                 
             }

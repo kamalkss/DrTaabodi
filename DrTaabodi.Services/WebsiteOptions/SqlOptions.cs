@@ -58,7 +58,7 @@ namespace DrTaabodi.Services.WebsiteOptions
             return _context.SaveChanges() >= 0;
         }
 
-        public ServiceResponse<bool> UpdateOption(Guid id, WebsiteOptionsTbl WebUser)
+        public ServiceResponse<bool> UpdateOption(string id, WebsiteOptionsTbl WebUser)
         {
             try
             {
