@@ -12,7 +12,7 @@ namespace DrTaabodi.Services.WebsiteOptions
     {
         public bool SaveChanges();
         public List<WebsiteOptionsTbl> GetWebsiteOptionsAsync();
-        public WebsiteOptionsTbl GetWebsiteOptionsById(Guid Id);
+        public WebsiteOptionsTbl GetWebsiteOptionsById(string Id);
 
         public ServiceResponse<WebsiteOptionsTbl> CreateOption(WebsiteOptionsTbl WebUser);
         public ServiceResponse<bool> UpdateOption(Guid id, WebsiteOptionsTbl WebUser);

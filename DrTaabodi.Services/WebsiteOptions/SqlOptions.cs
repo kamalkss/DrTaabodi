@@ -48,9 +48,9 @@ namespace DrTaabodi.Services.WebsiteOptions
             return _context.WebsiteOptionsTbls.ToList();
         }
 
-        public WebsiteOptionsTbl GetWebsiteOptionsById(Guid Id)
+        public WebsiteOptionsTbl GetWebsiteOptionsById(string Id)
         {
-            return _context.WebsiteOptionsTbls.FirstOrDefault(c => c.OptionId == Id);
+            return _context.WebsiteOptionsTbls.FirstOrDefault(c => c.OptionKey == Id);
         }
 
         public bool SaveChanges()

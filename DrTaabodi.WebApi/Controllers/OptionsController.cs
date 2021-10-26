@@ -32,8 +32,8 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok(Post);
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<IEnumerable<UpdateOption>>> GetSinglePostCategory([FromBody] Guid id)
+        [HttpGet("{Key}")]
+        public async Task<ActionResult<IEnumerable<UpdateOption>>> GetSinglePostCategory([FromBody] string id)
         {
             _logger.LogInformation("read single Posts");
             var Post = _options.GetWebsiteOptionsById(id);
@@ -48,7 +48,7 @@ namespace DrTaabodi.WebApi.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var Option = _options.GetWebsiteOptionsById(postCategory.OptionId);
+            var Option = _options.GetWebsiteOptionsById(postCategory.OptionKey);
             if(Option == null)
             {
                 var Mapped = _mapper.Map<WebsiteOptionsTbl>(postCategory);
