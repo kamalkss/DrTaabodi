@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace DrTaabodi.WebApi.Controllers
@@ -17,11 +18,13 @@ namespace DrTaabodi.WebApi.Controllers
         private readonly IOptions _options;
         private readonly ILogger<OptionsController> _logger;
         private readonly IMapper _mapper;
-        public OptionsController(IOptions options,ILogger<OptionsController> logger,IMapper mapper)
+        private readonly Data.DatabaseContext.DrTaabodiDbContext _context;
+        public OptionsController(IOptions options, ILogger<OptionsController> logger, IMapper mapper, Data.DatabaseContext.DrTaabodiDbContext context)
         {
             _logger = logger;
             _mapper = mapper;
             _options = options;
+            _context = context;
         }
 
         [HttpGet]
@@ -49,7 +52,7 @@ namespace DrTaabodi.WebApi.Controllers
                 return BadRequest(ModelState);
             }
             var Option = _options.GetWebsiteOptionsById(postCategory.OptionKey);
-            if(Option == null)
+            if (Option == null)
             {
                 var Mapped = _mapper.Map<WebsiteOptionsTbl>(postCategory);
                 var NewPost = _options.CreateOption(Mapped);
@@ -60,12 +63,31 @@ namespace DrTaabodi.WebApi.Controllers
                 var Mapped = _mapper.Map<WebsiteOptionsTbl>(postCategory);
                 var NewPost = _options.UpdateOption(postCategory.OptionKey, Mapped);
                 return Ok(NewPost);
-                
+
             }
-            
+
 
         }
 
-        
+        [HttpPost("all")]
+        public ActionResult SaveAll(IEnumerable<KeyValuePair<string, string>> result)
+        {
+            foreach (KeyValuePair<string, string> item in result)
+            {
+                WebsiteOptionsTbl row = _context.WebsiteOptionsTbls.First(x => x.OptionKey == item.Key);
+                if(row!= null)
+                {
+                    row.OptionValue = item.Value;                   
+                }
+                else
+                {
+                    _context.WebsiteOptionsTbls.Add(new WebsiteOptionsTbl { OptionKey = item.Key, OptionValue = item.Value });
+                }
+            }
+            _context.SaveChanges();
+            return Ok();
+        }
+
+
     }
 }
