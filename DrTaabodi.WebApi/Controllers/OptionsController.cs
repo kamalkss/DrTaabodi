@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -46,6 +47,23 @@ namespace DrTaabodi.WebApi.Controllers
                 return NotFound();
 
             return Ok(Post.OptionValue);
+        }
+
+        [HttpPost("{Key}")]
+        public async Task<ActionResult> updateOrInsertSinglePostCategory([FromRoute] string key)
+        {
+            string content = await new StreamReader(Request.Body).ReadToEndAsync();
+            _logger.LogInformation("update or insert single Posts");
+            if (!_context.WebsiteOptionsTbls.Any())
+                return NotFound();
+            var Post = _context.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == key);
+            if (Post == null)
+                _context.WebsiteOptionsTbls.Add(new WebsiteOptionsTbl { OptionKey = key, OptionValue = content });
+            else
+                Post.OptionValue = content;
+            _context.SaveChanges();
+
+            return Ok();
         }
 
         [HttpPost]
