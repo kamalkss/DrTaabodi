@@ -36,11 +36,16 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet("{Key}")]
-        public async Task<ActionResult<IEnumerable<UpdateOption>>> GetSinglePostCategory([FromBody] string id)
+        public async Task<ActionResult> GetSinglePostCategory([FromRoute] string key)
         {
             _logger.LogInformation("read single Posts");
-            var Post = _options.GetWebsiteOptionsById(id);
-            return Ok(Post);
+            if (!_context.WebsiteOptionsTbls.Any())
+                return NotFound();
+            var Post = _context.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == key);
+            if (Post == null)
+                return NotFound();
+
+            return Ok(Post.OptionValue);
         }
 
         [HttpPost]
@@ -68,26 +73,6 @@ namespace DrTaabodi.WebApi.Controllers
 
 
         }
-
-        [HttpPost("all")]
-        public ActionResult SaveAll(IEnumerable<KeyValuePair<string, string>> result)
-        {
-            foreach (KeyValuePair<string, string> item in result)
-            {
-                WebsiteOptionsTbl row = _context.WebsiteOptionsTbls.First(x => x.OptionKey == item.Key);
-                if(row!= null)
-                {
-                    row.OptionValue = item.Value;                   
-                }
-                else
-                {
-                    _context.WebsiteOptionsTbls.Add(new WebsiteOptionsTbl { OptionKey = item.Key, OptionValue = item.Value });
-                }
-            }
-            _context.SaveChanges();
-            return Ok();
-        }
-
 
     }
 }

@@ -21,6 +21,7 @@ using DrTaabodi.Services.QnATable;
 using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using DrTaabodi.Services.WebsiteOptions;
 
 namespace DrTaabodi.WebApi
 {
@@ -60,6 +61,7 @@ namespace DrTaabodi.WebApi
             services.AddScoped<IUser, SqlUser>();
             services.AddScoped<IPost, SqlPost>();
             services.AddScoped<IQnA, SqlQna>();
+            services.AddScoped<IOptions, SqlOptions>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>
             {
