@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Dictionary<string, string>
+@using Newtonsoft.Json.Linq
+@{
     ViewBag.ShowMenu = false;
 }
 
@@ -55,15 +57,15 @@
         <div class="col-sm text-center text-sm-start">
 
             <h1 style="color: orange">
-                دکتر علیرضا تعبدی
+                @Model.GetValueOrDefault("general_profile_first_title")
             </h1>
 
             <div style="color:#efefef">
-                ارتوپد- استاد دانشگاه
+                @Model.GetValueOrDefault("general_profile_second_title")
             </div>
 
             <h3 class="text-justify mt-3" style="color:white">
-                فلوشیپ دست و جراحی شانه و آرنج
+                @Model.GetValueOrDefault("general_profile_third_title")
             </h3>
 
         </div>
@@ -79,86 +81,25 @@
 
         <div class="row justify-content-center mt-5" style="font-size: 0.9rem">
 
+            @foreach (var item in JToken.Parse(Model.GetValueOrDefault("services", "[]")))
+            {
+                <div class="col-sm-4 mb-2 text-center">
 
-            <div class="col-sm-4 mb-2 text-center">
+                    <div class="mx-auto" style="max-width: 130px">
+                        <div class="aspect-60">
+                            <img src="@(item["icon"] ?? "")" class="img-contain" />
+                        </div>
+                    </div>
 
-                <div class="mx-auto" style="max-width: 130px">
-                    <div class="aspect-60">
-                        <img src="~/Resources/images/icons/tendon.png" class="img-contain" />
+                    <div class="fw-bold mt-2" style="font-size:1.3rem">
+                        @(item["title"] ?? "")
+                    </div>
+
+                    <div class="mt-2 text-muted text-justify text-last-center">
+                        @(item["description"] ?? "")
                     </div>
                 </div>
-
-                <div class="fw-bold mt-2" style="font-size:1.3rem">
-                    جراحی تاندون، عصب و شکستگی‌ها
-                </div>
-
-                <div class="mt-2 text-muted text-justify text-last-center">
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                </div>
-            </div>
-
-            <div class="col-sm-4 mb-2 text-center">
-
-                <div class="mx-auto" style="max-width: 130px">
-                    <div class="aspect-60">
-                        <img src="~/Resources/images/icons/childs.png" class="img-contain" />
-                    </div>
-                </div>
-
-                <div class="fw-bold mt-2" style="font-size:1.3rem">
-                    بیماری‌های مادرزادی دست در اطفال
-                </div>
-
-                <div class="mt-2 text-muted text-justify text-last-center">
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                </div>
-            </div>
-
-            <div class="col-sm-4 mb-2 text-center">
-
-                <div class="mx-auto" style="max-width: 130px">
-                    <div class="aspect-60">
-                        <img src="~/Resources/images/icons/hand-surguery.png" class="img-contain" />
-                    </div>
-                </div>
-
-                <div class="fw-bold mt-2" style="font-size:1.3rem">
-                    فلوشیپ دست و میکروسرجری
-                </div>
-
-                <div class="mt-2 text-muted text-justify text-last-center">
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                </div>
-            </div>
-
-            <div class="col-sm-4 mb-2 text-center">
-
-                <div class="mx-auto" style="max-width: 130px">
-                    <div class="aspect-60">
-                        <img src="~/Resources/images/icons/shoulder.png" class="img-contain" />
-                    </div>
-                </div>
-
-                <div class="fw-bold mt-2" style="font-size:1.3rem">
-                    جراحی شانه و آرنج
-                </div>
-
-                <div class="mt-2 text-muted text-justify text-last-center">
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                    توضیحات دربار مورد ذکر شده
-                </div>
-            </div>
+            }
 
         </div>
     </div>
