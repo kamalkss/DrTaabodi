@@ -114,45 +114,35 @@
 
             <div class="col-sm p-4">
                 <div>
-                    <img src="~/Resources/images/taabodi.png" class="shadow" />
+                    <img src="@Model.GetValueOrDefault("introduction_image")" class="shadow" />
                 </div>
             </div>
 
             <div class="col-sm">
 
                 <h1>
-                    دکتر علیرضا تعبدی
+                    @Model.GetValueOrDefault("introduction_first_title")
                 </h1>
 
                 <div>
-                    ارتوپد- استاد دانشگاه
+                    @Model.GetValueOrDefault("introduction_first_description")
                 </div>
 
                 <h3 class="text-justify mt-3">
-                    فلوشیپ دست و جراحی شانه و آرنج
+                    @Model.GetValueOrDefault("introduction_second_title")
                 </h3>
 
+                <div>
+                    @Model.GetValueOrDefault("introduction_second_description")
+                </div>
+
                 <ul class="mt-3">
-                    <li>
-                        رتبه برتر در امتحانات جامع پره انترنی دانشگاه علوم پزشکی شیراز ( ۱۳۸۱)
-                    </li>
-
-                    <li>
-                        رتبه اول امتحان پذیرش دستیاری در استان فارس (۱۳۸۵)
-                    </li>
-
-                    <li>
-                        رتبه برتر کشوری در امتحان بورد تخصصی جراحی استخوان و مفاصل (۱۳۸۹)
-                    </li>
-
-                    <li>
-                        رتبه اول آزمون فلوشیپ فوق تخصصی جراحی دست و پیوند عصب و اندام از دانشگاه علوم پزشکی تهران
-                        (۱۳۹۷)
-                    </li>
-
-                    <li>
-                        عضو هیئت علمی دانشگاه علوم پزشکی البرز
-                    </li>
+                    @foreach (var item in JToken.Parse(Model.GetValueOrDefault("introduction_list", "[]")))
+                    {
+                        <li>
+                            @item
+                        </li>
+                    }
                 </ul>
 
             </div>
