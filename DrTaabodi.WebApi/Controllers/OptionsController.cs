@@ -98,7 +98,8 @@ namespace DrTaabodi.WebApi.Controllers
         {
 
             return Ok(_context.WebsiteOptionsTbls.AsEnumerable()
-                .Select(x => new KeyValuePair<string, dynamic>(x.OptionKey, TryJson(x.OptionValue))));
+                .Select(x => new { key = x.OptionKey, value = TryJson(x.OptionValue) })
+                .ToDictionary(x => x.key, x => x.value));
         }
 
         [HttpPost("all")]
