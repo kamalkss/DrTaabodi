@@ -5,6 +5,7 @@ using DrTaabodi.Services.WebsiteOptions;
 using DrTaabodi.WebApi.DTO.WebsiteOptions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -90,6 +91,23 @@ namespace DrTaabodi.WebApi.Controllers
             }
 
 
+        }
+
+        [HttpPost("all")]
+        public ActionResult<dynamic> saveAll(JObject obj)
+        {
+
+            foreach(var x in obj.Properties())
+            {
+                var Post = _context.WebsiteOptionsTbls.FirstOrDefault(o => o.OptionKey == x.Name);
+                if (Post == null)
+                    _context.WebsiteOptionsTbls.Add(new WebsiteOptionsTbl { OptionKey = x.Name, OptionValue = x.Value.ToString() });
+                else
+                    Post.OptionValue = x.Value.ToString();
+            }
+            _context.SaveChanges();
+
+            return Ok();
         }
 
     }
