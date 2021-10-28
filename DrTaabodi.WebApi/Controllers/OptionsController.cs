@@ -93,11 +93,19 @@ namespace DrTaabodi.WebApi.Controllers
 
         }
 
+        [HttpGet("all")]
+        public ActionResult RetrieveAll()
+        {
+
+            return Ok(_context.WebsiteOptionsTbls.AsEnumerable()
+                .Select(x => new KeyValuePair<string, dynamic>(x.OptionKey, TryJson(x.OptionValue))));
+        }
+
         [HttpPost("all")]
         public ActionResult<dynamic> saveAll(JObject obj)
         {
 
-            foreach(var x in obj.Properties())
+            foreach (var x in obj.Properties())
             {
                 var Post = _context.WebsiteOptionsTbls.FirstOrDefault(o => o.OptionKey == x.Name);
                 if (Post == null)
@@ -110,5 +118,16 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok();
         }
 
+        dynamic TryJson(string value)
+        {
+            try
+            {
+                return JToken.Parse(value);
+            }
+            catch
+            {
+                return value;
+            }
+        }
     }
 }
