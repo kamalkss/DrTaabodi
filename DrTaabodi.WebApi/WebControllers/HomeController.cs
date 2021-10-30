@@ -20,10 +20,15 @@ namespace DrTaabodi.WebControllers
         public IActionResult Index()
         {
             var model = _db.WebsiteOptionsTbls.Select(x => new { key = x.OptionKey, value = x.OptionValue }).ToDictionary(x => x.key, x => x.value);
-            ViewData["Title"] = model["general_meta_title"] ?? "";
-            ViewData["Description"] = model["general_meta_description"] ?? "";
+            if (model.Count > 0)
+            {
+                ViewData["Title"] = model["general_meta_title"] ?? "";
+                ViewData["Description"] = model["general_meta_description"] ?? "";
+            }
             return View(model);
         }
+
+        //what ?
 
         [Route("/faq"), ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult FAQ()
