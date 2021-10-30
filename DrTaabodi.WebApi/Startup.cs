@@ -22,6 +22,8 @@ using DrTaabodi.Services.UserTable;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using DrTaabodi.Services.WebsiteOptions;
+using System.IO;
+using Microsoft.AspNetCore.Http;
 
 namespace DrTaabodi.WebApi
 {
@@ -82,14 +84,24 @@ namespace DrTaabodi.WebApi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Data.DatabaseContext.DrTaabodiDbContext db)
         {
             //db.Database.EnsureCreated();
-            
+
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DrTaabodi.WebApi v1"));
             }
-            
+
+
+            app.UseStaticFiles();
+            app.Map("/management", config =>
+            {
+                config.Run(async h => {
+                    await h.Response.SendFileAsync(Path.Combine(env.WebRootPath, "management/index.html"));
+                });
+            });
+
             app.UseCors("localhostVude");
 
             app.UseHttpsRedirection();
@@ -107,7 +119,6 @@ namespace DrTaabodi.WebApi
                     defaults: new { Namespace = "DrTaabodi.WebControllers" }
                     );
             });
-            app.UseStaticFiles();
             app.UseRouting();
         }
     }
