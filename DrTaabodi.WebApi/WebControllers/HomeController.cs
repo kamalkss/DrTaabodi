@@ -28,7 +28,7 @@ namespace DrTaabodi.WebControllers
             return View(model);
         }
 
-        //what ?
+        //what 
 
         [Route("/faq"), ApiExplorerSettings(IgnoreApi = true)]
         public IActionResult FAQ()
