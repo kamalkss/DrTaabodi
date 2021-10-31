@@ -122,6 +122,22 @@ namespace DrTaabodi.WebApi.Controllers
             return Ok();
         }
 
+        [HttpDelete("{key}")]
+        public ActionResult DeleteByKey([FromRoute] string key)
+        {
+            if (!_context.WebsiteOptionsTbls.Any())
+                return NotFound();
+            var Post = _context.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == key);
+            if (Post == null)
+                return NotFound();
+
+            _context.WebsiteOptionsTbls.Remove(Post);
+            _context.SaveChanges();
+
+            _logger.LogInformation("delete options by key:\t" + key);
+            return Ok();
+        }
+
         dynamic TryJson(string value)
         {
             try
