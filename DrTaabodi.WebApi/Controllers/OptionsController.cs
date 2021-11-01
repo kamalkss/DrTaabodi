@@ -96,8 +96,11 @@ namespace DrTaabodi.WebApi.Controllers
         [HttpGet("all")]
         public ActionResult RetrieveAll()
         {
+            var query = _context.WebsiteOptionsTbls.AsQueryable();
+            if (Request.Query.ContainsKey("StartWith"))
+                query = query.Where(x => x.OptionKey.StartsWith(Request.Query["StartWith"]));
 
-            return Ok(_context.WebsiteOptionsTbls.AsEnumerable()
+            return Ok(query.AsEnumerable()
                 .Select(x => new { key = x.OptionKey, value = TryJson(x.OptionValue) })
                 .ToDictionary(x => x.key, x => x.value));
         }
@@ -116,6 +119,22 @@ namespace DrTaabodi.WebApi.Controllers
             }
             _context.SaveChanges();
 
+            return Ok();
+        }
+
+        [HttpDelete("{key}")]
+        public ActionResult DeleteByKey([FromRoute] string key)
+        {
+            if (!_context.WebsiteOptionsTbls.Any())
+                return NotFound();
+            var Post = _context.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == key);
+            if (Post == null)
+                return NotFound();
+
+            _context.WebsiteOptionsTbls.Remove(Post);
+            _context.SaveChanges();
+
+            _logger.LogInformation("delete options by key:\t" + key);
             return Ok();
         }
 
