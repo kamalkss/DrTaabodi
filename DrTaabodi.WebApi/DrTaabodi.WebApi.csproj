@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>3bde5059-f402-4dae-9df6-69d5033bd0cb</UserSecretsId>
-	  <!--<AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>-->
+	  <!--<AspNetCoreHostivngModel>InProcess</AspNetCoreHostingModel>-->
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
   </PropertyGroup>
 
