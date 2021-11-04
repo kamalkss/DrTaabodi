@@ -51,7 +51,7 @@
     <div class="row align-items-center mt-3 mx-auto" style="max-width: 750px">
         <div class="col-sm-4">
             <div class="aspect-100 rounded-circle" style="border:5px solid white">
-                <img src="~/Resources/images/Doctor.png" class="img-cover" />
+                <img src="@Model.GetValueOrDefault("general_profile_image")" class="img-cover" />
             </div>
         </div>
         <div class="col-sm text-center text-sm-start">
