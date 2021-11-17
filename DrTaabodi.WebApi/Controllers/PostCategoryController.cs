@@ -64,13 +64,13 @@ namespace DrTaabodi.WebApi.Controllers
 
         }
 
-        public Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
-        {
-            return UpdatePostCategory(postCategory, _postCategoryService);
-        }
+        //public Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
+        //{
+        //    return UpdatePostCategory(postCategory, _postCategoryService);
+        //}
 
         [HttpPatch]
-        public async Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory, IPostCategory _postCategoryService)
+        public async Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
         {
             if (!ModelState.IsValid)
             {
