@@ -9,6 +9,7 @@ namespace DrTaabodi.Services.QnATable
 {
     public interface IQnA
     {
+        
         public bool SaveChanges();
         public IEnumerable<QnATbl> GetAllQnATbls(QnAParametes qnAParametes);
         public QnATbl GetQnATblById(Guid id);

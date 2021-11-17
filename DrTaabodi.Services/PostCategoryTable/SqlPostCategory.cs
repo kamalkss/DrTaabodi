@@ -21,24 +21,24 @@ namespace DrTaabodi.Services.PostCategoryTable
             _context = db;
             _logger = logger;
         }
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return await _context.SaveChangesAsync() >= 0;
         }
 
-        public List<PostCategoryTbl> GetAllPosts()
+        public async Task<List<PostCategoryTbl>> GetAllPosts()
         {
-            return _context.PostCategoryTbl
-                .Include(post => post.PostTable).ToList();
+            return await _context.PostCategoryTbl
+                .Include(post => post.PostTable).ToListAsync();
         }
 
-        public PostCategoryTbl GetPostById(Guid id)
+        public async Task<PostCategoryTbl> GetPostById(Guid id)
         {
-            return (_context.PostCategoryTbl.Include(c => c.PostTable)
-                .FirstOrDefault(c => c.PostCategoryId == id));
+            return await _context.PostCategoryTbl.Include(c => c.PostTable)
+                .FirstOrDefaultAsync(c => c.PostCategoryId == id);
         }
 
-        public ServiceResponse<PostCategoryTbl> CreatePost(PostCategoryTbl WebPost)
+        public async Task<ServiceResponse<PostCategoryTbl>> CreatePost(PostCategoryTbl WebPost)
         {
             _logger.LogInformation("Log for Create Post");
             try
@@ -47,8 +47,8 @@ namespace DrTaabodi.Services.PostCategoryTable
                 WebPost.CreatedDate = DateTime.UtcNow;
 
 
-                _context.Add(WebPost);
-                SaveChanges();
+                await _context.AddAsync(WebPost);
+                await SaveChanges();
                 return new ServiceResponse<PostCategoryTbl>
                 {
                     Data = WebPost,
@@ -69,7 +69,7 @@ namespace DrTaabodi.Services.PostCategoryTable
             }
         }
 
-        public ServiceResponse<bool> UpdatePostStatus(Guid id, PostCategoryTbl postStatus)
+        public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PostCategoryTbl postStatus)
         {
             var ChildPostType = GetPostById(id);
             //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
@@ -81,7 +81,7 @@ namespace DrTaabodi.Services.PostCategoryTable
 
 
                 _context.Entry(ChildPostType).CurrentValues.SetValues(postStatus);
-                SaveChanges();
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     Data = true,
