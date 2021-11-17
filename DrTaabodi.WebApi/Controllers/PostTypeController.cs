@@ -45,7 +45,7 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ServiceResponse<CreatePostType>> CreatePost([FromBody] CreatePostType PostType)
+        public async Task<ActionResult<ServiceResponse<CreatePostType>>> CreatePost([FromBody] CreatePostType PostType)
         {
             if (!ModelState.IsValid)
             {
@@ -55,13 +55,13 @@ namespace DrTaabodi.WebApi.Controllers
             if (PostType.ParentId!=Guid.Empty && PostType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 MapPost.PostTypeParent.Add(_postTypeService.GetPostById(PostType.ParentId));
             if(PostType.PostId!=Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(PostType.PostId));
+                MapPost.PostTable.Add(await _postService.GetPostById(PostType.PostId));
             var NewPost = _postTypeService.CreatePostType(MapPost);
             return Ok(NewPost);
         }
 
         [HttpPatch]
-        public ActionResult<ServiceResponse<bool>> UpdatePostType([FromBody] ReadPostType postType)
+        public async Task<ActionResult<ServiceResponse<bool>>> UpdatePostType([FromBody] ReadPostType postType)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
@@ -70,7 +70,7 @@ namespace DrTaabodi.WebApi.Controllers
             if(postType.ParentId != Guid.Empty && postType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 MapPost.PostTypeParent.Add(_postTypeService.GetPostById(postType.ParentId));
             if (postType.PostId != Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(postType.PostId));
+                MapPost.PostTable.Add(await _postService.GetPostById(postType.PostId));
             var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
             return Ok(UpdatedPost);
         }

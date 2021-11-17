@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
@@ -33,24 +34,24 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ReadPosts> GetAllPost()
+        public async Task<ActionResult<ReadPosts>> GetAllPost()
         {
             _logger.LogInformation("read all Posts");
-            var posts = _post.GetAllPosts();
+            var posts = await _post.GetAllPosts();
 
             return Ok(posts);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ReadPosts> GetPostById(Guid id)
+        public async Task<ActionResult<ReadPosts>> GetPostById(Guid id)
         {
             _logger.LogInformation("Read Id Post");
-            var post = _post.GetPostById(id);
+            var post = await _post.GetPostById(id);
             return Ok(_mapper.Map<ReadPosts>(post));
         }
 
         [HttpPost]
-        public ActionResult<ServiceResponse<CreatePosts>> CreatePost([FromBody] CreatePosts Post)
+        public async Task<ActionResult<ServiceResponse<CreatePosts>>> CreatePost([FromBody] CreatePosts Post)
         {
             _logger.LogInformation("Create Post");
             
@@ -66,7 +67,7 @@ namespace DrTaabodi.WebApi.Controllers
             if (Post.User != null && Post.User != Guid.Empty && Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 mapPost.UserTable.Add(_UserService.GetUserById(Post.User));
             if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty && Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.PstTblParent.Add(_post.GetPostById(Post.PstTbleParent));
+                mapPost.PstTblParent.Add(await _post.GetPostById(Post.PstTbleParent));
             //if (Post.PstTbleParent != null)
             //    mapPost.PstTbleParent.
             
@@ -86,7 +87,7 @@ namespace DrTaabodi.WebApi.Controllers
             //return Ok(_mapper.Map<PstTbl>(UpdatedPost));
         }*/
         [HttpPatch("/posttype/")]
-        public ActionResult<ReadPosts> UpdatePost([FromBody] ReadPosts Post)
+        public async Task<ActionResult<ReadPosts>> UpdatePost([FromBody] ReadPosts Post)
         {
             _logger.LogInformation("Update Post Status");
             var id = Post.PstId;
@@ -94,7 +95,7 @@ namespace DrTaabodi.WebApi.Controllers
                 Post.User = _UserService.GetUserById(Post.User.UsrId);
 
             if (Post.PstTbleParent != null)
-                Post.PstTbleParent = _post.GetPostById(Post.PstTbleParent.PstId);
+                Post.PstTbleParent = await _post.GetPostById(Post.PstTbleParent.PstId);
             var mapPost = _mapper.Map<PstTbl>(Post);
             var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
             return Ok(_mapper.Map<PstTbl>(UpdatedPost));
