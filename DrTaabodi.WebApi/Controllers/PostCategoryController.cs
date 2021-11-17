@@ -47,7 +47,7 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpPost]
-        public ActionResult<ServiceResponse<CreatePostCategory>> CreatePostCategory(
+        public async Task<ActionResult<ServiceResponse<CreatePostCategory>>> CreatePostCategory(
             [FromBody] CreatePostCategory postCategory)
         {
             if (!ModelState.IsValid)
@@ -56,16 +56,21 @@ namespace DrTaabodi.WebApi.Controllers
             }
             var MapPost = _mapper.Map<PostCategoryTbl>(postCategory);
             if (postCategory.ParentId != Guid.Empty && postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostCategoryParent.Add(_postCategoryService.GetPostById(postCategory.ParentId));
+                MapPost.PostCategoryParent.Add(await _postCategoryService.GetPostById(postCategory.ParentId));
             if (postCategory.PostId != Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(postCategory.PostId));
+                MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
             var NewPost = _postCategoryService.CreatePost(MapPost);
             return Ok(NewPost);
 
         }
 
+        public Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
+        {
+            return UpdatePostCategory(postCategory, _postCategoryService);
+        }
+
         [HttpPatch]
-        public ActionResult<ServiceResponse<bool>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
+        public async Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory, IPostCategory _postCategoryService)
         {
             if (!ModelState.IsValid)
             {
@@ -73,9 +78,9 @@ namespace DrTaabodi.WebApi.Controllers
             }
             var MapPost = _mapper.Map<PostCategoryTbl>(postCategory);
             if (postCategory.ParentId != Guid.Empty && postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostCategoryParent.Add(_postCategoryService.GetPostById(postCategory.ParentId));
+                MapPost.PostCategoryParent.Add(await _postCategoryService.GetPostById(postCategory.ParentId));
             if (postCategory.PostId != Guid.Empty)
-                MapPost.PostTable.Add(_postService.GetPostById(postCategory.PostId));
+                MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
             var NewPost = _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);
             return Ok(NewPost);
         }
