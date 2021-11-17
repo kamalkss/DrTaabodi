@@ -5,6 +5,8 @@ using System;
 using System.Collections.Generic;
 using AutoMapper;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DrTaabodi.Services.UserTable
 {
@@ -18,30 +20,30 @@ namespace DrTaabodi.Services.UserTable
             _context = _db;
             _logger = logger;
         }
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return await _context.SaveChangesAsync() >= 0;
         }
 
-        public List<UsrTbl> GetAllUsers()
+        public async Task<IEnumerable<UsrTbl>> GetAllUsers()
         {
-            return _context.UsrTbl.ToList();
+            return await _context.UsrTbl.ToListAsync();
         }
 
-        public UsrTbl GetUserById(Guid id)
+        public async Task<UsrTbl> GetUserById(Guid id)
         {
-            return _context.UsrTbl.Find(id);
+            return await _context.UsrTbl.FindAsync(id);
         }
 
-        public ServiceResponse<UsrTbl> CreateUsr(UsrTbl WebUser)
+        public async Task<ServiceResponse<UsrTbl>> CreateUsr(UsrTbl WebUser)
         {
             _logger.LogInformation("Log For Creating User");
             try
             {
                 WebUser.CreatedDate = DateTime.UtcNow;
                 WebUser.UpdatedData = DateTime.UtcNow;
-                _context.UsrTbl.Add(WebUser);
-                SaveChanges();
+                await _context.UsrTbl.AddAsync(WebUser);
+                await SaveChanges();
                 return new ServiceResponse<UsrTbl>
                 {
                     IsSucceess = true,
@@ -62,7 +64,7 @@ namespace DrTaabodi.Services.UserTable
             }
         }
 
-        public ServiceResponse<bool> UpdateUserStatus(Guid id, UsrTbl WebUser)
+        public async Task<ServiceResponse<bool>> UpdateUserStatus(Guid id, UsrTbl WebUser)
         {
 
             var UpdatedUser = _context.UsrTbl.Find(id);
@@ -81,7 +83,7 @@ namespace DrTaabodi.Services.UserTable
                 _context.Entry(UpdatedUser).CurrentValues.SetValues(to_update);
 
 
-                SaveChanges();
+                await SaveChanges();
 
 
 
@@ -107,7 +109,7 @@ namespace DrTaabodi.Services.UserTable
             }
         }
 
-        public ServiceResponse<bool> UpdatePassword(Guid id, UsrTbl WebUser)
+        public async Task<ServiceResponse<bool>> UpdatePassword(Guid id, UsrTbl WebUser)
         {
             var UpdatedUser = _context.UsrTbl.Find(id);
             _logger.LogInformation("Log For Update User");
@@ -125,7 +127,7 @@ namespace DrTaabodi.Services.UserTable
                 _context.Entry(UpdatedUser).CurrentValues.SetValues(UpdatedUser);
 
 
-                SaveChanges();
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,

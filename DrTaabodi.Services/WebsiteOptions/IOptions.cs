@@ -10,11 +10,11 @@ namespace DrTaabodi.Services.WebsiteOptions
 {
     public interface IOptions
     {
-        public bool SaveChanges();
-        public List<WebsiteOptionsTbl> GetWebsiteOptionsAsync();
-        public WebsiteOptionsTbl GetWebsiteOptionsById(string Id);
+        public Task<bool> SaveChanges();
+        public Task<IEnumerable<WebsiteOptionsTbl>> GetWebsiteOptionsAsync();
+        public Task<WebsiteOptionsTbl> GetWebsiteOptionsById(string Id);
 
-        public ServiceResponse<WebsiteOptionsTbl> CreateOption(WebsiteOptionsTbl WebUser);
-        public ServiceResponse<bool> UpdateOption(string id, WebsiteOptionsTbl WebUser);
+        public Task<ServiceResponse<WebsiteOptionsTbl>> CreateOption(WebsiteOptionsTbl WebUser);
+        public Task<ServiceResponse<bool>> UpdateOption(string id, WebsiteOptionsTbl WebUser);
     }
 }

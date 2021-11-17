@@ -31,38 +31,38 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ReadQnAs> GetAllQna([FromHeader] QnAParametes qnaParameters)
+        public async Task<ActionResult<ReadQnAs>> GetAllQna([FromHeader] QnAParametes qnaParameters)
         {
             _logger.LogInformation("Get all QnAs");
-            var Qna = _qnA.GetAllQnATbls(qnaParameters);
+            var Qna = await _qnA.GetAllQnATbls(qnaParameters);
             return Ok(Qna);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ReadQnAs> GetQnaById(Guid id)
+        public async Task<ActionResult<ReadQnAs>> GetQnaById(Guid id)
         {
             _logger.LogInformation("Get Id Qna");
-            var qna = _qnA.GetQnATblById(id);
+            var qna = await _qnA.GetQnATblById(id);
             return Ok(_mapper.Map<QnATbl>(qna));
         }
 
         [HttpPost]
-        public ActionResult<ServiceResponse<CreateQnAs>> CreateQna([FromBody] CreateQnAs CreateQna)
+        public async Task<ActionResult<ServiceResponse<CreateQnAs>>> CreateQna([FromBody] CreateQnAs CreateQna)
         {
             _logger.LogInformation("Create a qna");
             
             var mapQna = _mapper.Map<QnATbl>(CreateQna);
-            var newQna = _qnA.CreateQnATbl(mapQna);
+            var newQna = await _qnA.CreateQnATbl(mapQna);
             return Ok(newQna);
         }
 
         [HttpPatch]
-        public ActionResult<ServiceResponse<ReadQnAs>> UpdateQna([FromBody] ReadQnAs UpdateQna)
+        public async Task<ActionResult<ServiceResponse<ReadQnAs>>> UpdateQna([FromBody] ReadQnAs UpdateQna)
         {
             _logger.LogInformation("Update Qna");
             var id = UpdateQna.QnAId;
             var Qna = _mapper.Map<QnATbl>(UpdateQna);
-            var updatedQna = _qnA.UpdateQnATblQuestion(id, Qna);
+            var updatedQna = await _qnA.UpdateQnATblQuestion(id, Qna);
             return Ok(updatedQna);
         }
 

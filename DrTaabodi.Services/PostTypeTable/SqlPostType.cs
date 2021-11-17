@@ -22,23 +22,23 @@ namespace DrTaabodi.Services.PostTypeTable
             _logger = logger;
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return await _context.SaveChangesAsync() >= 0;
         }
 
-        public List<PostTypeTbl> GetAllPosts()
+        public async Task<List<PostTypeTbl>> GetAllPosts()
         {
-            return (_context.PostTypeTbl.Include(c => c.PostTable).ToList());
+            return await _context.PostTypeTbl.Include(c => c.PostTable).ToListAsync();
         }
 
-        public PostTypeTbl GetPostById(Guid id)
+        public async Task<PostTypeTbl> GetPostById(Guid id)
         {
-            return (_context.PostTypeTbl.Include(c => c.PostTable)
-                .FirstOrDefault(c => c.PostTypeId == id));
+            return await _context.PostTypeTbl.Include(c => c.PostTable)
+                .FirstOrDefaultAsync(c => c.PostTypeId == id);
         }
 
-        public ServiceResponse<PostTypeTbl> CreatePostType(PostTypeTbl WebPost)
+        public async Task<ServiceResponse<PostTypeTbl>> CreatePostType(PostTypeTbl WebPost)
         {
             _logger.LogInformation("Log for Create Post");
             try
@@ -47,8 +47,8 @@ namespace DrTaabodi.Services.PostTypeTable
                 WebPost.CreatedDate = DateTime.UtcNow;
 
 
-                _context.Add(WebPost);
-                SaveChanges();
+                await _context.AddAsync(WebPost);
+                await SaveChanges();
                 return new ServiceResponse<PostTypeTbl>
                 {
                     Data = WebPost,
@@ -69,7 +69,7 @@ namespace DrTaabodi.Services.PostTypeTable
             }
         }
 
-        public ServiceResponse<bool> UpdatePostType(Guid id, PostTypeTbl WebPost)
+        public async Task<ServiceResponse<bool>> UpdatePostType(Guid id, PostTypeTbl WebPost)
         {
             var ChildPostType = _context.PostTypeTbl.Find(id);
             //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
@@ -81,7 +81,7 @@ namespace DrTaabodi.Services.PostTypeTable
 
 
                 _context.Entry(ChildPostType).CurrentValues.SetValues(WebPost);
-                SaveChanges();
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     Data = true,
@@ -102,7 +102,7 @@ namespace DrTaabodi.Services.PostTypeTable
             }
         }
 
-        public ServiceResponse<bool> EditParent(Guid id, Guid ParentId)
+        public async Task<ServiceResponse<bool>> EditParent(Guid id, Guid ParentId)
         {
             var ChildPostType = _context.PostTypeTbl.Find(id);
             //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
@@ -113,8 +113,8 @@ namespace DrTaabodi.Services.PostTypeTable
                 //ChildPostType.PostType = Parent;
                // ChildPostType.PostTypeParentId = ParentId;
 
-                _context.Add(ChildPostType);
-                SaveChanges();
+                await _context.AddAsync(ChildPostType);
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     Data = true,
@@ -135,17 +135,17 @@ namespace DrTaabodi.Services.PostTypeTable
             }
         }
 
-        public ServiceResponse<bool> RemoveParent(Guid id, PostTypeTbl WebPost)
+        public async Task<ServiceResponse<bool>> RemoveParent(Guid id, PostTypeTbl WebPost)
         {
             throw new NotImplementedException();
         }
 
-        public ServiceResponse<bool> AddPosts(Guid id, PstTbl WebPost)
+        public async Task<ServiceResponse<bool>> AddPosts(Guid id, PstTbl WebPost)
         {
             throw new NotImplementedException();
         }
 
-        public ServiceResponse<bool> RemovePosts(Guid id, PstTbl WebPost)
+        public async Task<ServiceResponse<bool>> RemovePosts(Guid id, PstTbl WebPost)
         {
             throw new NotImplementedException();
         }

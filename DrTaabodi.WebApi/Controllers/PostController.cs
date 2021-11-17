@@ -65,7 +65,7 @@ namespace DrTaabodi.WebApi.Controllers
 
 
             if (Post.User != null && Post.User != Guid.Empty && Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.UserTable.Add(_UserService.GetUserById(Post.User));
+                mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
             if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty && Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 mapPost.PstTblParent.Add(await _post.GetPostById(Post.PstTbleParent));
             //if (Post.PstTbleParent != null)
@@ -92,7 +92,7 @@ namespace DrTaabodi.WebApi.Controllers
             _logger.LogInformation("Update Post Status");
             var id = Post.PstId;
             if (Post.User != null)
-                Post.User = _UserService.GetUserById(Post.User.UsrId);
+                Post.User = await _UserService.GetUserById(Post.User.UsrId);
 
             if (Post.PstTbleParent != null)
                 Post.PstTbleParent = await _post.GetPostById(Post.PstTbleParent.PstId);

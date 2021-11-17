@@ -1,5 +1,6 @@
 ﻿using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,13 +17,13 @@ namespace DrTaabodi.Services.WebsiteOptions
         {
             _context = context;
         }
-        public ServiceResponse<WebsiteOptionsTbl> CreateOption(WebsiteOptionsTbl WebUser)
+        public async Task<ServiceResponse<WebsiteOptionsTbl>> CreateOption(WebsiteOptionsTbl WebUser)
         {
             try
             {
                 
-                _context.WebsiteOptionsTbls.Add(WebUser);
-                SaveChanges();
+                await _context.WebsiteOptionsTbls.AddAsync(WebUser);
+                await SaveChanges();
                 return new ServiceResponse<WebsiteOptionsTbl>
                 {
                     IsSucceess = true,
@@ -43,28 +44,28 @@ namespace DrTaabodi.Services.WebsiteOptions
             }
         }
 
-        public List<WebsiteOptionsTbl> GetWebsiteOptionsAsync()
+        public async Task<IEnumerable<WebsiteOptionsTbl>> GetWebsiteOptionsAsync()
         {
-            return _context.WebsiteOptionsTbls.ToList();
+            return await _context.WebsiteOptionsTbls.ToListAsync();
         }
 
-        public WebsiteOptionsTbl GetWebsiteOptionsById(string Id)
+        public async Task<WebsiteOptionsTbl> GetWebsiteOptionsById(string Id)
         {
-            return _context.WebsiteOptionsTbls.FirstOrDefault(c => c.OptionKey == Id);
+            return await _context.WebsiteOptionsTbls.FirstOrDefaultAsync(c => c.OptionKey == Id);
         }
 
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return _context.SaveChanges() >= 0;
+            return await _context.SaveChangesAsync() >= 0;
         }
 
-        public ServiceResponse<bool> UpdateOption(string id, WebsiteOptionsTbl WebUser)
+        public async Task<ServiceResponse<bool>> UpdateOption(string id, WebsiteOptionsTbl WebUser)
         {
             try
             {
                 var UpdatedPost = _context.WebsiteOptionsTbls.Find(id);
                 _context.Entry(UpdatedPost).CurrentValues.SetValues(WebUser);
-                SaveChanges();
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,

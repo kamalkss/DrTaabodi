@@ -9,15 +9,15 @@ namespace DrTaabodi.Services.PostTypeTable
 {
     public interface IPostType
     {
-        public bool SaveChanges();
-        public List<PostTypeTbl> GetAllPosts();
-        public PostTypeTbl GetPostById(Guid id);
-        public ServiceResponse<PostTypeTbl> CreatePostType(PostTypeTbl WebPost);
-        public ServiceResponse<bool> UpdatePostType(Guid id, PostTypeTbl WebPost);
-        public ServiceResponse<bool> EditParent(Guid id, Guid ParentId);
+        public Task<bool> SaveChanges();
+        public Task<List<PostTypeTbl>> GetAllPosts();
+        public Task<PostTypeTbl> GetPostById(Guid id);
+        public Task<ServiceResponse<PostTypeTbl>> CreatePostType(PostTypeTbl WebPost);
+        public Task<ServiceResponse<bool>> UpdatePostType(Guid id, PostTypeTbl WebPost);
+        public Task<ServiceResponse<bool>> EditParent(Guid id, Guid ParentId);
         
-        public ServiceResponse<bool> AddPosts(Guid id,PstTbl WebPost);
-        public ServiceResponse<bool> RemovePosts(Guid id, PstTbl WebPost);
+        public Task<ServiceResponse<bool>> AddPosts(Guid id,PstTbl WebPost);
+        public Task<ServiceResponse<bool>> RemovePosts(Guid id, PstTbl WebPost);
 
 
     }

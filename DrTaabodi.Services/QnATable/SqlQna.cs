@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace DrTaabodi.Services.QnATable
 {
@@ -21,32 +22,32 @@ namespace DrTaabodi.Services.QnATable
             _logger = logger;
 
         }
-        public bool SaveChanges()
+        public async Task<bool> SaveChanges()
         {
-            return (_context.SaveChanges() >= 0);
+            return await _context.SaveChangesAsync() >= 0;
         }
 
-        public IEnumerable<QnATbl> GetAllQnATbls(QnAParametes qnAParametes)
+        public async Task<IEnumerable<QnATbl>> GetAllQnATbls(QnAParametes qnAParametes)
         {
-            return _context.QnATbl.Include(c => c.UserTable).OrderBy(on => on.QnAId)
-                .Skip((qnAParametes.PageNumber - 1) * qnAParametes.PageSize).Take(qnAParametes.PageSize).ToList();
+            return await _context.QnATbl.Include(c => c.UserTable).OrderBy(on => on.QnAId)
+                .Skip((qnAParametes.PageNumber - 1) * qnAParametes.PageSize).Take(qnAParametes.PageSize).ToListAsync();
         }
 
-        public QnATbl GetQnATblById(Guid id)
+        public async Task<QnATbl> GetQnATblById(Guid id)
         {
-            return _context.QnATbl.Include(u => u.UserTable)
-                .FirstOrDefault(q => q.QnAId == id);
+            return await _context.QnATbl.Include(u => u.UserTable)
+                .FirstOrDefaultAsync(q => q.QnAId == id);
         }
 
-        public ServiceResponse<QnATbl> CreateQnATbl(QnATbl WebPost)
+        public async Task<ServiceResponse<QnATbl>> CreateQnATbl(QnATbl WebPost)
         {
             _logger.LogInformation("Log for Create Post");
             try
             {
                 WebPost.UpdatedData = DateTime.UtcNow;
                 WebPost.CreatedDate = DateTime.UtcNow; ;
-                _context.QnATbl.Add(WebPost);
-                SaveChanges();
+                await _context.QnATbl.AddAsync(WebPost);
+                await SaveChanges();
                 return new ServiceResponse<QnATbl>
                 {
                     Data = WebPost,
@@ -67,7 +68,7 @@ namespace DrTaabodi.Services.QnATable
             }
         }
 
-        public ServiceResponse<bool> UpdateQnATblQuestion(Guid id, QnATbl WebPost)
+        public async Task<ServiceResponse<bool>> UpdateQnATblQuestion(Guid id, QnATbl WebPost)
         {
             var UpdatedPost = _context.QnATbl.Find(id);
             _logger.LogInformation("Log For Update Qna");
@@ -76,7 +77,7 @@ namespace DrTaabodi.Services.QnATable
 
                 WebPost.UpdatedData = DateTime.UtcNow;
                 _context.Entry(UpdatedPost).CurrentValues.SetValues(WebPost);
-                SaveChanges();
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,
@@ -97,7 +98,7 @@ namespace DrTaabodi.Services.QnATable
             }
         }
 
-        public ServiceResponse<bool> UpdateQnATblAnswer(Guid id, string Answer)
+        public async Task<ServiceResponse<bool>> UpdateQnATblAnswer(Guid id, string Answer)
         {
             var WebPost = _context.QnATbl.Find(id);
             _logger.LogInformation("Log For Update Qna");
@@ -105,8 +106,8 @@ namespace DrTaabodi.Services.QnATable
             {
                 WebPost.Answer = Answer;
                 WebPost.UpdatedData = DateTime.UtcNow;
-                _context.QnATbl.Add(WebPost);
-                SaveChanges();
+                await _context.QnATbl.AddAsync(WebPost);
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,
@@ -127,7 +128,7 @@ namespace DrTaabodi.Services.QnATable
             }
         }
 
-        public ServiceResponse<bool> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question)
+        public async Task<ServiceResponse<bool>> UpdateQnATblAnswerOrAnswer(Guid id, string Answer, string Question)
         {
             var WebPost = _context.QnATbl.Find(id);
             _logger.LogInformation("Log For Update Qna");
@@ -136,8 +137,8 @@ namespace DrTaabodi.Services.QnATable
                 WebPost.Answer = Answer;
                 WebPost.Question = Question;
                 WebPost.UpdatedData = DateTime.UtcNow;
-                _context.QnATbl.Add(WebPost);
-                SaveChanges();
+                await _context.QnATbl.AddAsync(WebPost);
+                await SaveChanges();
                 return new ServiceResponse<bool>
                 {
                     IsSucceess = true,

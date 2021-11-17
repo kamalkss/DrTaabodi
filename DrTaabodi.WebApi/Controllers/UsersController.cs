@@ -12,7 +12,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using BCryptNet = BCrypt.Net.BCrypt;
 using Microsoft.Extensions.Logging;
-
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace DrTaabodi.WebApi.Controllers
 {
@@ -35,17 +36,17 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet]
-        public ActionResult<ReadUsers> GetAllUsers()
+        public async Task<ActionResult<ReadUsers>> GetAllUsers()
         {
             _logger.LogInformation("Get All Users");
-            var Users = _UserService.GetAllUsers();
+            var Users = await _UserService.GetAllUsers();
             return Ok(Users);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<ReadUsers> GetUser(Guid Id)
+        public async Task<ActionResult<ReadUsers>> GetUser(Guid Id)
         {
-            var User = _UserService.GetUserById(Id);
+            var User = await _UserService.GetUserById(Id);
             return Ok(_mapper.Map<ReadUsers>(User));
         }
 
@@ -68,9 +69,9 @@ namespace DrTaabodi.WebApi.Controllers
         //}
         [AllowAnonymous]
         [HttpPost("authenticate")]
-        public ActionResult<Login> Authenticate([FromBody] Login model)
+        public async Task<ActionResult<Login>> Authenticate([FromBody] Login model)
         {
-            var usergot = _db.UsrTbl.FirstOrDefault(x => x.UserName == model.UserName);
+            var usergot = await _db.UsrTbl.FirstOrDefaultAsync(x => x.UserName == model.UserName);
             if (usergot == null || !BCryptNet.Verify(model.PassCode, usergot.PassCode))
                 return Unauthorized("Username or password is incorrect");
             //return Ok($"User {usergot.UsrNickName} {usergot.UsrFamily} User Name : {usergot.UserName} with Id {usergot.UsrId} and Email {usergot.UsrEmail}");
@@ -79,7 +80,7 @@ namespace DrTaabodi.WebApi.Controllers
         //Useless comments
         [AllowAnonymous]
         [HttpPost("register")]
-        public ActionResult<CreateUsers> Register([FromBody] CreateUsers model)
+        public async Task<ActionResult<CreateUsers>> Register([FromBody] CreateUsers model)
         {
 
             _logger.LogInformation("Create User Log");
@@ -92,28 +93,28 @@ namespace DrTaabodi.WebApi.Controllers
 
             // hash password
             MapUser.PassCode = BCryptNet.HashPassword(model.PassCode);
-            var NewUsr = _UserService.CreateUsr(MapUser);
+            var NewUsr = await _UserService.CreateUsr(MapUser);
 
             return Ok($"{model.UserName} Has Been Created");
         }
         [HttpPatch]
-        public ActionResult<UpdateUser> Update_User([FromBody] UpdateUser updateuser)
+        public async Task<ActionResult<UpdateUser>> Update_User([FromBody] UpdateUser updateuser)
         {
             _logger.LogInformation("UpdateUserStatus");
             var id = updateuser.UsrId;
-            var user = _mapper.Map<UsrTbl>(updateuser);
-            var updateduser = _UserService.UpdateUserStatus(id, user);
+            var user =  _mapper.Map<UsrTbl>(updateuser);
+            var updateduser = await _UserService.UpdateUserStatus(id, user);
             return Ok(updateduser);
 
         }
         [HttpPatch("/UpdatePassword")]
-        public ActionResult<UpdatePassword> Update_Password([FromBody] UpdatePassword updateuser)
+        public async Task<ActionResult<UpdatePassword>> Update_Password([FromBody] UpdatePassword updateuser)
         {
             _logger.LogInformation("UpdateUserStatus");
             var id = updateuser.UsrId;
             var user = _mapper.Map<UsrTbl>(updateuser);
             user.PassCode = BCryptNet.HashPassword(updateuser.PassCode);
-            var updateduser = _UserService.UpdatePassword(id, user);
+            var updateduser = await _UserService.UpdatePassword(id, user);
             return Ok(updateduser);
 
         }

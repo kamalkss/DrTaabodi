@@ -53,7 +53,7 @@ namespace DrTaabodi.WebApi.Controllers
             }
             var MapPost = _mapper.Map<PostTypeTbl>(PostType);
             if (PostType.ParentId!=Guid.Empty && PostType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostTypeParent.Add(_postTypeService.GetPostById(PostType.ParentId));
+                MapPost.PostTypeParent.Add(await _postTypeService.GetPostById(PostType.ParentId));
             if(PostType.PostId!=Guid.Empty)
                 MapPost.PostTable.Add(await _postService.GetPostById(PostType.PostId));
             var NewPost = _postTypeService.CreatePostType(MapPost);
@@ -68,7 +68,7 @@ namespace DrTaabodi.WebApi.Controllers
             var Post = _postTypeService.GetPostById(postType.PostTypeId);
             var MapPost = _mapper.Map<PostTypeTbl>(postType);
             if(postType.ParentId != Guid.Empty && postType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostTypeParent.Add(_postTypeService.GetPostById(postType.ParentId));
+                MapPost.PostTypeParent.Add(await _postTypeService.GetPostById(postType.ParentId));
             if (postType.PostId != Guid.Empty)
                 MapPost.PostTable.Add(await _postService.GetPostById(postType.PostId));
             var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
