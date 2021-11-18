@@ -65,7 +65,7 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         //public Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
-        //{
+        //{useless nothing
         //    return UpdatePostCategory(postCategory, _postCategoryService);
         //}
 
