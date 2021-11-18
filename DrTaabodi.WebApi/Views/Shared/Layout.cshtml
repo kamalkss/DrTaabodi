@@ -1,5 +1,6 @@
 ﻿@inject DrTaabodi.Data.DatabaseContext.DrTaabodiDbContext dbContext
 @using Newtonsoft.Json.Linq
+@using Microsoft.AspNetCore.Http.Extensions
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
@@ -9,10 +10,25 @@
             @( ViewData["Title"] )
         }
     </title>
-
-
+    
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <meta property="og:title" content="@( ViewData["Title"]  ?? "")" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="@UriHelper.GetDisplayUrl(Context.Request)" />
+    <meta property="og:image" content="https://ermateb.com/templateAssets/icons/ermateb-logo.png" />
+    <meta property="og:description" content="@( ViewData["Description"]  ?? "")" />
+
+    @{
+        var general_profile_image =  dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_profile_image");
+    }
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="@( ViewData["Title"]  ?? "")" />
+    <meta name="twitter:description" content="@( ViewData["Description"]  ?? "")" />
+    <meta name="twitter:image" content="@(general_profile_image.OptionValue ?? "")" />
+    <meta name="twitter:image:alt" content="@( ViewData["Title"]  ?? "")" />
 
     <link href="~/Resources/frameworks/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet" />
     <link href="~/Resources/style/fonts/fonts.css" rel="stylesheet" />
@@ -150,7 +166,8 @@
                         <p class="text-center text-sm-start">
                             @{
                                 var address = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_address");
-                                if (address != null) {
+                                if (address != null)
+                                {
                                     <span>@address.OptionValue</span>
                                 }
                             }
