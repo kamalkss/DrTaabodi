@@ -34,7 +34,7 @@ namespace DrTaabodi.WebApi.Controllers
         public async Task<ActionResult<IEnumerable<ReadPostCategory>>> GetAllPosts()
         {
             _logger.LogInformation("read all Posts");
-            var Post = _postCategoryService.GetAllPosts();
+            var Post = await _postCategoryService.GetAllPosts();
             return Ok(Post);
         }
 
@@ -42,7 +42,7 @@ namespace DrTaabodi.WebApi.Controllers
         public async Task<ActionResult<IEnumerable<ReadPostCategory>>> GetSinglePostCategory([FromBody] Guid id)
         {
             _logger.LogInformation("read single Posts");
-            var Post = _postCategoryService.GetPostById(id);
+            var Post = await _postCategoryService.GetPostById(id);
             return Ok(Post);
         }
 
