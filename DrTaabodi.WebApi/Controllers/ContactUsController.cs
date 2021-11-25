@@ -29,17 +29,17 @@ namespace DrTaabodi.WebApi.Controllers
         [HttpPost]
         public void SendMail([FromBody] ContactUsStructure contact)
         {
-            SmtpClient client = new SmtpClient();
-            client.Host = configuration["SMTP:Host"];
-            client.Port = configuration.GetValue<int>("SMTP:Port");
-            client.Credentials = new NetworkCredential(configuration["SMTP:Username"] ?? "", configuration["SMTP:Password"] ?? "");
-            client.EnableSsl = true;
+                SmtpClient client = new SmtpClient();
+                client.Host = configuration["SMTP:Host"];
+                client.Port = configuration.GetValue<int>("SMTP:Port");
+                client.Credentials = new NetworkCredential(configuration["SMTP:Username"] ?? "", configuration["SMTP:Password"] ?? "");
+                client.EnableSsl = true;
 
-            MailMessage messageObject = new MailMessage(new MailAddress(contact.email), new MailAddress(configuration["SMTP:MailAddress"]));
-            messageObject.Subject = contact.subject;
-            messageObject.Body = contact.message;
+                MailMessage messageObject = new MailMessage(new MailAddress(contact.email), new MailAddress(configuration["SMTP:MailAddress"]));
+                messageObject.Subject = contact.subject;
+                messageObject.Body = contact.message;
 
-            client.Send(messageObject);
+                client.Send(messageObject);
         }
     }
 }
