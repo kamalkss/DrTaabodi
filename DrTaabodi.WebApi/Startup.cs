@@ -24,6 +24,8 @@ using Newtonsoft.Json;
 using DrTaabodi.Services.WebsiteOptions;
 using System.IO;
 using Microsoft.AspNetCore.Http;
+using DrTaabodi.Services.PostCategoryTable;
+using DrTaabodi.Services.PostTypeTable;
 
 namespace DrTaabodi.WebApi
 {
@@ -63,6 +65,8 @@ namespace DrTaabodi.WebApi
             services.AddScoped<IUser, SqlUser>();
             services.AddScoped<IPost, SqlPost>();
             services.AddScoped<IQnA, SqlQna>();
+            services.AddScoped<IPostCategory, SqlPostCategory>();
+            services.AddScoped<IPostType, SqlPostType>();
             services.AddScoped<IOptions, SqlOptions>();
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSwaggerGen(c =>

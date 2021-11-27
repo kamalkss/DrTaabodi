@@ -13,12 +13,15 @@ namespace DrTaabodi.WebApi.Profiles
             CreateMap<CreatePosts, PstTbl>();
             CreateMap<PstTbl,CreatePosts>();
             CreateMap<ReadPosts, PstTbl>();
+            CreateMap<CreatePostWithTypeAndCategory,PstTbl>();
+            CreateMap<PstTbl, CreatePostWithTypeAndCategory>();
 
             CreateMap<PstTbl, ReadPosts>().ReverseMap();
             CreateMap<CreatePosts, PstTbl>().ReverseMap();
             CreateMap<PstTbl, CreatePosts>().ReverseMap();
             CreateMap<ReadPosts, PstTbl>().ReverseMap();
-
+            CreateMap<CreatePostWithTypeAndCategory, PstTbl>().ReverseMap();
+            CreateMap<PstTbl, CreatePostWithTypeAndCategory>().ReverseMap();
         }
 
     }
