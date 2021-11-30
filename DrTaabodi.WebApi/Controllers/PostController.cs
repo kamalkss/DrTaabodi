@@ -89,6 +89,8 @@ namespace DrTaabodi.WebApi.Controllers
                 mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(Post.PostCategory));
             if (Post.PostType != null && Post.PostType != Guid.Empty && Post.PostType != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
+            //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            //    mapPost.
 
             var newPost = _post.CreatePost(mapPost);
 

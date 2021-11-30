@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace DrTaabodi.WebApi.DTO.Meta
 {
@@ -8,5 +9,7 @@ namespace DrTaabodi.WebApi.DTO.Meta
         public string OptionKey { get; set; }
         [Required]
         public string OptionValue { get; set; }
+        
+        public Guid PostId { get; set; }
     }
 }

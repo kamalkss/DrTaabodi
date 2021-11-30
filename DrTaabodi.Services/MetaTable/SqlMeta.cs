@@ -57,6 +57,12 @@ namespace DrTaabodi.Services.MetaTable
                 .Include(c => c.PstTbls).ToListAsync();
         }
 
+        public async Task<IEnumerable<MetaTbl>> GetMetasWithPostId(Guid id)
+        {
+            return await _context.MetaTbl
+                .Include(c => c.PstTbls.FirstOrDefault(e => e.PstId == id)).ToListAsync();
+        }
+
         public async Task<MetaTbl> GetPostById(Guid id)
         {
             return await _context.MetaTbl

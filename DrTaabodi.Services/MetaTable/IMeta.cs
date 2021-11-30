@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DrTaabodi.Services.MetaTable
 {
-    internal interface IMeta
+    public interface IMeta
     {
         public Task<bool> SaveChanges();
         public Task<IEnumerable<MetaTbl>> GetAllPosts();
@@ -15,6 +15,7 @@ namespace DrTaabodi.Services.MetaTable
         public Task<ServiceResponse<MetaTbl>> CreatePost(MetaTbl WebPost);
         //public ServiceResponse<bool> UpdatePostType(Guid id, PstType PostType);
         public Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, MetaTbl postStatus);
+        Task<IEnumerable<MetaTbl>> GetMetasWithPostId(Guid id);
         
     }
 }

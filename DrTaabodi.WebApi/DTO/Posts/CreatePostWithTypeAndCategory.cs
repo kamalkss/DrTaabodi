@@ -12,5 +12,6 @@ namespace DrTaabodi.WebApi.DTO.Posts
         public Guid PstTbleParent { get; set; }
         public Guid PostCategory { get; set; }
         public Guid PostType { get; set; }
+        public Guid Meta { get; set; }
     }
 }
