@@ -69,14 +69,14 @@ namespace DrTaabodi.Data.Migrations
                     CategoryName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PostCategoryTblPostCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PostCategoryTbl", x => x.PostCategoryId);
                     table.ForeignKey(
-                        name: "FK_PostCategoryTbl_PostCategoryTbl_PostCategoryTblPostCategoryId",
-                        column: x => x.PostCategoryTblPostCategoryId,
+                        name: "FK_PostCategoryTbl_PostCategoryTbl_ParentId",
+                        column: x => x.ParentId,
                         principalTable: "PostCategoryTbl",
                         principalColumn: "PostCategoryId");
                 });
@@ -89,14 +89,14 @@ namespace DrTaabodi.Data.Migrations
                     PostTypeName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PostTypeTblPostTypeId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PostTypeTbl", x => x.PostTypeId);
                     table.ForeignKey(
-                        name: "FK_PostTypeTbl_PostTypeTbl_PostTypeTblPostTypeId",
-                        column: x => x.PostTypeTblPostTypeId,
+                        name: "FK_PostTypeTbl_PostTypeTbl_ParentId",
+                        column: x => x.ParentId,
                         principalTable: "PostTypeTbl",
                         principalColumn: "PostTypeId");
                 });
@@ -418,9 +418,9 @@ namespace DrTaabodi.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostCategoryTbl_PostCategoryTblPostCategoryId",
+                name: "IX_PostCategoryTbl_ParentId",
                 table: "PostCategoryTbl",
-                column: "PostCategoryTblPostCategoryId");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostCategoryTblPstTbl_PostTablePstId",
@@ -428,9 +428,9 @@ namespace DrTaabodi.Data.Migrations
                 column: "PostTablePstId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostTypeTbl_PostTypeTblPostTypeId",
+                name: "IX_PostTypeTbl_ParentId",
                 table: "PostTypeTbl",
-                column: "PostTypeTblPostTypeId");
+                column: "ParentId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PostTypeTblPstTbl_PostTypeTablePostTypeId",

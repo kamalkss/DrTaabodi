@@ -54,7 +54,7 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("PostCategoryTblPostCategoryId")
+                    b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedData")
@@ -62,7 +62,7 @@ namespace DrTaabodi.Data.Migrations
 
                     b.HasKey("PostCategoryId");
 
-                    b.HasIndex("PostCategoryTblPostCategoryId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("PostCategoryTbl");
                 });
@@ -76,19 +76,19 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PostTypeName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PostTypeTblPostTypeId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("UpdatedData")
                         .HasColumnType("datetime2");
 
                     b.HasKey("PostTypeId");
 
-                    b.HasIndex("PostTypeTblPostTypeId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("PostTypeTbl");
                 });
@@ -474,16 +474,20 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
                 {
-                    b.HasOne("DrTaabodi.Data.Models.PostCategoryTbl", null)
-                        .WithMany("PostCategoryParent")
-                        .HasForeignKey("PostCategoryTblPostCategoryId");
+                    b.HasOne("DrTaabodi.Data.Models.PostCategoryTbl", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PostTypeTbl", b =>
                 {
-                    b.HasOne("DrTaabodi.Data.Models.PostTypeTbl", null)
-                        .WithMany("PostTypeParent")
-                        .HasForeignKey("PostTypeTblPostTypeId");
+                    b.HasOne("DrTaabodi.Data.Models.PostTypeTbl", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
@@ -617,12 +621,12 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
                 {
-                    b.Navigation("PostCategoryParent");
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PostTypeTbl", b =>
                 {
-                    b.Navigation("PostTypeParent");
+                    b.Navigation("Children");
                 });
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
