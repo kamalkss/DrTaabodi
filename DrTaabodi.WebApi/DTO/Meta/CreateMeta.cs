@@ -1,15 +1,13 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DrTaabodi.WebApi.DTO.Meta
+namespace DrTaabodi.WebApi.DTO.Meta;
+
+public class CreateMeta
 {
-    public class CreateMeta
-    {
-        [Required]
-        public string OptionKey { get; set; }
-        [Required]
-        public string OptionValue { get; set; }
-        
-        public Guid PostId { get; set; }
-    }
+    [Required] public string OptionKey { get; set; }
+
+    [Required] public string OptionValue { get; set; }
+
+    public Guid PostId { get; set; }
 }

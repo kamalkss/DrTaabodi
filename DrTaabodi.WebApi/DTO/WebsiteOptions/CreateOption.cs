@@ -1,15 +1,13 @@
-﻿using DrTaabodi.WebApi.DTO.Posts;
-using System;
+﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DrTaabodi.WebApi.DTO.WebsiteOptions
+namespace DrTaabodi.WebApi.DTO.WebsiteOptions;
+
+public class CreateOption
 {
-    public class CreateOption
-    {
-        [Required]
-        public string OptionKey { get; set; }
-        [Required]
-        public string OptionValue { get; set; }
-        public Guid PostId { get; set; }
-    }
+    [Required] public string OptionKey { get; set; }
+
+    [Required] public string OptionValue { get; set; }
+
+    public Guid PostId { get; set; }
 }

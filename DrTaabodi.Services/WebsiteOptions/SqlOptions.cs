@@ -1,89 +1,86 @@
-﻿using DrTaabodi.Data.DatabaseContext;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace DrTaabodi.Services.WebsiteOptions
+namespace DrTaabodi.Services.WebsiteOptions;
+
+public class SqlOptions : IOptions
 {
-    public class SqlOptions : IOptions
+    private readonly DrTaabodiDbContext _context;
+
+    public SqlOptions(DrTaabodiDbContext context)
     {
-        private readonly DrTaabodiDbContext _context;
+        _context = context;
+    }
 
-        public SqlOptions(DrTaabodiDbContext context)
+    public async Task<ServiceResponse<WebsiteOptionsTbl>> CreateOption(WebsiteOptionsTbl WebUser)
+    {
+        try
         {
-            _context = context;
-        }
-        public async Task<ServiceResponse<WebsiteOptionsTbl>> CreateOption(WebsiteOptionsTbl WebUser)
-        {
-            try
+            await _context.WebsiteOptionsTbls.AddAsync(WebUser);
+            await SaveChanges();
+            return new ServiceResponse<WebsiteOptionsTbl>
             {
-                
-                await _context.WebsiteOptionsTbls.AddAsync(WebUser);
-                await SaveChanges();
-                return new ServiceResponse<WebsiteOptionsTbl>
-                {
-                    IsSucceess = true,
-                    Data = WebUser,
-                    Messege = "New user Added",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
+                IsSucceess = true,
+                Data = WebUser,
+                Messege = "New user Added",
+                Time = DateTime.UtcNow
+            };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<WebsiteOptionsTbl>
             {
-                return new ServiceResponse<WebsiteOptionsTbl>
-                {
-                    IsSucceess = false,
-                    Data = null,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = false,
+                Data = null,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
+    }
 
-        public async Task<IEnumerable<WebsiteOptionsTbl>> GetWebsiteOptionsAsync()
-        {
-            return await _context.WebsiteOptionsTbls.ToListAsync();
-        }
+    public async Task<IEnumerable<WebsiteOptionsTbl>> GetWebsiteOptionsAsync()
+    {
+        return await _context.WebsiteOptionsTbls.ToListAsync();
+    }
 
-        public async Task<WebsiteOptionsTbl> GetWebsiteOptionsById(string Id)
-        {
-            return await _context.WebsiteOptionsTbls.FirstOrDefaultAsync(c => c.OptionKey == Id);
-        }
+    public async Task<WebsiteOptionsTbl> GetWebsiteOptionsById(string Id)
+    {
+        return await _context.WebsiteOptionsTbls.FirstOrDefaultAsync(c => c.OptionKey == Id);
+    }
 
-        public async Task<bool> SaveChanges()
-        {
-            return await _context.SaveChangesAsync() >= 0;
-        }
+    public async Task<bool> SaveChanges()
+    {
+        return await _context.SaveChangesAsync() >= 0;
+    }
 
-        public async Task<ServiceResponse<bool>> UpdateOption(string id, WebsiteOptionsTbl WebUser)
+    public async Task<ServiceResponse<bool>> UpdateOption(string id, WebsiteOptionsTbl WebUser)
+    {
+        try
         {
-            try
+            var UpdatedPost = _context.WebsiteOptionsTbls.Find(id);
+            _context.Entry(UpdatedPost).CurrentValues.SetValues(WebUser);
+            await SaveChanges();
+            return new ServiceResponse<bool>
             {
-                var UpdatedPost = _context.WebsiteOptionsTbls.Find(id);
-                _context.Entry(UpdatedPost).CurrentValues.SetValues(WebUser);
-                await SaveChanges();
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = true,
-                    Data = true,
-                    Messege = "New user Added",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
+                IsSucceess = true,
+                Data = true,
+                Messege = "New user Added",
+                Time = DateTime.UtcNow
+            };
+        }
+        catch (Exception e)
+        {
+            return new ServiceResponse<bool>
             {
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = false,
-                    Data = false,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = false,
+                Data = false,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
     }
 }

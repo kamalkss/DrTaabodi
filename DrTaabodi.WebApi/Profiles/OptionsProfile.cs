@@ -2,16 +2,15 @@
 using DrTaabodi.Data.Models;
 using DrTaabodi.WebApi.DTO.WebsiteOptions;
 
-namespace DrTaabodi.WebApi.Profiles
+namespace DrTaabodi.WebApi.Profiles;
+
+public class OptionsProfile : Profile
 {
-    public class OptionsProfile: Profile
+    public OptionsProfile()
     {
-        public OptionsProfile()
-        {
-            CreateMap<CreateOption, WebsiteOptionsTbl>();
-            CreateMap<WebsiteOptionsTbl, UpdateOption>();
-            CreateMap<CreateOption,WebsiteOptionsTbl>().ReverseMap();
-            CreateMap<WebsiteOptionsTbl,UpdateOption>().ReverseMap();
-        }
+        CreateMap<CreateOption, WebsiteOptionsTbl>();
+        CreateMap<WebsiteOptionsTbl, UpdateOption>();
+        CreateMap<CreateOption, WebsiteOptionsTbl>().ReverseMap();
+        CreateMap<WebsiteOptionsTbl, UpdateOption>().ReverseMap();
     }
 }

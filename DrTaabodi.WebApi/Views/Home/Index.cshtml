@@ -1,5 +1,5 @@
-﻿@model Dictionary<string, string>
-@using Newtonsoft.Json.Linq
+﻿@using Newtonsoft.Json.Linq
+@model Dictionary<string, string>
 @{
     ViewBag.ShowMenu = false;
 }
@@ -39,9 +39,9 @@
     </div>
 </nav>
 
-<div class="position-relative overflow-hidden" id="home-page" data-on-scroll-change style="height:80vh; margin-bottom: -60vh">
+<div class="position-relative overflow-hidden" id="home-page" data-on-scroll-change style="height: 80vh; margin-bottom: -60vh">
     @Html.Partial("~/Views/Home/Index/Carousel.cshtml")
-    <div class="position-absolute abs-fill" style="background:#00000099">
+    <div class="position-absolute abs-fill" style="background: #00000099">
     </div>
 </div>
 
@@ -50,8 +50,8 @@
 
     <div class="row align-items-center mt-3 mx-auto" style="max-width: 750px">
         <div class="col-sm-4">
-            <div class="aspect-100 rounded-circle" style="border:5px solid white">
-                <img src="@Model.GetValueOrDefault("general_profile_image")" class="img-cover" />
+            <div class="aspect-100 rounded-circle" style="border: 5px solid white">
+                <img src="@Model.GetValueOrDefault("general_profile_image")" class="img-cover"/>
             </div>
         </div>
         <div class="col-sm text-center text-sm-start">
@@ -60,11 +60,11 @@
                 @Model.GetValueOrDefault("general_profile_first_title")
             </h1>
 
-            <div style="color:#efefef">
+            <div style="color: #efefef">
                 @Model.GetValueOrDefault("general_profile_second_title")
             </div>
 
-            <h3 class="text-justify mt-3" style="color:white">
+            <h3 class="text-justify mt-3" style="color: white">
                 @Model.GetValueOrDefault("general_profile_third_title")
             </h3>
 
@@ -72,7 +72,7 @@
     </div>
 
 
-    <div class="mt-4 bg-white p-3 shadow-sm" style="min-height:30vh;">
+    <div class="mt-4 bg-white p-3 shadow-sm" style="min-height: 30vh;">
 
         <h1 class="h4 text-center mt-4">
             خدمات قابل ارائه
@@ -87,11 +87,11 @@
 
                     <div class="mx-auto" style="max-width: 130px">
                         <div class="aspect-60">
-                            <img src="@(item["icon"] ?? "")" class="img-contain" />
+                            <img src="@(item["icon"] ?? "")" class="img-contain"/>
                         </div>
                     </div>
 
-                    <div class="fw-bold mt-2" style="font-size:1.3rem">
+                    <div class="fw-bold mt-2" style="font-size: 1.3rem">
                         @(item["title"] ?? "")
                     </div>
 
@@ -114,7 +114,7 @@
 
             <div class="col-sm p-4">
                 <div>
-                    <img src="@Model.GetValueOrDefault("introduction_image")" class="shadow" />
+                    <img src="@Model.GetValueOrDefault("introduction_image")" class="shadow"/>
                 </div>
             </div>
 
@@ -200,22 +200,22 @@
                                 @switch (item["social"].ToString())
                                 {
                                     case "telegram":
-                                        <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon"/>
                                         break;
                                     case "instagram":
-                                        <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon"/>
                                         break;
                                     case "facebook":
-                                        <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon"/>
                                         break;
                                     case "twitter":
-                                        <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon"/>
                                         break;
                                     case "linkedin":
-                                        <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon"/>
                                         break;
                                     case "youtube":
-                                        <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon"/>
                                         break;
                                 }
                             </a>
@@ -226,7 +226,7 @@
             </div>
 
             <div class="col-sm p-4">
-                <img src="@Model.GetValueOrDefault("contact_image")" class="shadow-sm" />
+                <img src="@Model.GetValueOrDefault("contact_image")" class="shadow-sm"/>
             </div>
         </div>
 
@@ -248,15 +248,15 @@
                 <form @@submit.prevent="onFormSubmit" v-if="!success">
 
                     <div class="mt-2">
-                        <input type="text" class="form-control" v-model="model.fullname" required placeholder="نام و نام خانوادگی" />
+                        <input type="text" class="form-control" v-model="model.fullname" required placeholder="نام و نام خانوادگی"/>
                     </div>
 
                     <div class="mt-2">
-                        <input type="email" class="form-control" v-model="model.email" required placeholder="ایمیل" />
+                        <input type="email" class="form-control" v-model="model.email" required placeholder="ایمیل"/>
                     </div>
 
                     <div class="mt-2">
-                        <input type="text" class="form-control" v-model="model.subject" placeholder="موضوع" />
+                        <input type="text" class="form-control" v-model="model.subject" placeholder="موضوع"/>
                     </div>
 
                     <div class="mt-2">
@@ -316,22 +316,22 @@
                                 @switch (item["social"].ToString())
                                 {
                                     case "telegram":
-                                        <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon"/>
                                         break;
                                     case "instagram":
-                                        <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon"/>
                                         break;
                                     case "facebook":
-                                        <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon"/>
                                         break;
                                     case "twitter":
-                                        <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon"/>
                                         break;
                                     case "linkedin":
-                                        <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon"/>
                                         break;
                                     case "youtube":
-                                        <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon" />
+                                        <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon"/>
                                         break;
                                 }
                             </a>
@@ -354,24 +354,24 @@
         const ChangeBorder = document.getElementById('biograpghy').offsetTop;
 
 
-        window.addEventListener('scroll', function () {
-            if (window.scrollY >= ChangeBorder && !navbar.classList.contains('scrolled'))
-                navbar.classList.add('scrolled');
-            if (window.scrollY < ChangeBorder && navbar.classList.contains('scrolled'))
-                navbar.classList.remove('scrolled');
+        window.addEventListener('scroll',
+            function() {
+                if (window.scrollY >= ChangeBorder && !navbar.classList.contains('scrolled'))
+                    navbar.classList.add('scrolled');
+                if (window.scrollY < ChangeBorder && navbar.classList.contains('scrolled'))
+                    navbar.classList.remove('scrolled');
 
 
-            $('[data-on-scroll-change]').each(function (indx, elm) {
-                const offsetTop = elm.offsetTop - 77;
-                const offsetBottom = elm.offsetTop + elm.offsetHeight - 77;
+                $('[data-on-scroll-change]').each(function(indx, elm) {
+                    const offsetTop = elm.offsetTop - 77;
+                    const offsetBottom = elm.offsetTop + elm.offsetHeight - 77;
 
-                if (window.scrollY >= offsetTop && offsetBottom > window.scrollY)
-                    $(`.nav-link[href="#${elm.id}"]:not(.active)`).addClass('active');
-                else if (offsetTop < window.scrollY || offsetBottom >= window.scrollY)
-                    $(`.nav-link[href="#${elm.id}"].active`).removeClass('active');
-            })
-        })
-
+                    if (window.scrollY >= offsetTop && offsetBottom > window.scrollY)
+                        $(`.nav-link[href="#${elm.id}"]:not(.active)`).addClass('active');
+                    else if (offsetTop < window.scrollY || offsetBottom >= window.scrollY)
+                        $(`.nav-link[href="#${elm.id}"].active`).removeClass('active');
+                });
+            });
 
 
         function ShowImageOfDoctor(elm) {
@@ -405,7 +405,7 @@
                         },
                         complete: () => this.working = false,
                         success: () => this.success = true
-                    })
+                    });
                 }
             }
         }).$mount('#contact-us-body');

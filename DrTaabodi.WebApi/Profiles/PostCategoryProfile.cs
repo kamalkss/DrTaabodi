@@ -1,23 +1,21 @@
 ﻿using AutoMapper;
 using DrTaabodi.Data.Models;
 using DrTaabodi.WebApi.DTO.PostCategory;
-using DrTaabodi.WebApi.DTO.PostType;
 
-namespace DrTaabodi.WebApi.Profiles
+namespace DrTaabodi.WebApi.Profiles;
+
+public class PostCategoryProfile : Profile
 {
-    public class PostCategoryProfile : Profile
+    public PostCategoryProfile()
     {
-        public PostCategoryProfile()
-        {
-            CreateMap<CreatePostCategory, PostCategoryTbl>();
-            CreateMap<ReadPostCategory, PostCategoryTbl>();
-            CreateMap<PostCategoryTbl, CreatePostCategory>();
-            CreateMap<PostCategoryTbl, ReadPostCategory>();
+        CreateMap<CreatePostCategory, PostCategoryTbl>();
+        CreateMap<ReadPostCategory, PostCategoryTbl>();
+        CreateMap<PostCategoryTbl, CreatePostCategory>();
+        CreateMap<PostCategoryTbl, ReadPostCategory>();
 
-            CreateMap<CreatePostCategory, PostTypeTbl>().ReverseMap();
-            CreateMap<ReadPostCategory, PostTypeTbl>().ReverseMap();
-            CreateMap<PostCategoryTbl, CreatePostCategory>().ReverseMap();
-            CreateMap<PostCategoryTbl, ReadPostCategory>().ReverseMap();
-        }
+        CreateMap<CreatePostCategory, PostTypeTbl>().ReverseMap();
+        CreateMap<ReadPostCategory, PostTypeTbl>().ReverseMap();
+        CreateMap<PostCategoryTbl, CreatePostCategory>().ReverseMap();
+        CreateMap<PostCategoryTbl, ReadPostCategory>().ReverseMap();
     }
 }

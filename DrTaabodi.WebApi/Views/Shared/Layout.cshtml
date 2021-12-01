@@ -1,223 +1,223 @@
-﻿@inject DrTaabodi.Data.DatabaseContext.DrTaabodiDbContext dbContext
-@using Newtonsoft.Json.Linq
+﻿@using DrTaabodi.Data.DatabaseContext
 @using Microsoft.AspNetCore.Http.Extensions
+@using Newtonsoft.Json.Linq
+@inject DrTaabodiDbContext dbContext
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
     <title>
         @if (ViewData["Title"] != null)
         {
-            @( ViewData["Title"] )
+            @(ViewData["Title"])
         }
     </title>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="@( ViewData["Description"]  ?? "")" />
-    <link rel="canonical" href="@UriHelper.GetDisplayUrl(Context.Request)" />
+    <meta name="description" content="@(ViewData["Description"] ?? "")"/>
+    <link rel="canonical" href="@Context.Request.GetDisplayUrl()"/>
 
-    <meta property="og:title" content="@( ViewData["Title"]  ?? "")" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="@UriHelper.GetDisplayUrl(Context.Request)" />
-    <meta property="og:image" content="https://ermateb.com/templateAssets/icons/ermateb-logo.png" />
-    <meta property="og:description" content="@( ViewData["Description"]  ?? "")" />
+    <meta property="og:title" content="@(ViewData["Title"] ?? "")"/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="@Context.Request.GetDisplayUrl()"/>
+    <meta property="og:image" content="https://ermateb.com/templateAssets/icons/ermateb-logo.png"/>
+    <meta property="og:description" content="@(ViewData["Description"] ?? "")"/>
 
     @{
-        var general_profile_image =  dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_profile_image");
+        var general_profile_image = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_profile_image");
     }
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="@( ViewData["Title"]  ?? "")" />
-    <meta name="twitter:description" content="@( ViewData["Description"]  ?? "")" />
-@*    <meta name="twitter:image" content="@(general_profile_image.OptionValue ?? "")" />
-*@    <meta name="twitter:image:alt" content="@( ViewData["Title"]  ?? "")" />
+    <meta name="twitter:card" content="summary"/>
+    <meta name="twitter:title" content="@(ViewData["Title"] ?? "")"/>
+    <meta name="twitter:description" content="@(ViewData["Description"] ?? "")"/>
+    @*    <meta name="twitter:image" content="@(general_profile_image.OptionValue ?? "")" />
+*@ <meta name="twitter:image:alt" content="@(ViewData["Title"] ?? "")"/>
 
-    <link href="~/Resources/frameworks/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet" />
-    <link href="~/Resources/style/fonts/fonts.css" rel="stylesheet" />
-    <link href="~/Resources/style/StyleSheet.css" rel="stylesheet" />
-    <link href="~/Resources/style/IndexPage.css" rel="stylesheet" />
-    <link href="~/Resources/frameworks/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet" />
+    <link href="~/Resources/frameworks/bootstrap/css/bootstrap.rtl.min.css" rel="stylesheet"/>
+    <link href="~/Resources/style/fonts/fonts.css" rel="stylesheet"/>
+    <link href="~/Resources/style/StyleSheet.css" rel="stylesheet"/>
+    <link href="~/Resources/style/IndexPage.css" rel="stylesheet"/>
+    <link href="~/Resources/frameworks/fontawesome-free-5.15.4-web/css/all.min.css" rel="stylesheet"/>
 
 </head>
 <body>
 
 
-    <div class="min-vh-100 d-flex flex-column">
+<div class="min-vh-100 d-flex flex-column">
 
-        @if (ViewBag.ShowMenu == null || ViewBag.ShowMenu == true)
-        {
-            <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="website-main-navigation">
-                <div class="container-fluid">
-                    <a class="navbar-brand d-flex align-items-center" href="/">
-                        <div class="" style="width: 40px">
-                            <div class="aspect-100 rounded-circle">
-                                <img src="~/Resources/images/Doctor.png" class="img-cover" />
-                            </div>
+    @if (ViewBag.ShowMenu == null || ViewBag.ShowMenu == true)
+    {
+        <nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="website-main-navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand d-flex align-items-center" href="/">
+                    <div class="" style="width: 40px">
+                        <div class="aspect-100 rounded-circle">
+                            <img src="~/Resources/images/Doctor.png" class="img-cover"/>
                         </div>
-                        <div class="ms-1">دکتر علیرضا تعبدی</div>
-                    </a>
-
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                            <li class="nav-item">
-                                <a class="nav-link" href="/#home-page">خانه</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/#about-doctor">معرفی</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link" href="/#contact-us">تماس با ما</a>
-                            </li>
-
-                            <li class="nav-item">
-                                <a class="nav-link @((Context.Request.Path.ToString().ToLower() == "/faq" ? "active" : ""))" href="/FAQ">سوالات متداول</a>
-                            </li>
-                        </ul>
                     </div>
+                    <div class="ms-1">دکتر علیرضا تعبدی</div>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#home-page">خانه</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#about-doctor">معرفی</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#clinics">مرکز فعالیت</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="/#contact-us">تماس با ما</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link @(Context.Request.Path.ToString().ToLower() == "/faq" ? "active" : "")" href="/FAQ">سوالات متداول</a>
+                        </li>
+                    </ul>
                 </div>
-            </nav>
-        }
+            </div>
+        </nav>
+    }
 
 
-        @RenderBody()
+    @RenderBody()
 
 
-        <footer id="footer" class="text-secondary mt-auto">
+    <footer id="footer" class="text-secondary mt-auto">
 
-            <div class="container mt-3">
+        <div class="container mt-3">
 
-                <div class="row">
+            <div class="row">
 
-                    <div class="col-sm text-center text-sm-start">
+                <div class="col-sm text-center text-sm-start">
 
-                        <h1>
-                            @{
-                                var title = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_meta_title");
-                                if (title != null)
+                    <h1>
+                        @{
+                            var title = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_meta_title");
+                            if (title != null)
+                            {
+                                <span>@title.OptionValue</span>
+                            }
+                        }
+                    </h1>
+                    <p>
+                        @{
+                            var description = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_meta_description");
+                            if (description != null)
+                            {
+                                <span>@description.OptionValue</span>
+                            }
+                        }
+                    </p>
+                </div>
+
+                <div class="col-sm my-3 my-sm-0">
+
+                    <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
+
+                        @{
+                            var socials = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_socials");
+                            if (socials != null)
+                            {
+                                foreach (var item in JToken.Parse(socials.OptionValue ?? "[]"))
                                 {
-                                    <span>@title.OptionValue</span>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-secondary" href="@(item["url"] ?? "")">
+                                            @switch (item["social"].ToString())
+                                            {
+                                                case "telegram":
+                                                    <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon"/>
+                                                    break;
+                                                case "instagram":
+                                                    <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon"/>
+                                                    break;
+                                                case "facebook":
+                                                    <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon"/>
+                                                    break;
+                                                case "twitter":
+                                                    <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon"/>
+                                                    break;
+                                                case "linkedin":
+                                                    <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon"/>
+                                                    break;
+                                                case "youtube":
+                                                    <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon"/>
+                                                    break;
+                                            }
+                                        </a>
+                                    </li>
                                 }
                             }
-                        </h1>
-                        <p>
-                            @{
-                                var description = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "general_meta_description");
-                                if (description != null)
+                        }
+
+                    </ul>
+
+                </div>
+
+                <div class="col-sm">
+
+                    <p class="text-center text-sm-start">
+                        @{
+                            var address = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_address");
+                            if (address != null)
+                            {
+                                <span>@address.OptionValue</span>
+                            }
+                        }
+                    </p>
+
+                    <ul class="mt-3 nav justify-content-center">
+
+                        @{
+                            var phones = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_phones");
+                            if (phones != null)
+                            {
+                                foreach (var item in JToken.Parse(phones.OptionValue ?? "[]"))
                                 {
-                                    <span>@description.OptionValue</span>
+                                    <li class="nav-item">
+                                        <a class="nav-link text-light" href="tel:@(item["number"] ?? "")">
+                                            @if (item["type"].ToString() == "mobile")
+                                            {
+                                                <span class="fa fa-mobile-alt me-2"></span>
+                                            }
+                                            @if (item["type"].ToString() == "phone")
+                                            {
+                                                <span class="fa fa-phone-alt me-2"></span>
+                                            }
+                                            @(item["number"] ?? "")
+                                        </a>
+                                    </li>
                                 }
                             }
-                        </p>
-                    </div>
+                        }
 
-                    <div class="col-sm my-3 my-sm-0">
-
-                        <ul class="mt-3 nav justify-content-center" dir="ltr" id="clinic-socials">
-
-                            @{
-                                var socials = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_socials");
-                                if (socials != null)
-                                {
-                                    foreach (var item in JToken.Parse(socials.OptionValue ?? "[]"))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-secondary" href="@(item["url"] ?? "")">
-                                                @switch (item["social"].ToString())
-                                                {
-                                                    case "telegram":
-                                                        <img src="~/Resources/images/icons/socials/6214504_air_telegram_paper_logo_airplane_plane.svg" class="social-icon" />
-                                                        break;
-                                                    case "instagram":
-                                                        <img src="~/Resources/images/icons/socials/6214515_instagram_logo.svg" class="social-icon" />
-                                                        break;
-                                                    case "facebook":
-                                                        <img src="~/Resources/images/icons/socials/6214511_logo_facebook.svg" class="social-icon" />
-                                                        break;
-                                                    case "twitter":
-                                                        <img src="~/Resources/images/icons/socials/6214502_logo_twitter_bird.svg" class="social-icon" />
-                                                        break;
-                                                    case "linkedin":
-                                                        <img src="~/Resources/images/icons/socials/6214505_logo_linkedin.svg" class="social-icon" />
-                                                        break;
-                                                    case "youtube":
-                                                        <img src="~/Resources/images/icons/socials/6214533_youtube_logo.svg" class="social-icon" />
-                                                        break;
-                                                }
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            }
-
-                        </ul>
-
-                    </div>
-
-                    <div class="col-sm">
-
-                        <p class="text-center text-sm-start">
-                            @{
-                                var address = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_address");
-                                if (address != null)
-                                {
-                                    <span>@address.OptionValue</span>
-                                }
-                            }
-                        </p>
-
-                        <ul class="mt-3 nav justify-content-center">
-
-                            @{
-                                var phones = dbContext.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == "contact_phones");
-                                if (phones != null)
-                                {
-                                    foreach (var item in JToken.Parse(phones.OptionValue ?? "[]"))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="nav-link text-light" href="tel:@(item["number"] ?? "")">
-                                                @if (item["type"].ToString() == "mobile")
-                                                {
-                                                    <span class="fa fa-mobile-alt me-2"></span>
-                                                }
-                                                @if (item["type"].ToString() == "phone")
-                                                {
-                                                    <span class="fa fa-phone-alt me-2"></span>
-                                                }
-                                                @(item["number"] ?? "")
-                                            </a>
-                                        </li>
-                                    }
-                                }
-                            }
-
-                        </ul>
-
-                    </div>
+                    </ul>
 
                 </div>
 
             </div>
 
-        </footer>
-    </div>
+        </div>
+
+    </footer>
+</div>
 
 
+<script src="~/Resources/frameworks/bootstrap/js/bootstrap.min.js"></script>
+<script src="~/Resources/frameworks/jquery-3.6.0.min.js"></script>
+<script src="~/Resources/frameworks/vue.min.js"></script>
 
-    <script src="~/Resources/frameworks/bootstrap/js/bootstrap.min.js"></script>
-    <script src="~/Resources/frameworks/jquery-3.6.0.min.js"></script>
-    <script src="~/Resources/frameworks/vue.min.js"></script>
 
-
-    @RenderSection("scripts", false)
+@RenderSection("scripts", false)
 
 </body>
 </html>

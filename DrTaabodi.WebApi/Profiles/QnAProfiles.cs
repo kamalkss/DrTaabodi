@@ -1,17 +1,15 @@
 ﻿using AutoMapper;
 using DrTaabodi.Data.Models;
-using DrTaabodi.WebApi.DTO.Posts;
 using DrTaabodi.WebApi.DTO.QnAs;
 
-namespace DrTaabodi.WebApi.Profiles
+namespace DrTaabodi.WebApi.Profiles;
+
+public class QnAProfiles : Profile
 {
-    public class QnAProfiles:Profile
+    public QnAProfiles()
     {
-        public QnAProfiles()
-        {
-            CreateMap<QnATbl, ReadQnAs>();
-            CreateMap<CreateQnAs, QnATbl>();
-            CreateMap<ReadQnAs, QnATbl>();
-        }
+        CreateMap<QnATbl, ReadQnAs>();
+        CreateMap<CreateQnAs, QnATbl>();
+        CreateMap<ReadQnAs, QnATbl>();
     }
 }

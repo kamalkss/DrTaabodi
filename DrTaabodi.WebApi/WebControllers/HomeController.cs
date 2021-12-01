@@ -1,39 +1,38 @@
-﻿using AutoMapper;
+﻿using System.Linq;
 using DrTaabodi.Data.DatabaseContext;
-using DrTaabodi.Services.QnATable;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace DrTaabodi.WebControllers
+namespace DrTaabodi.WebControllers;
+
+public class HomeController : Controller
 {
-    public class HomeController : Controller
+    private readonly DrTaabodiDbContext _db;
+
+    public HomeController(DrTaabodiDbContext db)
     {
-        private readonly DrTaabodiDbContext _db;
+        _db = db;
+    }
 
-        public HomeController(DrTaabodiDbContext db)
+    public IActionResult Index()
+    {
+        var model = _db.WebsiteOptionsTbls.Select(x => new {key = x.OptionKey, value = x.OptionValue})
+            .ToDictionary(x => x.key, x => x.value);
+        if (model.Count > 0)
         {
-            _db = db;
-        }
-        public IActionResult Index()
-        {
-            var model = _db.WebsiteOptionsTbls.Select(x => new { key = x.OptionKey, value = x.OptionValue }).ToDictionary(x => x.key, x => x.value);
-            if (model.Count > 0)
-            {
-                ViewData["Title"] = model.ContainsKey("general_meta_title") ? model["general_meta_title"] : "";
-                ViewData["Description"] = model.ContainsKey("general_meta_description") ? model["general_meta_description"] : "";
-            }
-            return View(model);
+            ViewData["Title"] = model.ContainsKey("general_meta_title") ? model["general_meta_title"] : "";
+            ViewData["Description"] =
+                model.ContainsKey("general_meta_description") ? model["general_meta_description"] : "";
         }
 
-        //what 
+        return View(model);
+    }
 
-        [Route("/faq"), ApiExplorerSettings(IgnoreApi = true)]
-        public IActionResult FAQ()
-        {
-            return View(_db.QnATbl.ToList());
-        }
+    //what 
+
+    [Route("/faq")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public IActionResult FAQ()
+    {
+        return View(_db.QnATbl.ToList());
     }
 }

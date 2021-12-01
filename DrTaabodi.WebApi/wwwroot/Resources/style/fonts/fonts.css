@@ -1,15 +1,15 @@
 ﻿@font-face {
     font-family: 'IRANSANS';
+    font-style: normal;
+    font-weight: normal;
     src: url('IRANSansWeb.ttf');
     src: url('IRANSansWeb.ttf') format('truetype');
-    font-weight:normal;
-    font-style:normal;
 }
 
 @font-face {
     font-family: 'IRANSANS-B';
+    font-style: normal;
+    font-weight: bold;
     src: url('IRANSansWeb_Bold.ttf');
     src: url('IRANSansWeb_Bold.ttf') format('truetype');
-    font-weight: bold;
-    font-style: normal;
 }

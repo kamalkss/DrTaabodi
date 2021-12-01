@@ -1,175 +1,173 @@
-﻿using DrTaabodi.Data.DatabaseContext;
-using DrTaabodi.Data.Models;
-using  Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
+using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
-namespace DrTaabodi.Services.PostTable
+namespace DrTaabodi.Services.PostTable;
+
+public class SqlPost : IPost
 {
-    public class SqlPost : IPost
+    private readonly DrTaabodiDbContext _context;
+
+    private readonly ILogger<SqlPost> _logger;
+    //private readonly PstTbl _pstTbl;
+
+    public SqlPost(DrTaabodiDbContext _db, ILogger<SqlPost> logger)
     {
-        private readonly DrTaabodiDbContext _context;
-        private readonly ILogger<SqlPost> _logger;
-        //private readonly PstTbl _pstTbl;
+        _context = _db;
+        _logger = logger;
+        // _pstTbl = pstTbl;
+    }
 
-        public SqlPost(DrTaabodiDbContext _db, ILogger<SqlPost> logger)
+    public async Task<bool> SaveChanges()
+    {
+        return await _context.SaveChangesAsync() >= 0;
+    }
+
+    public async Task<List<PstTbl>> GetAllPosts()
+    {
+        return await _context.PstTbl
+            .Include(c => c.UserTable)
+            .Include(c => c.PostTypeTable)
+            .Include(c => c.PostCategoryTable).ToListAsync();
+    }
+
+    public async Task<PstTbl> GetPostById(Guid id)
+    {
+        return await _context.PstTbl.Include(c => c.UserTable)
+            //.Include(c => c.PstTbleParent)
+            .Include(c => c.PostTypeTable)
+            .Include(c => c.PostCategoryTable).FirstOrDefaultAsync(p => p.PstId == id);
+    }
+
+    public async Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost)
+    {
+        _logger.LogInformation("Log for Create Post");
+        try
         {
-            _context = _db;
-            _logger = logger;
-            // _pstTbl = pstTbl;
+            WebPost.UpdatedData = DateTime.UtcNow;
+            WebPost.CreatedDate = DateTime.UtcNow;
+            //var user = WebPost.UserTable;
+
+            await _context.AddAsync(WebPost);
+            await SaveChanges();
+            return new ServiceResponse<PstTbl>
+            {
+                Data = WebPost,
+                IsSucceess = true,
+                Messege = "Post Created",
+                Time = DateTime.UtcNow
+            };
         }
-        public async Task<bool> SaveChanges()
+        catch (Exception e)
         {
-            return await _context.SaveChangesAsync() >= 0;
+            return new ServiceResponse<PstTbl>
+            {
+                Data = null,
+                IsSucceess = false,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
+    }
 
-        public async Task<List<PstTbl>> GetAllPosts()
+    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
+    {
+        var WebPost = _context.PstTbl.Find(id);
+        _logger.LogInformation("Log For Update Post");
+        try
         {
-            return await _context.PstTbl
-                .Include(c => c.UserTable)
-                .Include(c=>c.PostTypeTable)
-                .Include(c=>c.PostCategoryTable).ToListAsync();
+            //WebPost.PstStatus = UsrStatus;
+            UsrStatus.UpdatedData = DateTime.UtcNow;
+
+            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+
+
+            //_context.PstTbl.Update(WebPost);
+            await SaveChanges();
+            return new ServiceResponse<bool>
+            {
+                IsSucceess = true,
+                Data = true,
+                Messege = " Post Updated",
+                Time = DateTime.UtcNow
+            };
         }
-
-        public async Task<PstTbl> GetPostById(Guid id)
+        catch (Exception e)
         {
-            return await _context.PstTbl.Include(c => c.UserTable)
-                //.Include(c => c.PstTbleParent)
-                .Include(c => c.PostTypeTable)
-                .Include(c => c.PostCategoryTable).
-                FirstOrDefaultAsync(p => p.PstId == id);
+            return new ServiceResponse<bool>
+            {
+                IsSucceess = false,
+                Data = false,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
+    }
 
-        public async Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost)
+
+    public async Task<ServiceResponse<bool>> AddPostParent(Guid id, PstTbl postStatus)
+    {
+        var Child = _context.PstTbl.Find(id);
+        //var Parent = _context.PstTbl.Find(postStatus.PstTbleParent.PstId);
+        _logger.LogInformation("Log For Update Post");
+        try
         {
-            _logger.LogInformation("Log for Create Post");
-            try
+            //WebPost.PstType = UsrStatus;
+            Child.UpdatedData = DateTime.UtcNow;
+            await _context.PstTbl.AddAsync(Child);
+            await SaveChanges();
+            return new ServiceResponse<bool>
             {
-                WebPost.UpdatedData = DateTime.UtcNow;
-                WebPost.CreatedDate = DateTime.UtcNow;
-                //var user = WebPost.UserTable;
-
-                await _context.AddAsync(WebPost);
-                await SaveChanges();
-                return new ServiceResponse<PstTbl>
-                {
-                    Data = WebPost,
-                    IsSucceess = true,
-                    Messege = "Post Created",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
-            {
-                return new ServiceResponse<PstTbl>
-                {
-                    Data = null,
-                    IsSucceess = false,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = true,
+                Data = true,
+                Messege = " Post Updated",
+                Time = DateTime.UtcNow
+            };
         }
-
-        public async Task<ServiceResponse<bool>> UpdatePostType(Guid id, PstTbl UsrStatus)
+        catch (Exception e)
         {
-            var WebPost = _context.PstTbl.Find(id);
-            _logger.LogInformation("Log For Update Post");
-            try
+            return new ServiceResponse<bool>
             {
-                //WebPost.PstType = UsrStatus;
-                UsrStatus.UpdatedData = DateTime.UtcNow;
-
-                _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-                await SaveChanges();
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = true,
-                    Data = true,
-                    Messege = " Post Updated",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
-            {
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = false,
-                    Data = false,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = false,
+                Data = false,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
+    }
 
-        public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
+    public async Task<ServiceResponse<bool>> UpdatePostType(Guid id, PstTbl UsrStatus)
+    {
+        var WebPost = _context.PstTbl.Find(id);
+        _logger.LogInformation("Log For Update Post");
+        try
         {
-            var WebPost = _context.PstTbl.Find(id);
-            _logger.LogInformation("Log For Update Post");
-            try
+            //WebPost.PstType = UsrStatus;
+            UsrStatus.UpdatedData = DateTime.UtcNow;
+
+            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+            await SaveChanges();
+            return new ServiceResponse<bool>
             {
-                //WebPost.PstStatus = UsrStatus;
-                UsrStatus.UpdatedData = DateTime.UtcNow;
-
-                _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-
-
-                //_context.PstTbl.Update(WebPost);
-                await SaveChanges();
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = true,
-                    Data = true,
-                    Messege = " Post Updated",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
-            {
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = false,
-                    Data = false,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = true,
+                Data = true,
+                Messege = " Post Updated",
+                Time = DateTime.UtcNow
+            };
         }
-
-        
-
-        public async Task<ServiceResponse<bool>> AddPostParent(Guid id, PstTbl postStatus)
+        catch (Exception e)
         {
-            var  Child = _context.PstTbl.Find(id);
-            //var Parent = _context.PstTbl.Find(postStatus.PstTbleParent.PstId);
-            _logger.LogInformation("Log For Update Post");
-            try
+            return new ServiceResponse<bool>
             {
-                //WebPost.PstType = UsrStatus;
-                Child.UpdatedData = DateTime.UtcNow;
-                await _context.PstTbl.AddAsync(Child);
-                await SaveChanges();
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = true,
-                    Data = true,
-                    Messege = " Post Updated",
-                    Time = DateTime.UtcNow
-                };
-            }
-            catch (Exception e)
-            {
-                return new ServiceResponse<bool>
-                {
-                    IsSucceess = false,
-                    Data = false,
-                    Messege = e.Message,
-                    Time = DateTime.UtcNow
-                };
-            }
+                IsSucceess = false,
+                Data = false,
+                Messege = e.Message,
+                Time = DateTime.UtcNow
+            };
         }
     }
 }

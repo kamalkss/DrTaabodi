@@ -1,129 +1,120 @@
+using System;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Services.PostCategoryTable;
+using DrTaabodi.Services.PostTable;
+using DrTaabodi.Services.PostTypeTable;
+using DrTaabodi.Services.QnATable;
+using DrTaabodi.Services.UserTable;
+using DrTaabodi.Services.WebsiteOptions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Newtonsoft.Json.Serialization;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
-using DrTaabodi.Data;
-using DrTaabodi.Services.PostTable;
-using DrTaabodi.Services.QnATable;
-using DrTaabodi.Services.UserTable;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using DrTaabodi.Services.WebsiteOptions;
-using System.IO;
-using Microsoft.AspNetCore.Http;
-using DrTaabodi.Services.PostCategoryTable;
-using DrTaabodi.Services.PostTypeTable;
+using Newtonsoft.Json.Serialization;
 
-namespace DrTaabodi.WebApi
+namespace DrTaabodi.WebApi;
+
+public class Startup
 {
-    public class Startup
+    public Startup(IConfiguration configuration)
     {
-        public Startup(IConfiguration configuration)
-        {
-            Configuration = configuration;
-        }
+        Configuration = configuration;
+    }
 
-        public IConfiguration Configuration { get; }
+    public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
-        {
-
-            services.AddDbContext<Data.DatabaseContext.DrTaabodiDbContext>(options => options.UseSqlServer
+    // This method gets called by the runtime. Use this method to add services to the container.
+    public void ConfigureServices(IServiceCollection services)
+    {
+        services.AddDbContext<DrTaabodiDbContext>(options => options.UseSqlServer
             (Configuration.GetConnectionString("DrNullConnttion")));
 
-            services.AddControllers()
-                .AddJsonOptions(ops =>
+        services.AddControllers()
+            .AddJsonOptions(ops =>
+            {
+                ops.JsonSerializerOptions.IgnoreNullValues = true;
+                ops.JsonSerializerOptions.WriteIndented = true;
+                ops.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+                ops.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
+                ops.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+
+        services.AddControllers().AddNewtonsoftJson(s =>
+        {
+            s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            s.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+        });
+        //Some comment about automapper and api
+        services.AddControllers();
+        services.AddScoped<IUser, SqlUser>();
+        services.AddScoped<IPost, SqlPost>();
+        services.AddScoped<IQnA, SqlQna>();
+        services.AddScoped<IPostCategory, SqlPostCategory>();
+        services.AddScoped<IPostType, SqlPostType>();
+        services.AddScoped<IOptions, SqlOptions>();
+        services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+        services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "DrTaabodi", Version = "v1"}); });
+        services.AddControllersWithViews();
+
+        services.AddCors(x =>
+        {
+            x.AddPolicy("localhostVude",
+                b =>
                 {
-                    ops.JsonSerializerOptions.IgnoreNullValues = true;
-                    ops.JsonSerializerOptions.WriteIndented = true;
-                    ops.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
-                    ops.JsonSerializerOptions.DictionaryKeyPolicy = JsonNamingPolicy.CamelCase;
-                    ops.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
                 });
+        });
+    }
 
-            services.AddControllers().AddNewtonsoftJson(s =>
-            {
-                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                s.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
-            });
-            //Some comment about automapper and api
-            services.AddControllers();
-            services.AddScoped<IUser, SqlUser>();
-            services.AddScoped<IPost, SqlPost>();
-            services.AddScoped<IQnA, SqlQna>();
-            services.AddScoped<IPostCategory, SqlPostCategory>();
-            services.AddScoped<IPostType, SqlPostType>();
-            services.AddScoped<IOptions, SqlOptions>();
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DrTaabodi", Version = "v1" });
-            });
-            services.AddControllersWithViews();
+    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+    public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DrTaabodiDbContext db)
+    {
+        //db.Database.EnsureCreated();
 
-            services.AddCors(x =>
-            {
-                x.AddPolicy(name: "localhostVude", b =>
-                 {
-                     b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                 });
-            });
+
+        if (env.IsDevelopment())
+        {
+            app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DrTaabodi.WebApi v1"));
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Data.DatabaseContext.DrTaabodiDbContext db)
-        {
-            //db.Database.EnsureCreated();
 
-
-            if (env.IsDevelopment())
+        app.UseStaticFiles();
+        app.Map("/management",
+            config =>
             {
-                app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DrTaabodi.WebApi v1"));
-            }
-
-
-            app.UseStaticFiles();
-            app.Map("/management", config =>
-            {
-                config.Run(async h => {
+                config.Run(async h =>
+                {
                     await h.Response.SendFileAsync(Path.Combine(env.WebRootPath, "management/index.html"));
                 });
             });
 
-            app.UseCors("localhostVude");
+        app.UseCors("localhostVude");
 
-            app.UseHttpsRedirection();
-            //This is comment about routing
-            app.UseRouting();
+        app.UseHttpsRedirection();
+        //This is comment about routing
+        app.UseRouting();
 
-            app.UseAuthorization();
+        app.UseAuthorization();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-                endpoints.MapControllerRoute(
-                    name: "web-controllers",
-                    pattern: "{controller=Home}/{action=Index}/{id?}",
-                    defaults: new { Namespace = "DrTaabodi.WebControllers" }
-                    );
-            });
-            app.UseRouting();
-        }
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapControllers();
+            endpoints.MapControllerRoute(
+                "web-controllers",
+                "{controller=Home}/{action=Index}/{id?}",
+                new {Namespace = "DrTaabodi.WebControllers"}
+            );
+        });
+        app.UseRouting();
     }
 }

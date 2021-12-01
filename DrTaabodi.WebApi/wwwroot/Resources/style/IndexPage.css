@@ -1,55 +1,44 @@
-﻿html {
-    scroll-padding-top: 75px;
-}
+﻿html { scroll-padding-top: 75px; }
 
 #main-navigation {
-    height: 75px;
-    color: #ffffff;
     background: #00000000;
-    transition: linear 500ms;
+    color: #ffffff;
+    font-size: 0.8rem;
+    height: 75px;
+    height: 75px;
     left: 0;
+    padding: 0px 15px;
+    position: fixed;
     right: 0;
     top: 0;
+    transition: linear 500ms;
     z-index: 999;
-    position: fixed;
-    height: 75px;
-    padding: 0px 15px;
-    font-size: 0.8rem;
 }
 
-    #main-navigation.scrolled {
-        background: #00000095;
-    }
+#main-navigation.scrolled { background: #00000095; }
 
-    #main-navigation .nav-link,
-    #main-navigation a {
-        color: white;
-        /*text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;*/
-        border-bottom: thin solid transparent;
-    }
-
-        #main-navigation .nav-link:hover {
-            color: #eeeeee;
-            text-shadow: 0 0 2px #000000, 0 1px 2px #000000;
-        }
-
-        #main-navigation .nav-link.active {
-            border-bottom: thin solid var(--bs-warning)
-        }
-
-
-.page {
-    padding-top: 80px;
+#main-navigation .nav-link,
+#main-navigation a {
+    /*text-shadow: 0 1px 1px #000000, 0 -2px 5px #000000, 0 1px 5px #ffffff, 1px 0 1px #1e90ff;*/
+    border-bottom: thin solid transparent;
+    color: white;
 }
 
-
-#home-page {
+#main-navigation .nav-link:hover {
+    color: #eeeeee;
+    text-shadow: 0 0 2px #000000, 0 1px 2px #000000;
 }
 
+#main-navigation .nav-link.active { border-bottom: thin solid var(--bs-warning) }
 
-#about-doctor {
-    background: #f1f1f1;
-}
+
+.page { padding-top: 80px; }
+
+
+#home-page { }
+
+
+#about-doctor { background: #f1f1f1; }
 
 
 #clinics {
@@ -58,54 +47,50 @@
 }
 
 #main-map-container {
+    padding-top: 60vh;
     position: relative;
     width: 100%;
-    padding-top: 60vh;
 }
 
-    #main-map-container * {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-        height: 100%
-    }
+#main-map-container * {
+    bottom: 0;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+}
 
 #clinic-info {
-    position: relative;
+    background-color: white;
     margin-top: -10vh;
     min-height: 25vh;
-    background-color: white;
+    position: relative;
 }
 
-#clinic-socials .nav-link {
-    padding: 5px;
-}
+#clinic-socials .nav-link { padding: 5px; }
 
 .social-icon {
     filter: grayscale(87%);
-    transition: .7s;
     position: relative;
+    transition: .7s;
 }
 
-    .social-icon::after {
-        content: '';
-        position: absolute;
-        width: 10px;
-        height: 7px;
-        border-radius: 50%;
-        background: #00000029;
-        bottom: -20px;
-        left: 0;
-        right: 0;
-        margin: auto;
-    }
+.social-icon::after {
+    background: #00000029;
+    border-radius: 50%;
+    bottom: -20px;
+    content: '';
+    height: 7px;
+    left: 0;
+    margin: auto;
+    position: absolute;
+    right: 0;
+    width: 10px;
+}
 
-    .social-icon:hover {
-        filter: none;
-    }
+.social-icon:hover { filter: none; }
 
 
 #contact-us {
@@ -113,25 +98,21 @@
     background-size: cover;
 }
 
-#contact-us-body {
-    background: #ffffff99;
-}
+#contact-us-body { background: #ffffff99; }
 
 #footer {
     background: var(--bs-secondary);
     color: var(--bs-light) !important;
-    padding: 10px;
     font-size: 0.8rem;
+    padding: 10px;
 }
 
-    #footer h1,
-    #footer .h1 {
-        font-size: 1.1rem
-    }
+#footer h1,
+#footer .h1 { font-size: 1.1rem }
 
 @media (max-width: 576px) {
     #clinic-info {
-        width: auto;
         margin: 0 10px;
+        width: auto;
     }
 }

@@ -1,16 +1,15 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
 
-namespace DrTaabodi.WebApi.SRC
+namespace DrTaabodi.WebApi.SRC;
+
+public class AuthorizationAttribute : Attribute, IAuthorizationFilter, IOrderedFilter
 {
-    public class AuthorizationAttribute : Attribute, IAuthorizationFilter, IOrderedFilter
+    public void OnAuthorization(AuthorizationFilterContext context)
     {
-        public int Order => 0;
-        public void OnAuthorization(AuthorizationFilterContext context)
-        {
-            context.Result = new UnauthorizedResult();
-        }
+        context.Result = new UnauthorizedResult();
     }
+
+    public int Order => 0;
 }

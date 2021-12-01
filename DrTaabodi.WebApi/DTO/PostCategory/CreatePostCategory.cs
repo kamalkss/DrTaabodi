@@ -1,12 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace DrTaabodi.WebApi.DTO.PostCategory
+namespace DrTaabodi.WebApi.DTO.PostCategory;
+
+public class CreatePostCategory
 {
-    public class CreatePostCategory
-    {
-        [Required] public string CategoryName { get; set; }
-        public Guid ParentId { get; set; }
-        
-    }
+    [Required] public string CategoryName { get; set; }
+    public Guid ParentId { get; set; }
 }
