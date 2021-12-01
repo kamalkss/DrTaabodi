@@ -60,14 +60,24 @@ public class PostController : ControllerBase
     {
         _logger.LogInformation("Create Post");
         var mapPost = _mapper.Map<PstTbl>(Post);
-
+        
 
         if (Post.User != null && Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
+        {
+            var user = await _UserService.GetUserById(Post.User);
+            mapPost.UserTable.Add(user);
+        }
+
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PstTblParent.Add(await _post.GetPostById(Post.PstTbleParent));
+        {
+            var PostParent = await _post.GetPostById(Post.PstTbleParent);
+            mapPost.ParentId = Post.PstTbleParent;
+            
+
+        }
+
         //if (Post.PstTbleParent != null)
         //    mapPost.PstTbleParent.
 
@@ -88,7 +98,7 @@ public class PostController : ControllerBase
             mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PstTblParent.Add(await _post.GetPostById(Post.PstTbleParent));
+            mapPost.ParentId = Post.PstTbleParent;
         if (Post.PostCategory != null && Post.PostCategory != Guid.Empty &&
             Post.PostCategory != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(Post.PostCategory));

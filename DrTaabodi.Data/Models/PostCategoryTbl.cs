@@ -21,7 +21,10 @@ public class PostCategoryTbl
     //public Guid? ParentId { get; set; }
 
     //[ForeignKey(nameof(PostCategoryTbl))] public Guid PostCategoryParentId { get; set; }
-    public virtual ICollection<PostCategoryTbl> PostCategoryParent { get; set; }
+    //public virtual ICollection<PostCategoryTbl> PostCategoryParent { get; set; }
+    public Guid? ParentId { get; set; }
+    public virtual PostCategoryTbl Parent { get; set; }
+    public virtual ICollection<PostCategoryTbl> Children { get; set; }
 
     public virtual ICollection<PstTbl> PostTable { get; set; }
     //public virtual ICollection<PostCategoryTblRelation> PostCategory { get; set; }

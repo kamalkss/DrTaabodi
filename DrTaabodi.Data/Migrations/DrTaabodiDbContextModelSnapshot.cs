@@ -105,6 +105,9 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<Guid?>("MetaTblMetaId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ParentId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("PstContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -112,9 +115,6 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<string>("PstDescription")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PstTblPstId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("PstTitle")
                         .IsRequired()
@@ -127,7 +127,7 @@ namespace DrTaabodi.Data.Migrations
 
                     b.HasIndex("MetaTblMetaId");
 
-                    b.HasIndex("PstTblPstId");
+                    b.HasIndex("ParentId");
 
                     b.ToTable("PstTbl");
                 });
@@ -492,9 +492,11 @@ namespace DrTaabodi.Data.Migrations
                         .WithMany("PstTbls")
                         .HasForeignKey("MetaTblMetaId");
 
-                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
-                        .WithMany("PstTblParent")
-                        .HasForeignKey("PstTblPstId");
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", "Parent")
+                        .WithMany("Children")
+                        .HasForeignKey("ParentId");
+
+                    b.Navigation("Parent");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -625,7 +627,7 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
                 {
-                    b.Navigation("PstTblParent");
+                    b.Navigation("Children");
                 });
 #pragma warning restore 612, 618
         }

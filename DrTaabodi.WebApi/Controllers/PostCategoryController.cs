@@ -54,7 +54,7 @@ public class PostCategoryController : ControllerBase
         var MapPost = _mapper.Map<PostCategoryTbl>(postCategory);
         if (postCategory.ParentId != Guid.Empty &&
             postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            MapPost.PostCategoryParent.Add(await _postCategoryService.GetPostById(postCategory.ParentId));
+            MapPost.ParentId = postCategory.ParentId;
         //if (postCategory.PostId != Guid.Empty)
         //    MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
         var NewPost = _postCategoryService.CreatePost(MapPost);
@@ -73,7 +73,7 @@ public class PostCategoryController : ControllerBase
         var MapPost = _mapper.Map<PostCategoryTbl>(postCategory);
         if (postCategory.ParentId != Guid.Empty &&
             postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            MapPost.PostCategoryParent.Add(await _postCategoryService.GetPostById(postCategory.ParentId));
+            MapPost.ParentId = postCategory.ParentId;
         if (postCategory.PostId != Guid.Empty)
             MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
         var NewPost = _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);

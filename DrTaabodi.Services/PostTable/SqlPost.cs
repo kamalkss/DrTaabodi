@@ -40,7 +40,9 @@ public class SqlPost : IPost
         return await _context.PstTbl.Include(c => c.UserTable)
             //.Include(c => c.PstTbleParent)
             .Include(c => c.PostTypeTable)
-            .Include(c => c.PostCategoryTable).FirstOrDefaultAsync(p => p.PstId == id);
+            .Include(c => c.PostCategoryTable)
+           
+            .FirstOrDefaultAsync(p => p.PstId == id);
     }
 
     public async Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost)
