@@ -78,10 +78,11 @@ public class SqlPost : IPost
 
     public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
     {
-        var WebPost = _context.PstTbl.Find(id);
+        
         _logger.LogInformation("Log For Update Post");
         try
         {
+            var WebPost = _context.PstTbl.Find(id);
             //WebPost.PstStatus = UsrStatus;
             UsrStatus.UpdatedData = DateTime.UtcNow;
 

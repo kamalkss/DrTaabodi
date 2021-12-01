@@ -39,7 +39,7 @@ public class PostCategoryController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<IEnumerable<ReadPostCategory>>> GetSinglePostCategory([FromBody] Guid id)
+    public async Task<ActionResult<IEnumerable<ReadPostCategory>>> GetSinglePostCategory(Guid id)
     {
         _logger.LogInformation("read single Posts");
         var Post = await _postCategoryService.GetPostById(id);
@@ -55,6 +55,9 @@ public class PostCategoryController : ControllerBase
         if (postCategory.ParentId != Guid.Empty &&
             postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = postCategory.ParentId;
+
+        if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
         //if (postCategory.PostId != Guid.Empty)
         //    MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
         var NewPost = _postCategoryService.CreatePost(MapPost);
@@ -76,6 +79,8 @@ public class PostCategoryController : ControllerBase
             MapPost.ParentId = postCategory.ParentId;
         if (postCategory.PostId != Guid.Empty)
             MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
+        if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
         var NewPost = _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);
         return Ok(NewPost);
     }

@@ -51,6 +51,8 @@ public class PostTypeController : ControllerBase
         if (PostType.ParentId != Guid.Empty &&
             PostType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = PostType.ParentId;
+        if (PostType.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
         //if(PostType.PostId!=Guid.Empty)
         //    MapPost.PostTable.Add(await _postService.GetPostById(PostType.PostId));
         var NewPost = _postTypeService.CreatePostType(MapPost);
@@ -69,6 +71,8 @@ public class PostTypeController : ControllerBase
             MapPost.ParentId = postType.ParentId;
         if (postType.PostId != Guid.Empty)
             MapPost.PostTable.Add(await _postService.GetPostById(postType.PostId));
+        if (postType.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
         var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
         return Ok(UpdatedPost);
     }

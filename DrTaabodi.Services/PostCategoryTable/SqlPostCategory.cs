@@ -69,16 +69,17 @@ public class SqlPostCategory : IPostCategory
 
     public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PostCategoryTbl postStatus)
     {
-        var ChildPostType = GetPostById(id);
+        
         //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
         _logger.LogInformation("Log for Create Post Parent");
         try
         {
+            var ChildPostType = GetPostById(id);
             postStatus.UpdatedData = DateTime.UtcNow;
             //ChildPostType.PostType = Parent;
 
 
-            _context.Entry(ChildPostType).CurrentValues.SetValues(postStatus);
+            _context.Entry(ChildPostType.Result).CurrentValues.SetValues(postStatus);
             await SaveChanges();
             return new ServiceResponse<bool>
             {
