@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 
 namespace DrTaabodi.Services.PostTable;
@@ -8,7 +9,7 @@ namespace DrTaabodi.Services.PostTable;
 public interface IPost
 {
     public Task<bool> SaveChanges();
-    public Task<List<PstTbl>> GetAllPosts();
+    public Task<List<PstTbl>> GetAllPosts(QnAParametes qnAParamete);
     public Task<PstTbl> GetPostById(Guid id);
 
     public Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost);

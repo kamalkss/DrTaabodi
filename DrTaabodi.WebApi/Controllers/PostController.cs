@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using DrTaabodi.Services;
 using DrTaabodi.Services.PostCategoryTable;
@@ -39,10 +40,10 @@ public class PostController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<ReadPosts>> GetAllPost()
+    public async Task<ActionResult<ReadPosts>> GetAllPost([FromHeader] QnAParametes qnaParameters)
     {
         _logger.LogInformation("read all Posts");
-        var posts = await _post.GetAllPosts();
+        var posts = await _post.GetAllPosts(qnaParameters);
 
         return Ok(posts);
     }
@@ -122,17 +123,25 @@ public class PostController : ControllerBase
         //var UpdatedPost = _post.UpdatePostStatus(id, PostStatus);
         //return Ok(_mapper.Map<PstTbl>(UpdatedPost));
     }*/
-    [HttpPatch("/posttype/")]
+    [HttpPatch]
     public async Task<ActionResult<ReadPosts>> UpdatePost([FromBody] ReadPosts Post)
     {
         _logger.LogInformation("Update Post Status");
         var id = Post.PstId;
-        if (Post.User != null)
-            Post.User = await _UserService.GetUserById(Post.User.UsrId);
-
-        if (Post.PstTbleParent != null)
-            Post.PstTbleParent = await _post.GetPostById(Post.PstTbleParent.PstId);
         var mapPost = _mapper.Map<PstTbl>(Post);
+        if (Post.User != null && Post.User != Guid.Empty &&
+            Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
+        if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
+            Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            mapPost.ParentId = Post.PstTbleParent;
+        if (Post.PostCategory != null && Post.PostCategory != Guid.Empty &&
+            Post.PostCategory != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(Post.PostCategory));
+        if (Post.PostType != null && Post.PostType != Guid.Empty &&
+            Post.PostType != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
+        //var mapPost = _mapper.Map<PstTbl>(Post);
         var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
         return Ok(_mapper.Map<PstTbl>(UpdatedPost));
     }

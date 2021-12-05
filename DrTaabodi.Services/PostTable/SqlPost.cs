@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -27,12 +29,13 @@ public class SqlPost : IPost
         return await _context.SaveChangesAsync() >= 0;
     }
 
-    public async Task<List<PstTbl>> GetAllPosts()
+    public async Task<List<PstTbl>> GetAllPosts(QnAParametes qnAParametes)
     {
         return await _context.PstTbl
             .Include(c => c.UserTable)
             .Include(c => c.PostTypeTable)
-            .Include(c => c.PostCategoryTable).ToListAsync();
+            .Include(c => c.PostCategoryTable).OrderBy(c=>c.UpdatedData)
+            .Skip((qnAParametes.PageNumber - 1) * qnAParametes.PageSize).Take(qnAParametes.PageSize).ToListAsync();
     }
 
     public async Task<PstTbl> GetPostById(Guid id)
