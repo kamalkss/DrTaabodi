@@ -1,5 +1,7 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using DrTaabodi.Data.DatabaseContext;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DrTaabodi.WebControllers;
@@ -7,24 +9,28 @@ namespace DrTaabodi.WebControllers;
 public class HomeController : Controller
 {
     private readonly DrTaabodiDbContext _db;
+    private readonly IWebHostEnvironment env;
 
-    public HomeController(DrTaabodiDbContext db)
+    public HomeController(DrTaabodiDbContext db, IWebHostEnvironment env)
     {
         _db = db;
+        this.env = env;
     }
 
     public IActionResult Index()
     {
-        var model = _db.WebsiteOptionsTbls.Select(x => new {key = x.OptionKey, value = x.OptionValue})
-            .ToDictionary(x => x.key, x => x.value);
-        if (model.Count > 0)
+        var option = _db.WebsiteOptionsTbls.First(x => x.OptionKey == "website_pages__home");
+        if (option != null)
         {
-            ViewData["Title"] = model.ContainsKey("general_meta_title") ? model["general_meta_title"] : "";
-            ViewData["Description"] =
-                model.ContainsKey("general_meta_description") ? model["general_meta_description"] : "";
+            return Content(option.OptionValue, "text/html");
         }
 
-        return View(model);
+        string path = Path.Combine(env.WebRootPath, "template/index.html");
+        if (System.IO.File.Exists(path))
+        {
+            return Content(System.IO.File.ReadAllText(path), "text/html");
+        }
+        else return NotFound();
     }
 
     //what 
