@@ -87,7 +87,7 @@ public class Startup
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DrTaabodi.WebApi v1"));
         }
 
-
+        app.UseCors("localhostVude");
         app.UseStaticFiles();
         app.Map("/management",
             config =>
@@ -98,7 +98,6 @@ public class Startup
                 });
             });
 
-        app.UseCors("localhostVude");
 
         app.UseHttpsRedirection();
         //This is comment about routing
