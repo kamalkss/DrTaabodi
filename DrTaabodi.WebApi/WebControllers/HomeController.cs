@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using DrTaabodi.Data.DatabaseContext;
 using Microsoft.AspNetCore.Hosting;
@@ -19,11 +20,19 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var option = _db.WebsiteOptionsTbls.First(x => x.OptionKey == "website_pages__home");
-        if (option != null)
+        try
         {
-            return Content(option.OptionValue, "text/html");
+            var option = _db.WebsiteOptionsTbls.First(x => x.OptionKey == "website_pages__home");
+            if (option != null)
+            {
+                return Content(option.OptionValue, "text/html");
+            }
         }
+        catch (Exception e)
+        {
+            
+        }
+        
 
         string path = Path.Combine(env.WebRootPath, "template/index.html");
         if (System.IO.File.Exists(path))

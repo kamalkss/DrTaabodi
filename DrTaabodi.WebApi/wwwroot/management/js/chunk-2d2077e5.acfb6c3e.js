@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d2077e5"],{a187:function(n,e,c){"use strict";c.r(e);var t=c("7a23"),a={class:"panel"},s=Object(t["g"])("h1",null,"پیام های تماس با ما",-1),o=[s];function r(n,e,c,s,r,u){return Object(t["s"])(),Object(t["f"])("div",a,o)}var u={name:"ContactUs"},d=c("6b0d"),b=c.n(d);const i=b()(u,[["render",r]]);e["default"]=i}}]);
+//# sourceMappingURL=chunk-2d2077e5.acfb6c3e.js.map
