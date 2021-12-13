@@ -1,0 +1,11 @@
+.slider-container[data-v-700d689f] {
+    -moz-column-count: 4;
+    -moz-column-gap: 5px;
+    column-count: 4;
+    column-gap: 5px
+}
+
+.slider-container > .card[data-v-700d689f] {
+    display: inline-block;
+    margin-bottom: 5px
+}

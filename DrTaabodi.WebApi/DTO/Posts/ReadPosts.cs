@@ -1,5 +1,4 @@
 ﻿using System;
-using DrTaabodi.Data.Models;
 
 namespace DrTaabodi.WebApi.DTO.Posts;
 

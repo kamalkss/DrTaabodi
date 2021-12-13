@@ -58,7 +58,7 @@ public class OptionsController : ControllerBase
     {
         var content = await new StreamReader(Request.Body).ReadToEndAsync();
         _logger.LogInformation("update or insert single Posts");
-       
+
         var Post = _context.WebsiteOptionsTbls.FirstOrDefault(x => x.OptionKey == key);
         if (Post == null)
             _context.WebsiteOptionsTbls.Add(new WebsiteOptionsTbl {OptionKey = key, OptionValue = content});

@@ -61,7 +61,7 @@ public class PostController : ControllerBase
     {
         _logger.LogInformation("Create Post");
         var mapPost = _mapper.Map<PstTbl>(Post);
-        
+
 
         if (Post.User != null && Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
@@ -75,8 +75,6 @@ public class PostController : ControllerBase
         {
             var PostParent = await _post.GetPostById(Post.PstTbleParent);
             mapPost.ParentId = Post.PstTbleParent;
-            
-
         }
 
         //if (Post.PstTbleParent != null)

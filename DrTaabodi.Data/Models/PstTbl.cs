@@ -26,11 +26,10 @@ public class PstTbl
     public Guid? ParentId { get; set; }
     public virtual PstTbl Parent { get; set; }
     public virtual ICollection<PstTbl> Children { get; set; }
-    
+
 
     //[ForeignKey(nameof(PstTbl))]
     //public Guid PostParentId { get; set; }
-
 
 
     public virtual ICollection<PostTypeTbl> PostTypeTable { get; set; }

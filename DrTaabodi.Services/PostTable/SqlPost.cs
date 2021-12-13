@@ -34,7 +34,7 @@ public class SqlPost : IPost
         return await _context.PstTbl
             .Include(c => c.UserTable)
             .Include(c => c.PostTypeTable)
-            .Include(c => c.PostCategoryTable).OrderBy(c=>c.UpdatedData)
+            .Include(c => c.PostCategoryTable).OrderBy(c => c.UpdatedData)
             .Skip((qnAParametes.PageNumber - 1) * qnAParametes.PageSize).Take(qnAParametes.PageSize).ToListAsync();
     }
 
@@ -44,7 +44,6 @@ public class SqlPost : IPost
             //.Include(c => c.PstTbleParent)
             .Include(c => c.PostTypeTable)
             .Include(c => c.PostCategoryTable)
-           
             .FirstOrDefaultAsync(p => p.PstId == id);
     }
 
@@ -81,7 +80,6 @@ public class SqlPost : IPost
 
     public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
     {
-        
         _logger.LogInformation("Log For Update Post");
         try
         {

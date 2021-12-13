@@ -69,7 +69,6 @@ public class SqlPostCategory : IPostCategory
 
     public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PostCategoryTbl postStatus)
     {
-        
         //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
         _logger.LogInformation("Log for Create Post Parent");
         try
