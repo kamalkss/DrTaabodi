@@ -50,8 +50,13 @@ new Vue({
   data: () => ({
     articles: undefined
   }),
-  methods: {},
+  methods: {
+    retrieveLatestArticles() {
+
+    }
+  },
   mounted() {
     this.articles = []
   }
 })
+
