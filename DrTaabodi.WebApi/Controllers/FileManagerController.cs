@@ -28,7 +28,7 @@ public class FileManagerController : Controller
         operation.RootFolder(basePath + "\\" + root);
     }
 
-    [HttpGet("FileOperations")]
+    [Route("FileOperations")]
     public object FileOperations([FromBody] FileManagerDirectoryContent args)
     {
         if (args.Action == "delete" || args.Action == "rename")
@@ -75,7 +75,7 @@ public class FileManagerController : Controller
 
     // uploads the file(s) into a specified path
     //[Route("Upload")]
-    [HttpGet("Upload")]
+    [Route("Upload")]
     public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
     {
         FileManagerResponse uploadResponse;
@@ -92,7 +92,7 @@ public class FileManagerController : Controller
     }
 
     // downloads the selected file(s) and folder(s)
-    [HttpGet("Download")]
+    [Route("Download")]
     public IActionResult Download(string downloadInput)
     {
         var args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
@@ -100,7 +100,7 @@ public class FileManagerController : Controller
     }
 
     // gets the image(s) from the given path
-    [HttpGet("GetImage")]
+    [Route("GetImage")]
     public IActionResult GetImage(FileManagerDirectoryContent args)
     {
         return operation.GetImage(args.Path, args.Id, false, null, null);

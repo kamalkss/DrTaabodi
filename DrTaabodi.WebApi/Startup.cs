@@ -64,6 +64,9 @@ public class Startup
         services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "DrTaabodi", Version = "v1"}); });
         services.AddControllersWithViews();
 
+        services.AddMvc(p => p.EnableEndpointRouting = false);
+
+
         services.AddCors(x =>
         {
             x.AddPolicy("localhostVude",
