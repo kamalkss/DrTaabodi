@@ -67,14 +67,14 @@ public class Startup
         services.AddMvc(p => p.EnableEndpointRouting = false);
 
 
-        services.AddCors(x =>
-        {
-            x.AddPolicy("localhostVude",
-                b =>
-                {
-                    b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                });
-        });
+        //services.AddCors(x =>
+        //{
+        //    x.AddPolicy("localhostVude",
+        //        b =>
+        //        {
+        //            b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+        //        });
+        //});
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
