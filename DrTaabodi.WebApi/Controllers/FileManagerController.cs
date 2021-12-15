@@ -118,4 +118,10 @@ public class FileManagerController : Controller
         var NewPost = _fileSystemService.Update(MapPost.FileSystemId, MapPost);
         return Ok(NewPost);
     }
+
+    [HttpDelete("{Id}")]
+    public async Task<ActionResult<ServiceResponse<bool>>> DeleteSomeFile(Guid Id)
+    {
+        return await _fileSystemService.Delete(Id);
+    }
 }
