@@ -1,12 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using DrTaabodi.Data.Models;
 using DrTaabodi.Data.Models.Base;
+using DrTaabodi.Services;
+using DrTaabodi.Services.FileSystemTableServices;
+using DrTaabodi.Services.PostCategoryTable;
+using DrTaabodi.Services.PostTable;
+using DrTaabodi.WebApi.DTO.FileSystemDTO;
+using DrTaabodi.WebApi.DTO.PostCategory;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
 //using Microsoft.Extensions.FileProviders;
@@ -14,95 +23,99 @@ using Newtonsoft.Json;
 namespace DrTaabodi.WebApi.Controllers;
 
 [Route("api/[controller]")]
-[EnableCors("AllowAllOrigins")]
+[Controller]
 public class FileManagerController : Controller
 {
-    public string basePath;
-    public PhysicalFileProvider operation;
-    private readonly string root = "wwwroot\\Files";
+    private readonly ILogger<FileManagerController> _logger;
+    private readonly IMapper _mapper;
+    private readonly IFileSystemService _fileSystemService;
 
-    public FileManagerController(IHostingEnvironment hostingEnvironment)
+    public FileManagerController(IFileSystemService FileSystem, ILogger<FileManagerController> logger, IMapper mapper)
     {
-        basePath = hostingEnvironment.ContentRootPath;
-        operation = new PhysicalFileProvider();
-        operation.RootFolder(basePath + "\\" + root);
+        _logger = logger;
+        _mapper = mapper;
+        _fileSystemService = FileSystem;
     }
 
-    //[Route("FileOperations")]
-    //public object FileOperations([FromBody] FileManagerDirectoryContent args)
-    //{
-    //    if (args.Action == "delete" || args.Action == "rename")
-    //        if (args.TargetPath == null && args.Path == "")
-    //        {
-    //            var response = new FileManagerResponse();
-    //            response.Error = new ErrorDetails {Code = "401", Message = "Restricted to modify the root folder."};
-    //            return operation.ToCamelCase(response);
-    //        }
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<ReadFileSystem>>> GetAllFilesandFolders()
+    {
+        _logger.LogInformation("read all Posts");
+        var Post = await _fileSystemService.GetallFilesAdnFolders();
+        return Ok(Post);
 
-    //    switch (args.Action)
-    //    {
-    //        case "read":
-    //            // reads the file(s) or folder(s) from the given path.
-    //            return operation.ToCamelCase(operation.GetFiles(args.Path, args.ShowHiddenItems));
-    //        case "delete":
-    //            // deletes the selected file(s) or folder(s) from the given path.
-    //            return operation.ToCamelCase(operation.Delete(args.Path, args.Names));
-    //        case "copy":
-    //            // copies the selected file(s) or folder(s) from a path and then pastes them into a given target path.
-    //            return operation.ToCamelCase(operation.Copy(args.Path, args.TargetPath, args.Names, args.RenameFiles,
-    //                args.TargetData));
-    //        case "move":
-    //            // cuts the selected file(s) or folder(s) from a path and then pastes them into a given target path.
-    //            return operation.ToCamelCase(operation.Move(args.Path, args.TargetPath, args.Names, args.RenameFiles,
-    //                args.TargetData));
-    //        case "details":
-    //            // gets the details of the selected file(s) or folder(s).
-    //            return operation.ToCamelCase(operation.Details(args.Path, args.Names, args.Data));
-    //        case "create":
-    //            // creates a new folder in a given path.
-    //            return operation.ToCamelCase(operation.Create(args.Path, args.Name));
-    //        case "search":
-    //            // gets the list of file(s) or folder(s) from a given path based on the searched key string.
-    //            return operation.ToCamelCase(operation.Search(args.Path, args.SearchString, args.ShowHiddenItems,
-    //                args.CaseSensitive));
-    //        case "rename":
-    //            // renames a file or folder.
-    //            return operation.ToCamelCase(operation.Rename(args.Path, args.Name, args.NewName));
-    //    }
+    }
 
-    //    return null;
+    [HttpGet("files")]
+    public async Task<ActionResult<IEnumerable<ReadFileSystem>>> GetAllFiles()
+    {
+        _logger.LogInformation("read all Posts");
+        var Post = await _fileSystemService.GetallFile();
+        return Ok(Post);
+
+    }
+
+    [HttpGet("folders")]
+    public async Task<ActionResult<IEnumerable<ReadFileSystem>>> GetAllFolders()
+    {
+        _logger.LogInformation("read all Posts");
+        var Post = await _fileSystemService.GetallFolders();
+        return Ok(Post);
+
+    }
+
+    [HttpGet("path/{id}")]
+    public async Task<ActionResult<IEnumerable<ReadFileSystem>>> GetPath(Guid Id)
+    {
+        _logger.LogInformation("read all Posts");
+        var Post = await _fileSystemService.GetPath(Id);
+        return Ok(Post);
+
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<IEnumerable<ReadFileSystem>>> GetSingleFile(Guid id)
+    {
+        _logger.LogInformation("read single Posts");
+        var Post = await _fileSystemService.GetById(id);
+        return Ok(Post);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<ServiceResponse<CreateFileSystem>>> CreatePostCategory(
+        [FromBody] CreateFileSystem postCategory)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        var MapPost = _mapper.Map<FileSystemTbl>(postCategory);
+        if (postCategory.ParentId != Guid.Empty &&
+            postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = postCategory.ParentId;
+
+        if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
+        //if (postCategory.PostId != Guid.Empty)
+        //    MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
+        var NewPost = _fileSystemService.Create(MapPost);
+        return Ok(NewPost);
+    }
+
+    //public Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadPostCategory postCategory)
+    //{useless nothing
+    //    return UpdatePostCategory(postCategory, _postCategoryService);
     //}
 
-    //// uploads the file(s) into a specified path
-    ////[Route("Upload")]
-    //[Route("Upload")]
-    //public IActionResult Upload(string path, IList<IFormFile> uploadFiles, string action)
-    //{
-    //    FileManagerResponse uploadResponse;
-    //    uploadResponse = operation.Upload(path, uploadFiles, action, null);
-    //    if (uploadResponse.Error != null)
-    //    {
-    //        Response.Clear();
-    //        Response.ContentType = "application/json; charset=utf-8";
-    //        Response.StatusCode = Convert.ToInt32(uploadResponse.Error.Code);
-    //        Response.HttpContext.Features.Get<IHttpResponseFeature>().ReasonPhrase = uploadResponse.Error.Message;
-    //    }
-
-    //    return Content("");
-    //}
-
-    //// downloads the selected file(s) and folder(s)
-    //[Route("Download")]
-    //public IActionResult Download(string downloadInput)
-    //{
-    //    var args = JsonConvert.DeserializeObject<FileManagerDirectoryContent>(downloadInput);
-    //    return operation.Download(args.Path, args.Names, args.Data);
-    //}
-
-    //// gets the image(s) from the given path
-    //[Route("GetImage")]
-    //public IActionResult GetImage(FileManagerDirectoryContent args)
-    //{
-    //    return operation.GetImage(args.Path, args.Id, false, null, null);
-    //}
+    [HttpPatch]
+    public async Task<ActionResult<ServiceResponse<bool>>> UpdatePostCategory([FromBody] ReadFileSystem postCategory)
+    {
+        if (!ModelState.IsValid) return BadRequest(ModelState);
+        var MapPost = _mapper.Map<FileSystemTbl>(postCategory);
+        if (postCategory.ParentId != Guid.Empty &&
+            postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = postCategory.ParentId;
+       
+        if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+            MapPost.ParentId = null;
+        var NewPost = _fileSystemService.Update(MapPost.FileSystemId, MapPost);
+        return Ok(NewPost);
+    }
 }

@@ -12,6 +12,9 @@ namespace DrTaabodi.Data.Models
         [Required] [Key] public Guid FileSystemId { get; set; }
         [Required] public DateTime? CreationTime { get; set; }
         [Required] public DateTime? LastWriteTime { get; set; }
+
+        [Required][MaxLength(Int32.MaxValue)] public string FileFolderPath { get; set; } 
+
         public long? Size { get; set; }
         public bool? HasChilds { get; set; }
         public bool? IsFile { get; set; }

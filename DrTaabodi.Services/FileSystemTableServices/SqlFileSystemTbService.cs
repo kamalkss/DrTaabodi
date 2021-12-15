@@ -26,17 +26,17 @@ namespace DrTaabodi.Services.FileSystemTableServices
             return await _context.SaveChangesAsync() >= 0;
         }
 
-        public async   Task<List<FileSystemTbl>> GetallFilesAdnFolders()
+        public async   Task<IList<FileSystemTbl>> GetallFilesAdnFolders()
         {
             return await _context.FileSystem.ToListAsync();
         }
 
-        public async  Task<List<FileSystemTbl>> GetallFile()
+        public async  Task<IList<FileSystemTbl>> GetallFile()
         {
             return await _context.FileSystem.Where(c => c.IsFile == true).ToListAsync();
         }
 
-        public async  Task<List<FileSystemTbl>> GetallFolders()
+        public async  Task<IList<FileSystemTbl>> GetallFolders()
         {
             return await _context.FileSystem.Where(c => c.IsFile == false).ToListAsync();
         }
@@ -44,6 +44,21 @@ namespace DrTaabodi.Services.FileSystemTableServices
         public async  Task<FileSystemTbl> GetById(Guid id)
         {
             return await _context.FileSystem.FirstOrDefaultAsync(c => c.FileSystemId == id);
+        }
+
+        public async Task<string> GetPath(Guid id)
+        {
+            var item = await _context.FileSystem.FirstOrDefaultAsync(c => c.FileSystemId == id);
+            try
+            {
+                return item.FileFolderPath;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
+            
         }
 
         public async  Task<ServiceResponse<FileSystemTbl>> Create(FileSystemTbl WebPost)
