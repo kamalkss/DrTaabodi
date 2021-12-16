@@ -1,8 +1,11 @@
 using System;
 using System.IO;
+using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.Services.FileSystemTableServices;
+using DrTaabodi.Services.MetaTable;
 using DrTaabodi.Services.PostCategoryTable;
 using DrTaabodi.Services.PostTable;
 using DrTaabodi.Services.PostTypeTable;
@@ -15,17 +18,28 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using IHostingEnvironment = Microsoft.AspNetCore.Hosting.IHostingEnvironment;
 
 namespace DrTaabodi.WebApi;
 
 public class Startup
 {
-    public Startup(IConfiguration configuration)
+    private IHostingEnvironment _hostingEnvironment;
+    public Startup(IConfiguration configuration, IHostingEnvironment environment)
     {
+        var builder = new ConfigurationBuilder()
+            .SetBasePath(environment.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+            .AddEnvironmentVariables();
+        builder.Build();
+        _hostingEnvironment = environment;
+        
         Configuration = configuration;
     }
 
@@ -60,12 +74,18 @@ public class Startup
         services.AddScoped<IPostCategory, SqlPostCategory>();
         services.AddScoped<IPostType, SqlPostType>();
         services.AddScoped<IOptions, SqlOptions>();
+        services.AddScoped<IFileSystemService, SqlFileSystemTbService>();
+        services.AddScoped<IMeta, SqlMeta>();
         services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
         services.AddSwaggerGen(c => { c.SwaggerDoc("v1", new OpenApiInfo {Title = "DrTaabodi", Version = "v1"}); });
         services.AddControllersWithViews();
 
         services.AddMvc(p => p.EnableEndpointRouting = false);
 
+
+        var physicalProvider = _hostingEnvironment.ContentRootFileProvider;
+        var embeddedProvider = new EmbeddedFileProvider(Assembly.GetEntryAssembly());
+        var compositeProvider = new CompositeFileProvider(physicalProvider, embeddedProvider);
 
         //services.AddCors(x =>
         //{
@@ -75,6 +95,7 @@ public class Startup
         //            b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
         //        });
         //});
+        services.AddSingleton<IFileProvider>(compositeProvider);
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

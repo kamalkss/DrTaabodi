@@ -53,6 +53,7 @@
   <ItemGroup>
     <Folder Include="DTO\Paging\" />
     <Folder Include="wwwroot\management\" />
+    <Folder Include="wwwroot\NewFolder\" />
   </ItemGroup>
 
 </Project>
