@@ -77,8 +77,8 @@ namespace DrTaabodi.WebApi.Controllers
                 {
                     file.CopyTo(stream);
                 }
-
-                return Ok(dir);
+                
+                return Ok(targetPath.Replace(_environment.WebRootPath,"").Replace('\\','/'));
             }
             return BadRequest();
         }
