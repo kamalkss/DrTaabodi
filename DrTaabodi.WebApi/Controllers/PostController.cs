@@ -84,7 +84,7 @@ public class PostController : ControllerBase
         //    mapPost.PstTbleParent.
 
 
-        var newPost = _post.CreatePost(mapPost,Post.Categories);
+        var newPost = _post.CreatePost(mapPost, Post.Categories);
 
         return Ok(newPost);
     }
@@ -143,7 +143,7 @@ public class PostController : ControllerBase
             Post.PostType != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
         //var mapPost = _mapper.Map<PstTbl>(Post);
-        var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
-        return Ok(_mapper.Map<PstTbl>(UpdatedPost));
+        var UpdatedPost = _post.UpdatePostStatus(id, mapPost, Post.Categories);
+        return Ok(UpdatedPost.Id);
     }
 }

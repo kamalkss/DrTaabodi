@@ -57,7 +57,7 @@ public class SqlPost : IPost
             //var user = WebPost.UserTable;
 
             await _context.AddAsync(WebPost);
-           if(CategoriesIds != null)
+            if (CategoriesIds != null)
             {
                 foreach (var item in CategoriesIds)
                 {
@@ -87,7 +87,7 @@ public class SqlPost : IPost
         }
     }
 
-    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
+    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus, ICollection<Guid> CategoriesIds = null)
     {
         _logger.LogInformation("Log For Update Post");
         try
@@ -98,6 +98,16 @@ public class SqlPost : IPost
 
             _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
 
+            WebPost.PostCategoryTable.Clear();
+            if (CategoriesIds != null)
+            {
+                foreach (var item in CategoriesIds)
+                {
+                    var group = _context.PostCategoryTbl.Find(item);
+                    if (group != null)
+                        WebPost.PostCategoryTable.Add(group);
+                }
+            }
 
             //_context.PstTbl.Update(WebPost);
             await SaveChanges();
