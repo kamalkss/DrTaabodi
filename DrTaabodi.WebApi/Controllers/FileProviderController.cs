@@ -29,7 +29,8 @@ namespace DrTaabodi.WebApi.Controllers
         private IHostingEnvironment _environment;
         public string _basePath;
         string root = "wwwroot\\Files";
-        public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment, IFileSystemService fileSystemService, IMapper mapper)
+
+        public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment)
         {
             _fileProvider = fileProvider;
             this._basePath = hostingEnvironment.ContentRootPath;
@@ -210,13 +211,24 @@ namespace DrTaabodi.WebApi.Controllers
             }
             return contentType;
         }
-        private string GetUniqueFileName(string fileName)
+
+        [HttpPost("uploader")]
+        public IActionResult UploadFile(IFormFile file)
         {
-            fileName = Path.GetFileName(fileName);
-            return Path.GetFileNameWithoutExtension(fileName)
-                   + "_"
-                   + Guid.NewGuid().ToString().Substring(0, 4)
-                   + Path.GetExtension(fileName);
+            if (file != null)
+            {
+                string dir = Path.Combine(_environment.WebRootPath, "files/" + DateTime.Now.ToString("yyyy/MM/dd"));
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+                string targetPath = Path.Combine(dir, Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                using (var stream = System.IO.File.Create(targetPath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return Ok(dir);
+            }
+            return BadRequest();
         }
     }
 }
