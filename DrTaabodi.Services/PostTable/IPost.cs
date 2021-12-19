@@ -12,7 +12,7 @@ public interface IPost
     public Task<List<PstTbl>> GetAllPosts(QnAParametes qnAParamete);
     public Task<PstTbl> GetPostById(Guid id);
 
-    public Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost);
+    public Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost, ICollection<Guid> CategoriesIds = null);
 
     //public ServiceResponse<bool> UpdatePostType(Guid id, PstType PostType);
     public Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl postStatus);

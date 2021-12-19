@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DrTaabodi.WebApi.DTO.Posts;
 
@@ -10,4 +11,6 @@ public class CreatePosts
     public string PstDescription { get; set; }
 
     public Guid PstTbleParent { get; set; }
+
+    public ICollection<Guid> Categories { get; set; }
 }
