@@ -87,14 +87,14 @@ public class Startup
         var embeddedProvider = new EmbeddedFileProvider(Assembly.GetEntryAssembly());
         var compositeProvider = new CompositeFileProvider(physicalProvider, embeddedProvider);
 
-        services.AddCors(x =>
-        {
-            x.AddPolicy("localhostVude",
-                b =>
-                {
-                    b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                });
-        });
+        //services.AddCors(x =>
+        //{
+        //    x.AddPolicy("localhostVude",
+        //        b =>
+        //        {
+        //            b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
+        //        });
+        //});
         services.AddSingleton<IFileProvider>(compositeProvider);
     }
 
