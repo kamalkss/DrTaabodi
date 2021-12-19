@@ -30,7 +30,7 @@ namespace DrTaabodi.WebApi.Controllers
         public string _basePath;
         string root = "wwwroot\\Files";
 
-        public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment)
+        public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment, IMapper mapper, IFileSystemService fileSystemService)
         {
             _fileProvider = fileProvider;
             this._basePath = hostingEnvironment.ContentRootPath;
