@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Extensions.FileProviders;
@@ -17,7 +19,8 @@ namespace DrTaabodi.WebApi.Controllers
         private IHostingEnvironment _environment;
         public string _basePath;
         string root = "wwwroot\\Files";
-        public FileProviderController(IFileProvider fileProvider,IHostingEnvironment hostingEnvironment)
+
+        public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment)
         {
             _fileProvider = fileProvider;
             this._basePath = hostingEnvironment.ContentRootPath;
@@ -26,9 +29,9 @@ namespace DrTaabodi.WebApi.Controllers
         }
 
         [HttpGet("directories")]
-        public async Task<IActionResult>  GetDirectoies()
+        public async Task<IActionResult> GetDirectoies()
         {
-            var content =  _fileProvider.GetDirectoryContents(root);
+            var content = _fileProvider.GetDirectoryContents(root);
             IList<string> filesList = new List<string>();
             foreach (var directoryContent in content)
             {
@@ -41,10 +44,7 @@ namespace DrTaabodi.WebApi.Controllers
         [HttpGet("download")]
         public async Task<IActionResult> DownloadFile(string Url)
         {
-            if (!string.IsNullOrEmpty(Url))
-            {
-                return Ok();
-            }
+            return Ok();
         }
 
         [HttpGet("downloadbyName")]
@@ -62,6 +62,25 @@ namespace DrTaabodi.WebApi.Controllers
                 contentType = "application/octet-stream";
             }
             return contentType;
+        }
+
+        [HttpPost("uploader")]
+        public IActionResult UploadFile(IFormFile file)
+        {
+            if (file != null)
+            {
+                string dir = Path.Combine(_environment.WebRootPath, "files/" + DateTime.Now.ToString("yyyy/MM/dd"));
+                if (!Directory.Exists(dir))
+                    Directory.CreateDirectory(dir);
+                string targetPath = Path.Combine(dir, Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
+                using (var stream = System.IO.File.Create(targetPath))
+                {
+                    file.CopyTo(stream);
+                }
+
+                return Ok(dir);
+            }
+            return BadRequest();
         }
     }
 }
