@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DrTaabodi.Data.Migrations
 {
-    public partial class Base : Migration
+    public partial class FileSystemupdat : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -46,6 +46,37 @@ namespace DrTaabodi.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FileSystem",
+                columns: table => new
+                {
+                    FileSystemId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreationTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastWriteTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    FileFolderPath = table.Column<string>(type: "nvarchar(max)", maxLength: 2147483647, nullable: false),
+                    Caption = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Size = table.Column<long>(type: "bigint", nullable: true),
+                    HasChilds = table.Column<bool>(type: "bit", nullable: true),
+                    IsFile = table.Column<bool>(type: "bit", nullable: true),
+                    Id = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Version = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImageRuntimeVersion = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Compilation = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Extension = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FileSystem", x => x.FileSystemId);
+                    table.ForeignKey(
+                        name: "FK_FileSystem_FileSystem_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "FileSystem",
+                        principalColumn: "FileSystemId");
                 });
 
             migrationBuilder.CreateTable(
@@ -418,6 +449,11 @@ namespace DrTaabodi.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_FileSystem_ParentId",
+                table: "FileSystem",
+                column: "ParentId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PostCategoryTbl_ParentId",
                 table: "PostCategoryTbl",
                 column: "ParentId");
@@ -474,6 +510,9 @@ namespace DrTaabodi.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "FileSystem");
 
             migrationBuilder.DropTable(
                 name: "PostCategoryTblPstTbl");

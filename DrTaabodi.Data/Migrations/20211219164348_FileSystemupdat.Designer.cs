@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrTaabodi.Data.Migrations
 {
     [DbContext(typeof(DrTaabodiDbContext))]
-    [Migration("20211215225343_FileSystemupdate")]
-    partial class FileSystemupdate
+    [Migration("20211219164348_FileSystemupdat")]
+    partial class FileSystemupdat
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -30,12 +30,18 @@ namespace DrTaabodi.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("Caption")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Compilation")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreationTime")
                         .IsRequired()
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Extension")
                         .HasColumnType("nvarchar(max)");
