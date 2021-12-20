@@ -141,6 +141,7 @@ public class PostController : ControllerBase
             mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
         //var mapPost = _mapper.Map<PstTbl>(Post);
         var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
-        return Ok(_mapper.Map<PstTbl>(UpdatedPost));
+        //var updated = _mapper.Map<PstTbl>(UpdatedPost);
+        return Ok(UpdatedPost);
     }
 }
