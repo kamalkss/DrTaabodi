@@ -108,9 +108,13 @@ public class PostController : ControllerBase
                 mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
             
         }
-        if (Post.PostType != null && Post.PostType != Guid.Empty &&
-            Post.PostType != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
+
+        foreach (var guid in Post.PostCategory)
+        {
+            if (guid != null && guid != Guid.Empty &&
+                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+        }
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
         //    mapPost.
 
@@ -140,12 +144,20 @@ public class PostController : ControllerBase
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
-        if (Post.PostCategory != null && Post.PostCategory != Guid.Empty &&
-            Post.PostCategory != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(Post.PostCategory));
-        if (Post.PostType != null && Post.PostType != Guid.Empty &&
-            Post.PostType != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PostTypeTable.Add(await _TypeService.GetPostById(Post.PostType));
+        foreach (var guid in Post.PostCategory)
+        {
+            if (guid != null && guid != Guid.Empty &&
+                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
+
+        }
+
+        foreach (var guid in Post.PostCategory)
+        {
+            if (guid != null && guid != Guid.Empty &&
+                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+        }
         //var mapPost = _mapper.Map<PstTbl>(Post);
         var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
         //var updated = _mapper.Map<PstTbl>(UpdatedPost);
