@@ -12,9 +12,9 @@ public class ReadPosts
     public string PstDescription { get; set; }
 
     public Guid PstTbleParent { get; set; }
-    public Guid PostCategory { get; set; }
-    public Guid PostType { get; set; }
-    public Guid Meta { get; set; }
+    public ICollection<Guid> PostCategory { get; set; }
+    public ICollection<Guid> PostType { get; set; }
+    public ICollection<Guid> Meta { get; set; }
 
     public ICollection<Guid> Categories { get; set; }
 }
