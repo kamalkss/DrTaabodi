@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
@@ -53,7 +54,9 @@ public class PostController : ControllerBase
     {
         _logger.LogInformation("Read Id Post");
         var post = await _post.GetPostById(id);
-        return Ok(_mapper.Map<ReadPosts>(post));
+        ReadPosts dto = _mapper.Map<ReadPosts>(post);
+        dto.Categories = post.PostCategoryTable.Select(x => x.PostCategoryId).ToList();
+        return Ok(dto);
     }
 
     [HttpPost]
@@ -81,7 +84,7 @@ public class PostController : ControllerBase
         //    mapPost.PstTbleParent.
 
 
-        var newPost = _post.CreatePost(mapPost);
+        var newPost = _post.CreatePost(mapPost, Post.Categories);
 
         return Ok(newPost);
     }

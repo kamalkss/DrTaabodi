@@ -47,7 +47,7 @@ public class SqlPost : IPost
             .FirstOrDefaultAsync(p => p.PstId == id);
     }
 
-    public async Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost)
+    public async Task<ServiceResponse<PstTbl>> CreatePost(PstTbl WebPost, ICollection<Guid> CategoriesIds = null)
     {
         _logger.LogInformation("Log for Create Post");
         try
@@ -57,6 +57,15 @@ public class SqlPost : IPost
             //var user = WebPost.UserTable;
 
             await _context.AddAsync(WebPost);
+            if (CategoriesIds != null)
+            {
+                foreach (var item in CategoriesIds)
+                {
+                    var group = _context.PostCategoryTbl.Find(item);
+                    if (group != null)
+                        WebPost.PostCategoryTable.Add(group);
+                }
+            }
             await SaveChanges();
             return new ServiceResponse<PstTbl>
             {
@@ -78,7 +87,7 @@ public class SqlPost : IPost
         }
     }
 
-    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus)
+    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus, ICollection<Guid> CategoriesIds = null)
     {
         _logger.LogInformation("Log For Update Post");
         try
@@ -89,6 +98,16 @@ public class SqlPost : IPost
 
             _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
 
+            WebPost.PostCategoryTable.Clear();
+            if (CategoriesIds != null)
+            {
+                foreach (var item in CategoriesIds)
+                {
+                    var group = _context.PostCategoryTbl.Find(item);
+                    if (group != null)
+                        WebPost.PostCategoryTable.Add(group);
+                }
+            }
 
             //_context.PstTbl.Update(WebPost);
             await SaveChanges();

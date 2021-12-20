@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace DrTaabodi.WebApi.DTO.Posts;
 
@@ -14,4 +15,6 @@ public class ReadPosts
     public Guid PostCategory { get; set; }
     public Guid PostType { get; set; }
     public Guid Meta { get; set; }
+
+    public ICollection<Guid> Categories { get; set; }
 }
