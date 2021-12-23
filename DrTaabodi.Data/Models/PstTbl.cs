@@ -11,6 +11,7 @@ public class PstTbl
         PostTypeTable = new HashSet<PostTypeTbl>();
         PostCategoryTable = new HashSet<PostCategoryTbl>();
         UserTable = new HashSet<UsrTbl>();
+        MetaTable = new HashSet<MetaTbl>();
         //PstTblParent = new HashSet<PstTbl>();
     }
 
@@ -34,7 +35,7 @@ public class PstTbl
 
     public virtual ICollection<PostTypeTbl> PostTypeTable { get; set; }
     public virtual ICollection<PostCategoryTbl> PostCategoryTable { get; set; }
-
+    public virtual ICollection<MetaTbl> MetaTable { get; set; }
     public virtual ICollection<UsrTbl> UserTable { get; set; }
     //public virtual ICollection<PstTbl> ChildDependencies { get; set; } = new List<PstTbl>();
     //public virtual ICollection<PstTbl> ParentDependencies { get; set; } = new List<PstTbl>();

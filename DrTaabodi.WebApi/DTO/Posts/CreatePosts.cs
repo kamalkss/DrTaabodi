@@ -12,5 +12,5 @@ public class CreatePosts
 
     public Guid PstTbleParent { get; set; }
 
-    public ICollection<Guid> Categories { get; set; }
+    //public ICollection<Guid> Categories { get; set; }
 }

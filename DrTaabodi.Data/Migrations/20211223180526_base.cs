@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace DrTaabodi.Data.Migrations
 {
-    public partial class FileSystemupdat : Migration
+    public partial class @base : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -80,19 +80,6 @@ namespace DrTaabodi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "MetaTbl",
-                columns: table => new
-                {
-                    MetaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    MetaKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    MetaValue = table.Column<string>(type: "nvarchar(max)", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_MetaTbl", x => x.MetaId);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PostCategoryTbl",
                 columns: table => new
                 {
@@ -130,6 +117,28 @@ namespace DrTaabodi.Data.Migrations
                         column: x => x.ParentId,
                         principalTable: "PostTypeTbl",
                         principalColumn: "PostTypeId");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PstTbl",
+                columns: table => new
+                {
+                    PstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    PstContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PstTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PstDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PstTbl", x => x.PstId);
+                    table.ForeignKey(
+                        name: "FK_PstTbl_PstTbl_ParentId",
+                        column: x => x.ParentId,
+                        principalTable: "PstTbl",
+                        principalColumn: "PstId");
                 });
 
             migrationBuilder.CreateTable(
@@ -286,55 +295,22 @@ namespace DrTaabodi.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PstTbl",
+                name: "MetaTbl",
                 columns: table => new
                 {
-                    PstId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedData = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    PstContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PstTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PstDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    MetaTblMetaId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    MetaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MetaKey = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    MetaValue = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PstTblPstId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PstTbl", x => x.PstId);
+                    table.PrimaryKey("PK_MetaTbl", x => x.MetaId);
                     table.ForeignKey(
-                        name: "FK_PstTbl_MetaTbl_MetaTblMetaId",
-                        column: x => x.MetaTblMetaId,
-                        principalTable: "MetaTbl",
-                        principalColumn: "MetaId");
-                    table.ForeignKey(
-                        name: "FK_PstTbl_PstTbl_ParentId",
-                        column: x => x.ParentId,
+                        name: "FK_MetaTbl_PstTbl_PstTblPstId",
+                        column: x => x.PstTblPstId,
                         principalTable: "PstTbl",
                         principalColumn: "PstId");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "QnATblUsrTbl",
-                columns: table => new
-                {
-                    QuestionAndAnswerTableQnAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserTableUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_QnATblUsrTbl", x => new { x.QuestionAndAnswerTableQnAId, x.UserTableUsrId });
-                    table.ForeignKey(
-                        name: "FK_QnATblUsrTbl_QnATbl_QuestionAndAnswerTableQnAId",
-                        column: x => x.QuestionAndAnswerTableQnAId,
-                        principalTable: "QnATbl",
-                        principalColumn: "QnAId",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_QnATblUsrTbl_UsrTbl_UserTableUsrId",
-                        column: x => x.UserTableUsrId,
-                        principalTable: "UsrTbl",
-                        principalColumn: "UsrId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -409,6 +385,30 @@ namespace DrTaabodi.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "QnATblUsrTbl",
+                columns: table => new
+                {
+                    QuestionAndAnswerTableQnAId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserTableUsrId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QnATblUsrTbl", x => new { x.QuestionAndAnswerTableQnAId, x.UserTableUsrId });
+                    table.ForeignKey(
+                        name: "FK_QnATblUsrTbl_QnATbl_QuestionAndAnswerTableQnAId",
+                        column: x => x.QuestionAndAnswerTableQnAId,
+                        principalTable: "QnATbl",
+                        principalColumn: "QnAId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_QnATblUsrTbl_UsrTbl_UserTableUsrId",
+                        column: x => x.UserTableUsrId,
+                        principalTable: "UsrTbl",
+                        principalColumn: "UsrId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -454,6 +454,11 @@ namespace DrTaabodi.Data.Migrations
                 column: "ParentId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_MetaTbl_PstTblPstId",
+                table: "MetaTbl",
+                column: "PstTblPstId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PostCategoryTbl_ParentId",
                 table: "PostCategoryTbl",
                 column: "ParentId");
@@ -472,11 +477,6 @@ namespace DrTaabodi.Data.Migrations
                 name: "IX_PostTypeTblPstTbl_PostTypeTablePostTypeId",
                 table: "PostTypeTblPstTbl",
                 column: "PostTypeTablePostTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_PstTbl_MetaTblMetaId",
-                table: "PstTbl",
-                column: "MetaTblMetaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PstTbl_ParentId",
@@ -515,6 +515,9 @@ namespace DrTaabodi.Data.Migrations
                 name: "FileSystem");
 
             migrationBuilder.DropTable(
+                name: "MetaTbl");
+
+            migrationBuilder.DropTable(
                 name: "PostCategoryTblPstTbl");
 
             migrationBuilder.DropTable(
@@ -549,9 +552,6 @@ namespace DrTaabodi.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "UsrTbl");
-
-            migrationBuilder.DropTable(
-                name: "MetaTbl");
         }
     }
 }

@@ -6,6 +6,7 @@ using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using DrTaabodi.Services;
+using DrTaabodi.Services.MetaTable;
 using DrTaabodi.Services.PostCategoryTable;
 using DrTaabodi.Services.PostTable;
 using DrTaabodi.Services.PostTypeTable;
@@ -27,9 +28,10 @@ public class PostController : ControllerBase
     private readonly IPost _post;
     private readonly IPostType _TypeService;
     private readonly IUser _UserService;
+    private readonly IMeta _meta;
 
     public PostController(ILogger<PostController> logger, DrTaabodiDbContext db, IUser user, IMapper mapper, IPost post,
-        IPostCategory postCategory, IPostType PostType)
+        IPostCategory postCategory, IPostType PostType,IMeta meta)
     {
         _logger = logger;
         _db = db;
@@ -38,6 +40,7 @@ public class PostController : ControllerBase
         _post = post;
         _CategoryService = postCategory;
         _TypeService = PostType;
+        _meta = meta;
     }
 
     [HttpGet]
@@ -54,9 +57,9 @@ public class PostController : ControllerBase
     {
         _logger.LogInformation("Read Id Post");
         var post = await _post.GetPostById(id);
-        ReadPosts dto = _mapper.Map<ReadPosts>(post);
-        dto.Categories = post.PostCategoryTable.Select(x => x.PostCategoryId).ToList();
-        return Ok(dto);
+        //ReadPosts dto = _mapper.Map<ReadPosts>(post);
+        //dto.Categories = post.PostCategoryTable.Select(x => x.PostCategoryId).ToList();
+        return Ok(post);
     }
 
     [HttpPost]
@@ -84,7 +87,7 @@ public class PostController : ControllerBase
         //    mapPost.PstTbleParent.
 
 
-        var newPost = _post.CreatePost(mapPost, Post.Categories);
+        var newPost = _post.CreatePost(mapPost);
 
         return Ok(newPost);
     }
@@ -101,19 +104,36 @@ public class PostController : ControllerBase
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
-        foreach (var guid in Post.PostCategory)
+
+        
+        if (Post.PostCategory != null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
-            
+            foreach (var guid in Post.PostCategory)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
+
+            }
+        }
+        if (Post.PostType != null)
+        {
+            foreach (var guid in Post.PostType)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+            }
         }
 
-        foreach (var guid in Post.PostCategory)
+        if (Post.Meta != null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+            foreach (var guid in Post.Meta)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.MetaTable.Add(await _meta.GetPostById(guid));
+            }
         }
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
         //    mapPost.
@@ -144,19 +164,33 @@ public class PostController : ControllerBase
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
-        foreach (var guid in Post.PostCategory)
+        if (Post.PostCategory != null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
+            foreach (var guid in Post.PostCategory)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
 
+            }
         }
-
-        foreach (var guid in Post.PostCategory)
+        if (Post.MetaId != null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+            foreach (var guid in Post.MetaId)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.MetaTable.Add(await _meta.GetPostById(guid));
+            }
+        }
+        if (Post.PostType != null)
+        {
+            foreach (var guid in Post.PostType)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
+            }
         }
         //var mapPost = _mapper.Map<PstTbl>(Post);
         var UpdatedPost = _post.UpdatePostStatus(id, mapPost);

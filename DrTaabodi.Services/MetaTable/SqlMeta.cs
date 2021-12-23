@@ -51,20 +51,20 @@ public class SqlMeta : IMeta
 
     public async Task<IEnumerable<MetaTbl>> GetAllPosts()
     {
-        return await _context.MetaTbl
-            .Include(c => c.PstTbls).ToListAsync();
+        return await _context.MetaTbl.ToListAsync();
+            //.Include(c => c.PstTbls).ToListAsync();
     }
 
     public async Task<IEnumerable<MetaTbl>> GetMetasWithPostId(Guid id)
     {
-        return await _context.MetaTbl
-            .Include(c => c.PstTbls.FirstOrDefault(e => e.PstId == id)).ToListAsync();
+        return await _context.MetaTbl.ToListAsync();
+        //.Include(c => c.PstTbls.FirstOrDefault(e => e.PstId == id)).ToListAsync();
     }
 
     public async Task<MetaTbl> GetPostById(Guid id)
     {
-        return await _context.MetaTbl
-            .Include(c => c.PstTbls).FirstOrDefaultAsync(c => c.MetaId == id);
+        return await _context.MetaTbl.FirstOrDefaultAsync(c => c.MetaId == id);
+            //.Include(c => c.PstTbls)
     }
 
     public async Task<bool> SaveChanges()
