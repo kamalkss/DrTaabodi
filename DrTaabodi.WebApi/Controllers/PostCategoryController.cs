@@ -58,8 +58,13 @@ public class PostCategoryController : ControllerBase
 
         if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
-        //if (postCategory.PostId != Guid.Empty)
-        //    MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
+        foreach (var guid in postCategory.PostId)
+        {
+            if (guid != null && guid != Guid.Empty &&
+                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                MapPost.PostTable.Add(await _postService.GetPostById(guid));
+
+        }
         var NewPost = _postCategoryService.CreatePost(MapPost);
         return Ok(NewPost);
     }
@@ -77,8 +82,14 @@ public class PostCategoryController : ControllerBase
         if (postCategory.ParentId != Guid.Empty &&
             postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = postCategory.ParentId;
-        if (postCategory.PostId != Guid.Empty)
-            MapPost.PostTable.Add(await _postService.GetPostById(postCategory.PostId));
+        foreach (var guid in postCategory.PostId)
+        {
+            if (guid != null && guid != Guid.Empty &&
+                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                MapPost.PostTable.Add(await _postService.GetPostById(guid));
+            
+        }
+        
         if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
         var NewPost = _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);
