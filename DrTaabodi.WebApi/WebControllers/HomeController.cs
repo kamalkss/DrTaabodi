@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using DrTaabodi.Data.DatabaseContext;
+using DrTaabodi.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -68,7 +69,9 @@ public class HomeController : Controller
             content = content.Replace("[title]", post.PstTitle);
             content = content.Replace("[description]", post.PstDescription);
             content = content.Replace("[content]", post.PstContent);
-
+            content = content.Replace("[date]", post.CreatedDate.ToPersianCalender() ?? "---");
+            content = content.Replace("[time]", post.CreatedDate.ToShortTimeString() ?? "---");
+            
 
             var machs = Regex.Matches(content, @"\[(?<name>[^\]]*)\]");
             foreach (Match match in machs)

@@ -331,7 +331,9 @@
       <div class="items-container">
 
         <template v-if="articles && articles.length >= 0">
-          <a v-for="x in articles" :key="x.pstId" href="/" class="item text-decoration-none text-inherit">
+          <a v-for="x in articles" :key="x.pstId" :href="`/article/${x.pstId}`"
+             class="item text-decoration-none text-inherit"
+          >
             <div class="h-100 bg-light-gray rounded border p-2">
               <div class="aspect-100 bg-secondary">
 
