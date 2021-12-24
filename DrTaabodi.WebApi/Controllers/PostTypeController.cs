@@ -53,12 +53,15 @@ public class PostTypeController : ControllerBase
             MapPost.ParentId = PostType.ParentId;
         if (PostType.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
-        foreach (var guid in PostType.PostId)
+        if(PostType.PostId !=null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostTable.Add(await _postService.GetPostById(guid));
+            foreach (var guid in PostType.PostId)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    MapPost.PostTable.Add(await _postService.GetPostById(guid));
 
+            }
         }
         var NewPost = _postTypeService.CreatePostType(MapPost);
         return Ok(NewPost);
@@ -74,12 +77,15 @@ public class PostTypeController : ControllerBase
         if (postType.ParentId != Guid.Empty &&
             postType.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = postType.ParentId;
-        foreach (var guid in postType.PostId)
+        if(postType.PostId!=null)
         {
-            if (guid != null && guid != Guid.Empty &&
-                guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                MapPost.PostTable.Add(await _postService.GetPostById(guid));
+            foreach (var guid in postType.PostId)
+            {
+                if (guid != null && guid != Guid.Empty &&
+                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                    MapPost.PostTable.Add(await _postService.GetPostById(guid));
 
+            }
         }
         if (postType.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
