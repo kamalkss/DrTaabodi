@@ -331,7 +331,7 @@
       <div class="items-container">
 
         <template v-if="articles && articles.length >= 0">
-          <a v-for="x in 10" :key="x" href="/" class="item text-decoration-none text-inherit">
+          <a v-for="x in articles" :key="x.pstId" href="/" class="item text-decoration-none text-inherit">
             <div class="h-100 bg-light-gray rounded border p-2">
               <div class="aspect-100 bg-secondary">
 
@@ -339,11 +339,10 @@
 
               <div class="mt-2 text-center">
                 <div class="fw-bolder">
-                  عنوان اخرین مقاله 1
+                  {{x.pstTitle}}
                 </div>
                 <p class="text-justify text-last-center small mt-1">
-                  خلاصه مقاله خلاصه مقاله خلاصه مقاله خلاصه مقاله خلاصه مقاله خلاصه مقاله خلاصه مقاله خلاصه
-                  مقاله خلاصه مقاله خلاصه مقاله خلاصه مقاله
+                  {{x.pstDescription}}
                 </p>
               </div>
             </div>
