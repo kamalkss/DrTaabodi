@@ -140,7 +140,7 @@ public class PostController : ControllerBase
 
         var newPost = _post.CreatePost(mapPost);
 
-        return Ok(newPost);
+        return Ok(newPost.Result);
     }
 
     /*[HttpPatch("/postStatus/")]
@@ -195,6 +195,6 @@ public class PostController : ControllerBase
         //var mapPost = _mapper.Map<PstTbl>(Post);
         var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
         //var updated = _mapper.Map<PstTbl>(UpdatedPost);
-        return Ok(UpdatedPost);
+        return Ok(UpdatedPost.Result);
     }
 }
