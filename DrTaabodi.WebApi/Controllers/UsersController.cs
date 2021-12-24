@@ -107,7 +107,7 @@ public class UsersController : ControllerBase
         return Ok(updateduser);
     }
 
-    [HttpPatch("/UpdatePassword")]
+    [HttpPatch("UpdatePassword")]
     public async Task<ActionResult<UpdatePassword>> Update_Password([FromBody] UpdatePassword updateuser)
     {
         _logger.LogInformation("UpdateUserStatus");
