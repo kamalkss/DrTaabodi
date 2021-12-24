@@ -92,7 +92,7 @@ public class PostController : ControllerBase
         return Ok(newPost);
     }
 
-    [HttpPost("/PostCreateUsingCategoryAndType")]
+    [HttpPost("PostCreateUsingCategoryAndType")]
     public async Task<ActionResult<ServiceResponse<CreatePostWithTypeAndCategory>>> PostCreateUsingCategoryAndType(
         [FromBody] CreatePostWithTypeAndCategory Post)
     {
