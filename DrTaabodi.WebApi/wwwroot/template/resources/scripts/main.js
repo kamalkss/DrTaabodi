@@ -52,11 +52,19 @@ new Vue({
   }),
   methods: {
     retrieveLatestArticles() {
-
+      fetch('/api/post')
+        .then(x => {
+          if (x.ok) {
+            x.json()
+              .then(r => {
+                this.articles = r
+              })
+          }
+        })
     }
   },
   mounted() {
-    this.articles = []
+    this.retrieveLatestArticles()
   }
 })
 
