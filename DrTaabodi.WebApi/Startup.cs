@@ -104,7 +104,7 @@ public class Startup
         //db.Database.EnsureCreated();
 
 
-        if (env.IsDevelopment())
+        if (env.IsDevelopment() || env.EnvironmentName == "MHRDevelopment")
         {
             app.UseDeveloperExceptionPage();
             app.UseSwagger();
