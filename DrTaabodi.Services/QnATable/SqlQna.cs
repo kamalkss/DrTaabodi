@@ -71,12 +71,14 @@ public class SqlQna : IQnA
 
     public async Task<ServiceResponse<bool>> UpdateQnATblQuestion(Guid id, QnATbl WebPost)
     {
-        var UpdatedPost = _context.QnATbl.Find(id);
         _logger.LogInformation("Log For Update Qna");
         try
         {
-            WebPost.UpdatedData = DateTime.UtcNow;
-            _context.Entry(UpdatedPost).CurrentValues.SetValues(WebPost);
+            var UpdatedPost = await GetQnATblById(id);
+            UpdatedPost.UpdatedData = DateTime.UtcNow;
+            UpdatedPost.UserTable.Clear();
+            foreach (var item in WebPost.UserTable) UpdatedPost.UserTable.Add(item);
+            //_context.Entry(UpdatedPost).CurrentValues.SetValues(WebPost);
             await SaveChanges();
             return new ServiceResponse<bool>
             {
