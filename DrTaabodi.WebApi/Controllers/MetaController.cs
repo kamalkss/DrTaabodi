@@ -56,9 +56,7 @@ public class MetaController : ControllerBase
     {
         var mapPost = _mapper.Map<MetaTbl>(createMeta);
 
-        if (createMeta.PostId != null && createMeta.PostId != Guid.Empty &&
-            createMeta.PostId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-            mapPost.PstTbls.Add(await _postService.GetPostById(createMeta.PostId));
+
         var newPost = _metaService.CreatePost(mapPost);
 
         return Ok(newPost);

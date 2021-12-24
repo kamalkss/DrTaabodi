@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrTaabodi.Data.Migrations
 {
     [DbContext(typeof(DrTaabodiDbContext))]
-    [Migration("20211219164348_FileSystemupdat")]
-    partial class FileSystemupdat
+    [Migration("20211223180526_base")]
+    partial class @base
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -100,7 +100,12 @@ namespace DrTaabodi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("PstTblPstId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("MetaId");
+
+                    b.HasIndex("PstTblPstId");
 
                     b.ToTable("MetaTbl");
                 });
@@ -166,9 +171,6 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid?>("MetaTblMetaId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
@@ -188,8 +190,6 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("PstId");
-
-                    b.HasIndex("MetaTblMetaId");
 
                     b.HasIndex("ParentId");
 
@@ -545,6 +545,13 @@ namespace DrTaabodi.Data.Migrations
                     b.Navigation("Parent");
                 });
 
+            modelBuilder.Entity("DrTaabodi.Data.Models.MetaTbl", b =>
+                {
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
+                        .WithMany("MetaTable")
+                        .HasForeignKey("PstTblPstId");
+                });
+
             modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
                 {
                     b.HasOne("DrTaabodi.Data.Models.PostCategoryTbl", "Parent")
@@ -565,10 +572,6 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
                 {
-                    b.HasOne("DrTaabodi.Data.Models.MetaTbl", null)
-                        .WithMany("PstTbls")
-                        .HasForeignKey("MetaTblMetaId");
-
                     b.HasOne("DrTaabodi.Data.Models.PstTbl", "Parent")
                         .WithMany("Children")
                         .HasForeignKey("ParentId");
@@ -692,11 +695,6 @@ namespace DrTaabodi.Data.Migrations
                     b.Navigation("Children");
                 });
 
-            modelBuilder.Entity("DrTaabodi.Data.Models.MetaTbl", b =>
-                {
-                    b.Navigation("PstTbls");
-                });
-
             modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>
                 {
                     b.Navigation("Children");
@@ -710,6 +708,8 @@ namespace DrTaabodi.Data.Migrations
             modelBuilder.Entity("DrTaabodi.Data.Models.PstTbl", b =>
                 {
                     b.Navigation("Children");
+
+                    b.Navigation("MetaTable");
                 });
 #pragma warning restore 612, 618
         }
