@@ -92,13 +92,33 @@ public class SqlPost : IPost
         _logger.LogInformation("Log For Update Post");
         try
         {
-            var WebPost = _context.PstTbl.Find(id);
+            var WebPost = await GetPostById(id);
+            //_context.PstTbl.RemoveRange(WebPost);
+            //_context.PstTbl.AddRangeAsync(UsrStatus);
             //WebPost.PstStatus = UsrStatus;
-            UsrStatus.UpdatedData = DateTime.UtcNow;
-
-            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-
+            WebPost.UpdatedData = DateTime.UtcNow;
+            //var mypost = await GetPostById(id);
+            //_context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+            //_context.PstTbl.Update(UsrStatus);
+            // WebPost.PostCategoryTable.Clear();
             WebPost.PostCategoryTable.Clear();
+            WebPost.PostTypeTable.Clear();
+            WebPost.MetaTable.Clear();
+
+
+            foreach (var item in UsrStatus.PostCategoryTable)
+            {
+                WebPost.PostCategoryTable.Add(item);
+            }
+            foreach (var item in UsrStatus.PostTypeTable)
+            {
+                WebPost.PostTypeTable.Add(item);
+            }
+            foreach (var item in UsrStatus.MetaTable)
+            {
+                WebPost.MetaTable.Add(item);
+            }
+
             if (CategoriesIds != null)
             {
                 foreach (var item in CategoriesIds)
@@ -110,7 +130,7 @@ public class SqlPost : IPost
             }
 
             //_context.PstTbl.Update(WebPost);
-            await SaveChanges();
+            await _context.SaveChangesAsync();
             return new ServiceResponse<bool>
             {
                 IsSucceess = true,
