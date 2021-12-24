@@ -226,7 +226,7 @@ namespace DrTaabodi.WebApi.Controllers
                     file.CopyTo(stream);
                 }
                 
-                return Ok(targetPath.Replace(_environment.WebRootPath,"/Files/").Replace('\\','/'));
+                return Ok(targetPath.Replace(_environment.WebRootPath,"/Files").Replace('\\','/'));
             }
             return BadRequest();
         }
