@@ -217,7 +217,7 @@ namespace DrTaabodi.WebApi.Controllers
         {
             if (file != null)
             {
-                string dir = Path.Combine(_environment.WebRootPath, "files/" + DateTime.Now.ToString("yyyy/MM/dd"));
+                string dir = Path.Combine(_environment.WebRootPath,  DateTime.Now.ToString("yyyy/MM/dd"));
                 if (!Directory.Exists(dir))
                     Directory.CreateDirectory(dir);
                 string targetPath = Path.Combine(dir, Guid.NewGuid().ToString() + Path.GetExtension(file.FileName));
@@ -226,7 +226,7 @@ namespace DrTaabodi.WebApi.Controllers
                     file.CopyTo(stream);
                 }
                 
-                return Ok(targetPath.Replace(_environment.WebRootPath,"").Replace('\\','/'));
+                return Ok(targetPath.Replace(_environment.WebRootPath,"/Files/").Replace('\\','/'));
             }
             return BadRequest();
         }
