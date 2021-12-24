@@ -58,14 +58,13 @@ public class SqlPost : IPost
 
             await _context.AddAsync(WebPost);
             if (CategoriesIds != null)
-            {
                 foreach (var item in CategoriesIds)
                 {
                     var group = _context.PostCategoryTbl.Find(item);
                     if (group != null)
                         WebPost.PostCategoryTable.Add(group);
                 }
-            }
+
             await SaveChanges();
             return new ServiceResponse<PstTbl>
             {
@@ -87,7 +86,8 @@ public class SqlPost : IPost
         }
     }
 
-    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus, ICollection<Guid> CategoriesIds = null)
+    public async Task<ServiceResponse<bool>> UpdatePostStatus(Guid id, PstTbl UsrStatus,
+        ICollection<Guid> CategoriesIds = null)
     {
         _logger.LogInformation("Log For Update Post");
         try
@@ -106,28 +106,17 @@ public class SqlPost : IPost
             WebPost.MetaTable.Clear();
 
 
-            foreach (var item in UsrStatus.PostCategoryTable)
-            {
-                WebPost.PostCategoryTable.Add(item);
-            }
-            foreach (var item in UsrStatus.PostTypeTable)
-            {
-                WebPost.PostTypeTable.Add(item);
-            }
-            foreach (var item in UsrStatus.MetaTable)
-            {
-                WebPost.MetaTable.Add(item);
-            }
+            foreach (var item in UsrStatus.PostCategoryTable) WebPost.PostCategoryTable.Add(item);
+            foreach (var item in UsrStatus.PostTypeTable) WebPost.PostTypeTable.Add(item);
+            foreach (var item in UsrStatus.MetaTable) WebPost.MetaTable.Add(item);
 
             if (CategoriesIds != null)
-            {
                 foreach (var item in CategoriesIds)
                 {
                     var group = _context.PostCategoryTbl.Find(item);
                     if (group != null)
                         WebPost.PostCategoryTable.Add(group);
                 }
-            }
 
             //_context.PstTbl.Update(WebPost);
             await _context.SaveChangesAsync();

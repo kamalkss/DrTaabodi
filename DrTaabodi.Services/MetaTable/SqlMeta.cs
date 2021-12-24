@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
@@ -52,7 +51,7 @@ public class SqlMeta : IMeta
     public async Task<IEnumerable<MetaTbl>> GetAllPosts()
     {
         return await _context.MetaTbl.ToListAsync();
-            //.Include(c => c.PstTbls).ToListAsync();
+        //.Include(c => c.PstTbls).ToListAsync();
     }
 
     public async Task<IEnumerable<MetaTbl>> GetMetasWithPostId(Guid id)
@@ -64,7 +63,7 @@ public class SqlMeta : IMeta
     public async Task<MetaTbl> GetPostById(Guid id)
     {
         return await _context.MetaTbl.FirstOrDefaultAsync(c => c.MetaId == id);
-            //.Include(c => c.PstTbls)
+        //.Include(c => c.PstTbls)
     }
 
     public async Task<bool> SaveChanges()
@@ -78,7 +77,7 @@ public class SqlMeta : IMeta
         try
         {
             //WebPost.PstType = UsrStatus;
-            var WebPost = _context.MetaTbl.Find(id);
+            var WebPost = await _context.MetaTbl.FindAsync(id);
 
             _context.Entry(WebPost).CurrentValues.SetValues(postStatus);
             await SaveChanges();

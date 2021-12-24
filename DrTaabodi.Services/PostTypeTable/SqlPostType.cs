@@ -68,16 +68,17 @@ public class SqlPostType : IPostType
 
     public async Task<ServiceResponse<bool>> UpdatePostType(Guid id, PostTypeTbl WebPost)
     {
-        var ChildPostType = _context.PostTypeTbl.Find(id);
         //var Parent = _context.PostTypeTbl.Find(WebPost.PostTypeId);
         _logger.LogInformation("Log for Create Post Parent");
         try
         {
-            WebPost.UpdatedData = DateTime.UtcNow;
+            var ChildPostType = await GetPostById(id);
+            ChildPostType.UpdatedData = DateTime.UtcNow;
             //ChildPostType.PostType = Parent;
+            ChildPostType.PostTable.Clear();
 
-
-            _context.Entry(ChildPostType).CurrentValues.SetValues(WebPost);
+            // _context.Entry(ChildPostType).CurrentValues.SetValues(WebPost);
+            foreach (var item in WebPost.PostTable) ChildPostType.PostTable.Add(item);
             await SaveChanges();
             return new ServiceResponse<bool>
             {
