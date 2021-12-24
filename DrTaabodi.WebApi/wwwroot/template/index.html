@@ -321,23 +321,23 @@
     </div>
   </div>
 
-  <div class="container py-5">
-    <div class="h3">
-      <span class="fa fa-angle-double-left"></span>
-      <span data-editable>آخرین مقالات</span>
-    </div>
+  <template v-if="articles && articles.length >= 0">
+    <div class="container py-5">
+      <div class="h3">
+        <span class="fa fa-angle-double-left"></span>
+        <span data-editable>آخرین مقالات</span>
+      </div>
 
-    <div class="mt-4 horizontal-slider">
-      <div class="items-container">
+      <div class="mt-4 horizontal-slider">
+        <div class="items-container">
 
-        <template v-if="articles && articles.length >= 0">
           <a v-for="x in articles" :key="x.pstId" :href="`/article/${x.pstId}`"
              class="item text-decoration-none text-inherit"
           >
             <div class="h-100 bg-light-gray rounded border p-2">
-              <div class="aspect-100 bg-secondary">
+             <!-- <div class="aspect-100 bg-secondary">
 
-              </div>
+              </div>-->
 
               <div class="mt-2 text-center">
                 <div class="fw-bolder">
@@ -349,18 +349,18 @@
               </div>
             </div>
           </a>
-        </template>
 
-      </div>
+        </div>
 
-      <div class="controller left d-flex align-items-center justify-content-center">
-        <span class="fa fa-angle-left"></span>
-      </div>
-      <div class="controller right d-flex align-items-center justify-content-center">
-        <span class="fa fa-angle-right"></span>
+        <div class="controller left d-flex align-items-center justify-content-center">
+          <span class="fa fa-angle-left"></span>
+        </div>
+        <div class="controller right d-flex align-items-center justify-content-center">
+          <span class="fa fa-angle-right"></span>
+        </div>
       </div>
     </div>
-  </div>
+  </template>
 
 
   <footer data-theme-part="footer" class="mt-3 " id="footer">
