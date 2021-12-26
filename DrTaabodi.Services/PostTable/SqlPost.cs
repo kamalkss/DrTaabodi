@@ -44,6 +44,7 @@ public class SqlPost : IPost
             //.Include(c => c.PstTbleParent)
             .Include(c => c.PostTypeTable)
             .Include(c => c.PostCategoryTable)
+            .Include(c=>c.MetaTable)
             .FirstOrDefaultAsync(p => p.PstId == id);
     }
 
@@ -98,7 +99,7 @@ public class SqlPost : IPost
             //WebPost.PstStatus = UsrStatus;
             WebPost.UpdatedData = DateTime.UtcNow;
             //var mypost = await GetPostById(id);
-            //_context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
             //_context.PstTbl.Update(UsrStatus);
             // WebPost.PostCategoryTable.Clear();
             WebPost.PostCategoryTable.Clear();
