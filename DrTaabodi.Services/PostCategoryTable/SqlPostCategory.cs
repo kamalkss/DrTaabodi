@@ -76,10 +76,10 @@ public class SqlPostCategory : IPostCategory
             var ChildPostType = await GetPostById(id);
             ChildPostType.UpdatedData = DateTime.UtcNow;
             //ChildPostType.PostType = Parent;
-
+            _context.Entry(ChildPostType).CurrentValues.SetValues(postStatus);
             ChildPostType.PostTable.Clear();
             foreach (var item in postStatus.PostTable) ChildPostType.PostTable.Add(item);
-            //_context.Entry(ChildPostType.Result).CurrentValues.SetValues(postStatus);
+            
             await SaveChanges();
             return new ServiceResponse<bool>
             {
