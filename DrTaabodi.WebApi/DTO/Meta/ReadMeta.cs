@@ -8,9 +8,9 @@ public class ReadMeta
 {
     public Guid MetaId { get; set; }
 
-    [Required] public string OptionKey { get; set; }
+    [Required] public string MetaKey { get; set; }
 
-    [Required] public string OptionValue { get; set; }
+    [Required] public string MetaValue { get; set; }
 
     public Guid PostId { get; set; }
 

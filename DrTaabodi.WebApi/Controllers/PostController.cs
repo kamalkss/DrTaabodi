@@ -130,9 +130,9 @@ public class PostController : ControllerBase
         {
             foreach (var guid in Post.Meta)
             {
-                if (guid != null && guid != Guid.Empty &&
-                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                    mapPost.MetaTable.Add(await _meta.GetPostById(guid));
+                var mapPostmeta = _mapper.Map<MetaTbl>(guid);
+                var metaid = await _meta.CreatePost(mapPostmeta);
+                mapPost.MetaTable.Add(await _meta.GetPostById(metaid.Data.MetaId));
             }
         }
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
