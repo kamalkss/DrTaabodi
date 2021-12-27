@@ -6,6 +6,7 @@ using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 
 namespace DrTaabodi.Services.PostTable;
@@ -93,14 +94,23 @@ public class SqlPost : IPost
         _logger.LogInformation("Log For Update Post");
         try
         {
+            _context.ChangeTracker.Clear();
+            _context.DetachAllEntities();
             var WebPost = await GetPostById(id);
             //_context.PstTbl.RemoveRange(WebPost);
             //_context.PstTbl.AddRangeAsync(UsrStatus);
             //WebPost.PstStatus = UsrStatus;
-            WebPost.UpdatedData = DateTime.UtcNow;
+            UsrStatus.UpdatedData = DateTime.UtcNow;
             //var mypost = await GetPostById(id);
             _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-            //_context.PstTbl.Update(UsrStatus);
+            //WebPost = UsrStatus;
+            //_context.Update(WebPost);
+            await SaveChanges();
+
+            _context.ChangeTracker.Clear();
+
+
+            //
             // WebPost.PostCategoryTable.Clear();
             WebPost.PostCategoryTable.Clear();
             WebPost.PostTypeTable.Clear();
@@ -118,9 +128,13 @@ public class SqlPost : IPost
                     if (group != null)
                         WebPost.PostCategoryTable.Add(group);
                 }
-
+            _context.PstTbl.Update(WebPost);
             //_context.PstTbl.Update(WebPost);
-            await _context.SaveChangesAsync();
+            await SaveChanges();
+
+
+            
+
             return new ServiceResponse<bool>
             {
                 IsSucceess = true,

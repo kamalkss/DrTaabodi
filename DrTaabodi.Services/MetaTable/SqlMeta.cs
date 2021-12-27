@@ -76,8 +76,10 @@ public class SqlMeta : IMeta
         _logger.LogInformation("Log For Update Post");
         try
         {
+            //_context.ChangeTracker.Clear();
+            _context.DetachAllEntities();
             //WebPost.PstType = UsrStatus;
-            var WebPost = await _context.MetaTbl.FindAsync(id);
+            var WebPost = await GetPostById(id);
 
             _context.Entry(WebPost).CurrentValues.SetValues(postStatus);
             await SaveChanges();

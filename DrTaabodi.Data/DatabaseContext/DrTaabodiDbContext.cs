@@ -1,4 +1,5 @@
-﻿using DrTaabodi.Data.Models;
+﻿using System.Linq;
+using DrTaabodi.Data.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -14,7 +15,17 @@ public class DrTaabodiDbContext : IdentityDbContext
     {
     }
 
+    public void DetachAllEntities()
+    {
+        var changedEntriesCopy = this.ChangeTracker.Entries()
+            .Where(e => e.State == EntityState.Added ||
+                        e.State == EntityState.Modified ||
+                        e.State == EntityState.Deleted)
+            .ToList();
 
+        foreach (var entry in changedEntriesCopy)
+            entry.State = EntityState.Detached;
+    }
     public virtual DbSet<PstTbl> PstTbl { get; set; }
     public virtual DbSet<QnATbl> QnATbl { get; set; }
     public virtual DbSet<UsrTbl> UsrTbl { get; set; }

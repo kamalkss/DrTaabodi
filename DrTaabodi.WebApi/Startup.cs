@@ -49,7 +49,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<DrTaabodiDbContext>(options => options.UseSqlServer
-            (Configuration.GetConnectionString("DrNullConnttion")));
+            (Configuration.GetConnectionString("DrNullConnttion")), ServiceLifetime.Transient);
 
         services.AddControllers()
             .AddJsonOptions(ops =>

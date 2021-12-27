@@ -138,9 +138,9 @@ public class PostController : ControllerBase
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
         //    mapPost.
 
-        var newPost = _post.CreatePost(mapPost);
+        var newPost = await _post.CreatePost(mapPost);
 
-        return Ok(newPost.Result);
+        return Ok(newPost);
     }
 
     /*[HttpPatch("/postStatus/")]
@@ -178,9 +178,19 @@ public class PostController : ControllerBase
         {
             foreach (var guid in Post.MetaId)
             {
-                if (guid != null && guid != Guid.Empty &&
-                    guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
-                    mapPost.MetaTable.Add(await _meta.GetPostById(guid));
+                if (guid.MetaId != null && guid.MetaId != Guid.Empty &&
+                    guid.MetaId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
+                {
+                    var meta = await _meta.UpdatePostStatus(guid.MetaId, _mapper.Map<MetaTbl>(guid));
+                    mapPost.MetaTable.Add(await _meta.GetPostById(guid.MetaId));
+                }
+                else
+                {
+                    var mapPostmeta = _mapper.Map<MetaTbl>(guid);
+                    var metaid = await _meta.CreatePost(mapPostmeta);
+                    mapPost.MetaTable.Add(await _meta.GetPostById(metaid.Data.MetaId));
+                }
+                   
             }
         }
         if (Post.PostType != null)
@@ -193,8 +203,8 @@ public class PostController : ControllerBase
             }
         }
         //var mapPost = _mapper.Map<PstTbl>(Post);
-        var UpdatedPost = _post.UpdatePostStatus(id, mapPost);
+         var UpdatedPost = await _post.UpdatePostStatus(id, mapPost);
         //var updated = _mapper.Map<PstTbl>(UpdatedPost);
-        return Ok(UpdatedPost.Result);
+        return Ok(UpdatedPost);
     }
 }
