@@ -46,8 +46,8 @@ public class SqlQna : IQnA
         {
             WebPost.UpdatedData = DateTime.UtcNow;
             WebPost.CreatedDate = DateTime.UtcNow;
-            ;
-            await _context.QnATbl.AddAsync(WebPost);
+            
+            _context.Update(WebPost);
             await SaveChanges();
             return new ServiceResponse<QnATbl>
             {
@@ -63,7 +63,7 @@ public class SqlQna : IQnA
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -94,7 +94,7 @@ public class SqlQna : IQnA
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -124,7 +124,7 @@ public class SqlQna : IQnA
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -155,7 +155,7 @@ public class SqlQna : IQnA
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

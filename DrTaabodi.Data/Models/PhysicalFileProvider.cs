@@ -80,7 +80,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             readResponse.Error = er;
@@ -272,7 +272,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             createResponse.Error = er;
@@ -366,7 +366,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             getDetailResponse.Error = er;
             return getDetailResponse;
@@ -445,7 +445,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             DeleteResponse.Error = er;
@@ -528,7 +528,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
             er.Message = e.GetType().Name == "UnauthorizedAccessException"
                 ? "'" + getFileNameFromPath(rootName + path + name) +
                   "' is not accessible. You need permission to perform the write action."
-                : e.Message;
+                : e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             renameResponse.Error = er;
@@ -704,7 +704,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             er.FileExists = copyResponse.Error?.FileExists;
@@ -898,8 +898,8 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         {
             var er = new ErrorDetails
             {
-                Message = e.Message,
-                Code = e.Message.Contains("is not accessible. You need permission") ? "401" : "417",
+                Message = e.InnerException.Message,
+                Code = e.InnerException.Message.Contains("is not accessible. You need permission") ? "401" : "417",
                 FileExists = moveResponse.Error?.FileExists
             };
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
@@ -1000,7 +1000,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
         catch (Exception e)
         {
             var er = new ErrorDetails();
-            er.Message = e.Message;
+            er.Message = e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             searchResponse.Error = er;
@@ -1245,7 +1245,7 @@ public class PhysicalFileProvider : PhysicalFileProviderBase
             er.Message = e.GetType().Name == "UnauthorizedAccessException"
                 ? "'" + getFileNameFromPath(path) +
                   "' is not accessible. You need permission to perform the upload action."
-                : e.Message;
+                : e.InnerException.Message;
             er.Code = er.Message.Contains("is not accessible. You need permission") ? "401" : "417";
             if (er.Code == "401" && !string.IsNullOrEmpty(accessMessage)) er.Message = accessMessage;
             uploadResponse.Error = er;

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DrTaabodi.Data.Migrations
 {
     [DbContext(typeof(DrTaabodiDbContext))]
-    [Migration("20211223180526_base")]
+    [Migration("20211229200202_base")]
     partial class @base
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -547,9 +547,11 @@ namespace DrTaabodi.Data.Migrations
 
             modelBuilder.Entity("DrTaabodi.Data.Models.MetaTbl", b =>
                 {
-                    b.HasOne("DrTaabodi.Data.Models.PstTbl", null)
+                    b.HasOne("DrTaabodi.Data.Models.PstTbl", "PstTbl")
                         .WithMany("MetaTable")
                         .HasForeignKey("PstTblPstId");
+
+                    b.Navigation("PstTbl");
                 });
 
             modelBuilder.Entity("DrTaabodi.Data.Models.PostCategoryTbl", b =>

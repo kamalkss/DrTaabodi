@@ -21,7 +21,16 @@ public class SqlPostCategory : IPostCategory
 
     public async Task<bool> SaveChanges()
     {
-        return await _context.SaveChangesAsync() >= 0;
+        try
+        {
+            return await _context.SaveChangesAsync() >= 0;
+        }
+        catch (Exception e)
+        {
+            
+            throw new ArgumentException(e.InnerException.Message);
+        }
+        
     }
 
     public async Task<List<PostCategoryTbl>> GetAllPosts()
@@ -44,8 +53,9 @@ public class SqlPostCategory : IPostCategory
             WebPost.UpdatedData = DateTime.UtcNow;
             WebPost.CreatedDate = DateTime.UtcNow;
 
+            _context.ChangeTracker.Clear();
 
-            await _context.AddAsync(WebPost);
+            _context.Update(WebPost);
             await SaveChanges();
             return new ServiceResponse<PostCategoryTbl>
             {
@@ -61,7 +71,7 @@ public class SqlPostCategory : IPostCategory
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -95,7 +105,7 @@ public class SqlPostCategory : IPostCategory
             {
                 Data = false,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

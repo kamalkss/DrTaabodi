@@ -84,7 +84,7 @@ public class SqlFileSystemTbService : IFileSystemService
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -116,7 +116,7 @@ public class SqlFileSystemTbService : IFileSystemService
             {
                 Data = false,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -148,7 +148,7 @@ public class SqlFileSystemTbService : IFileSystemService
             {
                 Data = false,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

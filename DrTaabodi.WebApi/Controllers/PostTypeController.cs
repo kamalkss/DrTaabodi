@@ -32,14 +32,14 @@ public class PostTypeController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<ReadPostType>>> GetAllPostTypes()
     {
-        var PostTypes = _postTypeService.GetAllPosts();
+        var PostTypes = await _postTypeService.GetAllPosts();
         return Ok(PostTypes);
     }
 
     [HttpGet("{id}")]
     public async Task<ActionResult<IEnumerable<ReadPostType>>> GetPostType(Guid id)
     {
-        var PostType = _postTypeService.GetPostById(id);
+        var PostType = await _postTypeService.GetPostById(id);
         return Ok(PostType);
     }
 
@@ -63,7 +63,7 @@ public class PostTypeController : ControllerBase
 
             }
         }
-        var NewPost = _postTypeService.CreatePostType(MapPost);
+        var NewPost = await _postTypeService.CreatePostType(MapPost);
         return Ok(NewPost);
     }
 
@@ -89,7 +89,7 @@ public class PostTypeController : ControllerBase
         }
         if (postType.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
-        var UpdatedPost = _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
+        var UpdatedPost = await _postTypeService.UpdatePostType(MapPost.PostTypeId, MapPost);
         return Ok(UpdatedPost);
     }
 }

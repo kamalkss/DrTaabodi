@@ -68,7 +68,7 @@ public class PostCategoryController : ControllerBase
 
             }
         }
-        var NewPost = _postCategoryService.CreatePost(MapPost);
+        var NewPost = await _postCategoryService.CreatePost(MapPost);
         return Ok(NewPost);
     }
 
@@ -97,7 +97,7 @@ public class PostCategoryController : ControllerBase
         }
         if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
-        var NewPost = _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);
+        var NewPost = await _postCategoryService.UpdatePostStatus(MapPost.PostCategoryId, MapPost);
         return Ok(NewPost);
     }
 }

@@ -12,4 +12,6 @@ public class MetaTbl
     [Required] public string MetaKey { get; set; }
     [Required] public string MetaValue { get; set; }
     
+    //public Guid? PostId { get; set; }
+    public PstTbl PstTbl { get; set; }
 }

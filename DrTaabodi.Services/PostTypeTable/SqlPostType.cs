@@ -44,7 +44,8 @@ public class SqlPostType : IPostType
             WebPost.CreatedDate = DateTime.UtcNow;
 
 
-            await _context.AddAsync(WebPost);
+            //await _context.PostTypeTbl.AddAsync(WebPost);
+            _context.Update(WebPost);
             await SaveChanges();
             return new ServiceResponse<PostTypeTbl>
             {
@@ -60,7 +61,7 @@ public class SqlPostType : IPostType
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -94,7 +95,7 @@ public class SqlPostType : IPostType
             {
                 Data = false,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -127,7 +128,7 @@ public class SqlPostType : IPostType
             {
                 Data = false,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

@@ -26,7 +26,7 @@ public class SqlMeta : IMeta
         {
             //var user = WebPost.UserTable;
 
-            await _context.AddAsync(WebPost);
+            _context.Update(WebPost);
             await SaveChanges();
             return new ServiceResponse<MetaTbl>
             {
@@ -42,7 +42,7 @@ public class SqlMeta : IMeta
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -97,7 +97,7 @@ public class SqlMeta : IMeta
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

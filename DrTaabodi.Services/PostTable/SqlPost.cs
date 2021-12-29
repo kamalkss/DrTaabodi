@@ -54,11 +54,16 @@ public class SqlPost : IPost
         _logger.LogInformation("Log for Create Post");
         try
         {
+            _context.ChangeTracker.Clear();
+            _context.DetachAllEntities();
             WebPost.UpdatedData = DateTime.UtcNow;
             WebPost.CreatedDate = DateTime.UtcNow;
-            //var user = WebPost.UserTable;
+            
+            
+            //await _context.PstTbl.AddAsync(WebPost);
 
-            await _context.AddAsync(WebPost);
+            _context.Update(WebPost);
+
             if (CategoriesIds != null)
                 foreach (var item in CategoriesIds)
                 {
@@ -82,7 +87,7 @@ public class SqlPost : IPost
             {
                 Data = null,
                 IsSucceess = false,
-                Messege = e.Message,
+                Messege = e.InnerException.ToString(),
                 Time = DateTime.UtcNow
             };
         }
@@ -97,21 +102,15 @@ public class SqlPost : IPost
             _context.ChangeTracker.Clear();
             _context.DetachAllEntities();
             var WebPost = await GetPostById(id);
-            //_context.PstTbl.RemoveRange(WebPost);
-            //_context.PstTbl.AddRangeAsync(UsrStatus);
-            //WebPost.PstStatus = UsrStatus;
+
             UsrStatus.UpdatedData = DateTime.UtcNow;
-            //var mypost = await GetPostById(id);
+
             _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-            //WebPost = UsrStatus;
-            //_context.Update(WebPost);
+
             await SaveChanges();
 
             _context.ChangeTracker.Clear();
 
-
-            //
-            // WebPost.PostCategoryTable.Clear();
             WebPost.PostCategoryTable.Clear();
             WebPost.PostTypeTable.Clear();
             WebPost.MetaTable.Clear();
@@ -149,7 +148,7 @@ public class SqlPost : IPost
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -181,7 +180,7 @@ public class SqlPost : IPost
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -212,7 +211,7 @@ public class SqlPost : IPost
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

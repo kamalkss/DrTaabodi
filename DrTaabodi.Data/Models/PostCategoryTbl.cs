@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace DrTaabodi.Data.Models;
 
@@ -8,7 +9,7 @@ public class PostCategoryTbl
 {
     public PostCategoryTbl()
     {
-        PostTable = new HashSet<PstTbl>();
+        PostTable = new HashSet<PstTbl>().ToList();
         //this.PostType = new HashSet<PostCategoryTbl>();
     }
 
@@ -26,7 +27,7 @@ public class PostCategoryTbl
     public virtual PostCategoryTbl Parent { get; set; }
     public virtual ICollection<PostCategoryTbl> Children { get; set; }
 
-    public virtual ICollection<PstTbl> PostTable { get; set; }
+    public virtual IList<PstTbl> PostTable { get; set; }
     //public virtual ICollection<PostCategoryTblRelation> PostCategory { get; set; }
     //public virtual ICollection<PostCategoryTblRelation> PostCategoryParent { get; set; }
 }

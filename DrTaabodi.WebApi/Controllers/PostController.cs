@@ -87,7 +87,7 @@ public class PostController : ControllerBase
         //    mapPost.PstTbleParent.
 
 
-        var newPost = _post.CreatePost(mapPost);
+        var newPost = await _post.CreatePost(mapPost);
 
         return Ok(newPost);
     }
@@ -138,9 +138,9 @@ public class PostController : ControllerBase
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
         //    mapPost.
 
-        var newPost = await _post.CreatePost(mapPost);
+        var newPost =  _post.CreatePost(mapPost);
 
-        return Ok(newPost);
+        return Ok(newPost.Result);
     }
 
     /*[HttpPatch("/postStatus/")]
@@ -174,9 +174,9 @@ public class PostController : ControllerBase
 
             }
         }
-        if (Post.MetaId != null)
+        if (Post.Meta != null)
         {
-            foreach (var guid in Post.MetaId)
+            foreach (var guid in Post.Meta)
             {
                 if (guid.MetaId != null && guid.MetaId != Guid.Empty &&
                     guid.MetaId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))

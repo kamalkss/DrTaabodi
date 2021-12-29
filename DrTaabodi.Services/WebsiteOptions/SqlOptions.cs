@@ -36,7 +36,7 @@ public class SqlOptions : IOptions
             {
                 IsSucceess = false,
                 Data = null,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }
@@ -78,7 +78,7 @@ public class SqlOptions : IOptions
             {
                 IsSucceess = false,
                 Data = false,
-                Messege = e.Message,
+                Messege = e.InnerException.Message,
                 Time = DateTime.UtcNow
             };
         }

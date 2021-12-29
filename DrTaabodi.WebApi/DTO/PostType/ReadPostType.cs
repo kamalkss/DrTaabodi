@@ -6,7 +6,7 @@ namespace DrTaabodi.WebApi.DTO.PostType;
 
 public class ReadPostType
 {
-    [Required] public Guid PostTypeId { get; set; }
+     public Guid PostTypeId { get; set; }
     [Required] public string PostTypeName { get; set; }
     public Guid ParentId { get; set; }
     public ICollection<Guid> PostId { get; set; }
