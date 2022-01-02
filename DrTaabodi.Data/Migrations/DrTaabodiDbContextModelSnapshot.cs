@@ -29,9 +29,11 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Caption")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Compilation")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("CreationTime")
@@ -39,9 +41,11 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Extension")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FileFolderPath")
@@ -53,9 +57,11 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("Id")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("ImageRuntimeVersion")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("IsFile")
@@ -66,6 +72,7 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("ParentId")
@@ -75,6 +82,7 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("bigint");
 
                     b.Property<string>("Version")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("FileSystemId");
@@ -230,6 +238,7 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("PassCode")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
@@ -237,16 +246,20 @@ namespace DrTaabodi.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("UserName")
+                        .IsRequired()
                         .HasMaxLength(150)
                         .HasColumnType("nvarchar(150)");
 
                     b.Property<string>("UsrEmail")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsrFamily")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UsrNickName")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UsrStatus")

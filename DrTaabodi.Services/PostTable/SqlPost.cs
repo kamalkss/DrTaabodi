@@ -54,15 +54,28 @@ public class SqlPost : IPost
         _logger.LogInformation("Log for Create Post");
         try
         {
-            _context.ChangeTracker.Clear();
-            _context.DetachAllEntities();
+            //_context.ChangeTracker.Clear();
+            //_context.DetachAllEntities();
             WebPost.UpdatedData = DateTime.UtcNow;
             WebPost.CreatedDate = DateTime.UtcNow;
-            
-            
-            //await _context.PstTbl.AddAsync(WebPost);
 
-            _context.Update(WebPost);
+
+            //await _context.PstTbl.AddAsync(WebPost);
+            //foreach (var item in WebPost.PostCategoryTable) _context.Entry(item).State = EntityState.Detached;
+            //foreach (var item in WebPost.PostTypeTable) _context.Entry(item).State = EntityState.Detached;
+            foreach (var item in WebPost.MetaTable) _context.Entry(item).State = EntityState.Modified;
+            var typex = _context.Entry(WebPost).Entity.GetType();
+            var typecontext = _context.Entry(WebPost).GetType();
+
+            _context.PstTbl.AddAsync(WebPost);
+
+
+            var dirtyEntries = _context.ChangeTracker
+                .Entries()
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added)
+                .Select(x => x.Entity)
+                .ToList();
+
 
             if (CategoriesIds != null)
                 foreach (var item in CategoriesIds)

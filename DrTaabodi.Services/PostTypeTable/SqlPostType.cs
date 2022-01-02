@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.Models;
@@ -46,6 +47,13 @@ public class SqlPostType : IPostType
 
             //await _context.PostTypeTbl.AddAsync(WebPost);
             _context.Update(WebPost);
+
+            var dirtyEntries = _context.ChangeTracker
+                .Entries()
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added)
+                .Select(x => x.Entity)
+                .ToList();
+
             await SaveChanges();
             return new ServiceResponse<PostTypeTbl>
             {

@@ -34,10 +34,10 @@ public class PstTbl
     //public Guid PostParentId { get; set; }
 
 
-    public virtual ICollection<PostTypeTbl> PostTypeTable { get; set; }
-    public virtual IList<PostCategoryTbl> PostCategoryTable { get; set; }
-    public virtual ICollection<MetaTbl> MetaTable { get; set; }
-    public virtual ICollection<UsrTbl> UserTable { get; set; }
+    public virtual ICollection<PostTypeTbl>? PostTypeTable { get; set; }
+    public virtual IList<PostCategoryTbl>? PostCategoryTable { get; set; }
+    public virtual ICollection<MetaTbl>? MetaTable { get; set; }
+    public virtual ICollection<UsrTbl>? UserTable { get; set; }
     //public virtual ICollection<PstTbl> ChildDependencies { get; set; } = new List<PstTbl>();
     //public virtual ICollection<PstTbl> ParentDependencies { get; set; } = new List<PstTbl>();
 }
