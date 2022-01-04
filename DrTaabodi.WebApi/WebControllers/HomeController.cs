@@ -7,6 +7,7 @@ using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace DrTaabodi.WebControllers;
 
@@ -51,7 +52,17 @@ public class HomeController : Controller
     [ApiExplorerSettings(IgnoreApi = true)]
     public IActionResult FAQ()
     {
-        return View(_db.QnATbl.ToList());
+        string path = Path.Combine(env.WebRootPath, "template/faq.html");
+        if (System.IO.File.Exists(path))
+        {
+            string content = System.IO.File.ReadAllText(path);
+            content = content.Replace("[JSON_DATA]", JsonConvert.SerializeObject(_db.QnATbl
+                .Select(x => new { x.Question, x.Answer, x.CreatedDate })
+                .ToList()));
+            return LoadPageContent(content);
+        }
+
+        return NotFound();
     }
 
     [Route("/article/{pstId}")]
@@ -71,19 +82,24 @@ public class HomeController : Controller
             content = content.Replace("[content]", post.PstContent);
             content = content.Replace("[date]", post.CreatedDate.ToPersianCalender() ?? "---");
             content = content.Replace("[time]", post.CreatedDate.ToShortTimeString() ?? "---");
-            
 
-            var machs = Regex.Matches(content, @"\[(?<name>[^\]]*)\]");
-            foreach (Match match in machs)
-            {
-                var part = _db.WebsiteOptionsTbls.Where(x => x.OptionKey == $"website_pages__home_theme_part_{match.Groups["name"].Value}");
-                if (part.Any())
-                {
-                    content = content.Replace(match.Value, part.First().OptionValue);
-                }
-            }
-            return Content(content, "text/html");
+
+            return LoadPageContent(content);
         }
         else return NotFound();
+    }
+
+    private ContentResult LoadPageContent(string content)
+    {
+        var machs = Regex.Matches(content, @"\[(?<name>[^\]]*)\]");
+        foreach (Match match in machs)
+        {
+            var part = _db.WebsiteOptionsTbls.Where(x => x.OptionKey == $"website_pages__home_theme_part_{match.Groups["name"].Value}");
+            if (part.Any())
+            {
+                content = content.Replace(match.Value, part.First().OptionValue);
+            }
+        }
+        return Content(content, "text/html");
     }
 }
