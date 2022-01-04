@@ -86,15 +86,15 @@
               </div>
 
               <div class="nav-item">
-                <a href="/" class="nav-link" data-editable>درباره من</a>
+                <a href="/#about-me" class="nav-link" data-editable>درباره من</a>
               </div>
 
               <div class="nav-item">
-                <a href="/" class="nav-link" data-editable>مقالات</a>
+                <a href="/#latest-articles" class="nav-link" data-editable>مقالات</a>
               </div>
 
               <div class="nav-item">
-                <a href="/" class="nav-link" data-editable>سوالات متداول</a>
+                <a href="/faq" class="nav-link" data-editable>سوالات متداول</a>
               </div>
 
             </nav>
@@ -322,7 +322,7 @@
   </div>
 
   <template v-if="articles && articles.length >= 0">
-    <div class="container py-5">
+    <div id="latest-articles" class="container py-5">
       <div class="h3">
         <span class="fa fa-angle-double-left"></span>
         <span data-editable>آخرین مقالات</span>
@@ -335,9 +335,9 @@
              class="item text-decoration-none text-inherit"
           >
             <div class="h-100 bg-light-gray rounded border p-2">
-             <!-- <div class="aspect-100 bg-secondary">
+              <!-- <div class="aspect-100 bg-secondary">
 
-              </div>-->
+               </div>-->
 
               <div class="mt-2 text-center">
                 <div class="fw-bolder">
