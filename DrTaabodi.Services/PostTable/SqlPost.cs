@@ -117,16 +117,18 @@ public class SqlPost : IPost
             var WebPost = await GetPostById(id);
 
             UsrStatus.UpdatedData = DateTime.UtcNow;
-
-            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
-
-            await SaveChanges();
-
-            _context.ChangeTracker.Clear();
-
             WebPost.PostCategoryTable.Clear();
             WebPost.PostTypeTable.Clear();
             WebPost.MetaTable.Clear();
+
+            await SaveChanges();
+            _context.Entry(WebPost).CurrentValues.SetValues(UsrStatus);
+
+            //زس
+
+            _context.ChangeTracker.Clear();
+
+            
 
 
             foreach (var item in UsrStatus.PostCategoryTable) WebPost.PostCategoryTable.Add(item);
