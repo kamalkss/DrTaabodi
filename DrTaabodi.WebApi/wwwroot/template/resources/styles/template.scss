@@ -1,4 +1,4 @@
-$blue: #52ABFB;
+$blue: #401856;
 $dark-blue: #033e73;
 $gray: #8D8D8D;
 $dark-gray: #444444;
@@ -95,7 +95,7 @@ img {
 
     h1 {
       font-size: 1.7rem;
-      color: #3A537B;
+      color: #401856;
     }
 
     p {
@@ -125,18 +125,18 @@ img {
   }
 
   & > div:nth-child(odd) {
-    background-color: #6bb7fc;
+    background-color: #8037a8;
   }
 
   & > div:nth-child(even) {
-    background-color: #52ABFB;
+    background-color: #401856;
   }
 }
 
 #footer {
   font-size: .97rem !important;
   color: white;
-  background: linear-gradient(#29343f, #033e73);
+  background: linear-gradient(#731e96, #3e1051);
 
   .footer-social-navs {
     .nav-link {
@@ -157,12 +157,12 @@ img {
 
     & > div:nth-child(odd) {
       transform: skewY(-2deg);
-      background-color: #6bb7fc;
+      background-color: #8037a8;
     }
 
     & > div:nth-child(even) {
       transform: skewY(2deg);
-      background-color: #52ABFB;
+      background-color: #401856;
     }
   }
 

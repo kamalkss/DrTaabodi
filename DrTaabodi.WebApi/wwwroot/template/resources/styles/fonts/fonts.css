@@ -1,7 +1,1 @@
-@font-face {
-    font-family: "vazir";
-    font-style: normal;
-    font-weight: normal;
-    src: url("Vazir.eot");
-    src: url("Vazir.eot?#iefix") format("embedded-opentype"), url("Vazir.woff") format("woff"), url("Vazir.ttf") format("truetype");
-}/*# sourceMappingURL=fonts.css.map */
+@font-face{font-family:"vazir";src:url("Vazir.eot");src:url("Vazir.eot?#iefix") format("embedded-opentype"),url("Vazir.woff") format("woff"),url("Vazir.ttf") format("truetype");font-style:normal;font-weight:normal}/*# sourceMappingURL=fonts.css.map */
