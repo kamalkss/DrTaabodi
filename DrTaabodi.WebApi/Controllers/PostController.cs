@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
@@ -25,13 +24,13 @@ public class PostController : ControllerBase
     private readonly DrTaabodiDbContext _db;
     private readonly ILogger<PostController> _logger;
     private readonly IMapper _mapper;
+    private readonly IMeta _meta;
     private readonly IPost _post;
     private readonly IPostType _TypeService;
     private readonly IUser _UserService;
-    private readonly IMeta _meta;
 
     public PostController(ILogger<PostController> logger, DrTaabodiDbContext db, IUser user, IMapper mapper, IPost post,
-        IPostCategory postCategory, IPostType PostType,IMeta meta)
+        IPostCategory postCategory, IPostType PostType, IMeta meta)
     {
         _logger = logger;
         _db = db;
@@ -105,40 +104,29 @@ public class PostController : ControllerBase
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
 
-        
+
         if (Post.PostCategory != null)
-        {
             foreach (var guid in Post.PostCategory)
-            {
                 if (guid != null && guid != Guid.Empty &&
                     guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                     mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
-
-            }
-        }
         if (Post.PostType != null)
-        {
             foreach (var guid in Post.PostType)
-            {
                 if (guid != null && guid != Guid.Empty &&
                     guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                     mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
-            }
-        }
 
         if (Post.Meta != null)
-        {
             foreach (var guid in Post.Meta)
             {
                 var mapPostmeta = _mapper.Map<MetaTbl>(guid);
                 var metaid = await _meta.CreatePost(mapPostmeta);
                 mapPost.MetaTable.Add(await _meta.GetPostById(metaid.Data.MetaId));
             }
-        }
         //if(Post.Meta != null && Post.Meta != Guid.Empty &&Post.Meta != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
         //    mapPost.
 
-        var newPost =  _post.CreatePost(mapPost);
+        var newPost = _post.CreatePost(mapPost);
 
         return Ok(newPost.Result);
     }
@@ -165,19 +153,12 @@ public class PostController : ControllerBase
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
         if (Post.PostCategory != null)
-        {
             foreach (var guid in Post.PostCategory)
-            {
                 if (guid != null && guid != Guid.Empty &&
                     guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                     mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
-
-            }
-        }
         if (Post.Meta != null)
-        {
             foreach (var guid in Post.Meta)
-            {
                 if (guid.MetaId != null && guid.MetaId != Guid.Empty &&
                     guid.MetaId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                 {
@@ -190,20 +171,14 @@ public class PostController : ControllerBase
                     var metaid = await _meta.CreatePost(mapPostmeta);
                     mapPost.MetaTable.Add(await _meta.GetPostById(metaid.Data.MetaId));
                 }
-                   
-            }
-        }
+
         if (Post.PostType != null)
-        {
             foreach (var guid in Post.PostType)
-            {
                 if (guid != null && guid != Guid.Empty &&
                     guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                     mapPost.PostTypeTable.Add(await _TypeService.GetPostById(guid));
-            }
-        }
         //var mapPost = _mapper.Map<PstTbl>(Post);
-         var UpdatedPost = await _post.UpdatePostStatus(id, mapPost);
+        var UpdatedPost = await _post.UpdatePostStatus(id, mapPost);
         //var updated = _mapper.Map<PstTbl>(UpdatedPost);
         return Ok(UpdatedPost);
     }

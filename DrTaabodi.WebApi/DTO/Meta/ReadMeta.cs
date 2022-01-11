@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using DrTaabodi.Data.Models;
 
@@ -14,5 +13,4 @@ public class ReadMeta
     [Required] public string MetaValue { get; set; }
 
     public PstTbl Posttbl { get; set; }
-
 }

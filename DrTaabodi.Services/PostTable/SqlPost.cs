@@ -6,7 +6,6 @@ using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 
 namespace DrTaabodi.Services.PostTable;
@@ -45,7 +44,7 @@ public class SqlPost : IPost
             //.Include(c => c.PstTbleParent)
             .Include(c => c.PostTypeTable)
             .Include(c => c.PostCategoryTable)
-            .Include(c=>c.MetaTable)
+            .Include(c => c.MetaTable)
             .FirstOrDefaultAsync(p => p.PstId == id);
     }
 
@@ -72,7 +71,8 @@ public class SqlPost : IPost
 
             var dirtyEntries = _context.ChangeTracker
                 .Entries()
-                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added)
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted ||
+                            x.State == EntityState.Added)
                 .Select(x => x.Entity)
                 .ToList();
 
@@ -128,8 +128,6 @@ public class SqlPost : IPost
 
             _context.ChangeTracker.Clear();
 
-            
-
 
             foreach (var item in UsrStatus.PostCategoryTable) WebPost.PostCategoryTable.Add(item);
             foreach (var item in UsrStatus.PostTypeTable) WebPost.PostTypeTable.Add(item);
@@ -142,12 +140,11 @@ public class SqlPost : IPost
                     if (group != null)
                         WebPost.PostCategoryTable.Add(group);
                 }
+
             _context.PstTbl.Update(WebPost);
             //_context.PstTbl.Update(WebPost);
             await SaveChanges();
 
-
-            
 
             return new ServiceResponse<bool>
             {

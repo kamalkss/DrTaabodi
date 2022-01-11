@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using DrTaabodi.Data.Models;
 
 namespace DrTaabodi.WebApi.DTO.Meta;

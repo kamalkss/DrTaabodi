@@ -1,16 +1,7 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using Microsoft.AspNetCore.Http;
+﻿namespace DrTaabodi.WebApi.DTO.FileSystemDTO;
 
-namespace DrTaabodi.WebApi.DTO.FileSystemDTO
+public class UploadFile
 {
-    public class UploadFile
-    {
-        
-        
-        public string Caption { set; get; }
-        public string Description { set; get; }
-        
-        
-    }
+    public string Caption { set; get; }
+    public string Description { set; get; }
 }

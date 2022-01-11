@@ -3,20 +3,11 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.Models;
-using DrTaabodi.Data.Models.Base;
 using DrTaabodi.Services;
 using DrTaabodi.Services.FileSystemTableServices;
-using DrTaabodi.Services.PostCategoryTable;
-using DrTaabodi.Services.PostTable;
 using DrTaabodi.WebApi.DTO.FileSystemDTO;
-using DrTaabodi.WebApi.DTO.PostCategory;
-using Microsoft.AspNetCore.Cors;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 
 //using Microsoft.Extensions.FileProviders;
 
@@ -26,9 +17,9 @@ namespace DrTaabodi.WebApi.Controllers;
 [Controller]
 public class FileManagerController : Controller
 {
+    private readonly IFileSystemService _fileSystemService;
     private readonly ILogger<FileManagerController> _logger;
     private readonly IMapper _mapper;
-    private readonly IFileSystemService _fileSystemService;
 
     public FileManagerController(IFileSystemService FileSystem, ILogger<FileManagerController> logger, IMapper mapper)
     {
@@ -43,7 +34,6 @@ public class FileManagerController : Controller
         _logger.LogInformation("read all Posts");
         var Post = await _fileSystemService.GetallFilesAdnFolders();
         return Ok(Post);
-
     }
 
     [HttpGet("files")]
@@ -52,7 +42,6 @@ public class FileManagerController : Controller
         _logger.LogInformation("read all Posts");
         var Post = await _fileSystemService.GetallFile();
         return Ok(Post);
-
     }
 
     [HttpGet("folders")]
@@ -61,7 +50,6 @@ public class FileManagerController : Controller
         _logger.LogInformation("read all Posts");
         var Post = await _fileSystemService.GetallFolders();
         return Ok(Post);
-
     }
 
     [HttpGet("path/{id}")]
@@ -70,7 +58,6 @@ public class FileManagerController : Controller
         _logger.LogInformation("read all Posts");
         var Post = await _fileSystemService.GetPath(Id);
         return Ok(Post);
-
     }
 
     [HttpGet("{id}")]
@@ -112,7 +99,7 @@ public class FileManagerController : Controller
         if (postCategory.ParentId != Guid.Empty &&
             postCategory.ParentId != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = postCategory.ParentId;
-       
+
         if (postCategory.ParentId == Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             MapPost.ParentId = null;
         var NewPost = _fileSystemService.Update(MapPost.FileSystemId, MapPost);

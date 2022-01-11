@@ -50,7 +50,8 @@ public class SqlPostType : IPostType
 
             var dirtyEntries = _context.ChangeTracker
                 .Entries()
-                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added)
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted ||
+                            x.State == EntityState.Added)
                 .Select(x => x.Entity)
                 .ToList();
 

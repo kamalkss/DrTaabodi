@@ -29,17 +29,18 @@ namespace DrTaabodi.WebApi;
 
 public class Startup
 {
-    private IHostingEnvironment _hostingEnvironment;
+    private readonly IHostingEnvironment _hostingEnvironment;
+
     public Startup(IConfiguration configuration, IHostingEnvironment environment)
     {
         var builder = new ConfigurationBuilder()
             .SetBasePath(environment.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", optional: true)
+            .AddJsonFile("appsettings.json", true, true)
+            .AddJsonFile($"appsettings.{environment.EnvironmentName}.json", true)
             .AddEnvironmentVariables();
         builder.Build();
         _hostingEnvironment = environment;
-        
+
         Configuration = configuration;
     }
 
@@ -49,7 +50,7 @@ public class Startup
     public void ConfigureServices(IServiceCollection services)
     {
         services.AddDbContext<DrTaabodiDbContext>(options => options.UseSqlServer
-            (Configuration.GetConnectionString("DrNullConnttion")), ServiceLifetime.Scoped);
+            (Configuration.GetConnectionString("DrNullConnttion")));
 
         services.AddControllers()
             .AddJsonOptions(ops =>
@@ -90,10 +91,7 @@ public class Startup
         services.AddCors(x =>
         {
             x.AddPolicy("localhostVude",
-                b =>
-                {
-                    b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
-                });
+                b => { b.WithOrigins("http://localhost:8080").AllowAnyMethod().AllowAnyHeader().AllowCredentials(); });
         });
         services.AddSingleton<IFileProvider>(compositeProvider);
     }

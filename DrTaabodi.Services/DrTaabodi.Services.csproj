@@ -1,17 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
-    <PackageReference Include="Humanizer" Version="2.13.14" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="FileSystemService\**" />
+		<EmbeddedResource Remove="FileSystemService\**" />
+		<None Remove="FileSystemService\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\DrTaabodi.Data\DrTaabodi.Data.csproj" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\DrTaabodi.Data\DrTaabodi.Data.csproj" />
+	</ItemGroup>
 
 </Project>

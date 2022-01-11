@@ -47,7 +47,7 @@ public class SqlQna : IQnA
             WebPost.UpdatedData = DateTime.UtcNow;
 
             WebPost.CreatedDate = DateTime.UtcNow;
-            
+
             _context.Update(WebPost);
             await SaveChanges();
             return new ServiceResponse<QnATbl>
@@ -78,17 +78,18 @@ public class SqlQna : IQnA
             var UpdatedPost = await GetQnATblById(id);
             _context.Entry(UpdatedPost).CurrentValues.SetValues(WebPost);
             UpdatedPost.UpdatedData = DateTime.UtcNow;
-            
+
             UpdatedPost.UserTable.Clear();
             foreach (var item in WebPost.UserTable) UpdatedPost.UserTable.Add(item);
-            
+
             //_context.QnATbl.Update(UpdatedPost);
             var dirtyEntries = _context.ChangeTracker
                 .Entries()
-                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted || x.State == EntityState.Added)
+                .Where(x => x.State == EntityState.Modified || x.State == EntityState.Deleted ||
+                            x.State == EntityState.Added)
                 .Select(x => x.Entity)
                 .ToList();
-            
+
             await SaveChanges();
             return new ServiceResponse<bool>
             {

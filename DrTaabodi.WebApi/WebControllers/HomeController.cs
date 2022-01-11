@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -27,23 +26,17 @@ public class HomeController : Controller
         try
         {
             var option = _db.WebsiteOptionsTbls.First(x => x.OptionKey == "website_pages__home");
-            if (option != null)
-            {
-                return Content(option.OptionValue, "text/html");
-            }
+            if (option != null) return Content(option.OptionValue, "text/html");
         }
         catch (Exception e)
         {
-
         }
 
 
-        string path = Path.Combine(env.WebRootPath, "template/index.html");
+        var path = Path.Combine(env.WebRootPath, "template/index.html");
         if (System.IO.File.Exists(path))
-        {
             return Content(System.IO.File.ReadAllText(path), "text/html");
-        }
-        else return NotFound();
+        return NotFound();
     }
 
     //what 
@@ -52,12 +45,12 @@ public class HomeController : Controller
     [ApiExplorerSettings(IgnoreApi = true)]
     public IActionResult FAQ()
     {
-        string path = Path.Combine(env.WebRootPath, "template/faq.html");
+        var path = Path.Combine(env.WebRootPath, "template/faq.html");
         if (System.IO.File.Exists(path))
         {
-            string content = System.IO.File.ReadAllText(path);
+            var content = System.IO.File.ReadAllText(path);
             content = content.Replace("[JSON_DATA]", JsonConvert.SerializeObject(_db.QnATbl
-                .Select(x => new { x.Question, x.Answer, x.CreatedDate })
+                .Select(x => new {x.Question, x.Answer, x.CreatedDate})
                 .ToList()));
             return LoadPageContent(content);
         }
@@ -73,10 +66,10 @@ public class HomeController : Controller
         if (post == null)
             return NotFound();
 
-        string path = Path.Combine(env.WebRootPath, "template/post.html");
+        var path = Path.Combine(env.WebRootPath, "template/post.html");
         if (System.IO.File.Exists(path))
         {
-            string content = System.IO.File.ReadAllText(path);
+            var content = System.IO.File.ReadAllText(path);
             content = content.Replace("[title]", post.PstTitle);
             content = content.Replace("[description]", post.PstDescription);
             content = content.Replace("[content]", post.PstContent);
@@ -86,7 +79,8 @@ public class HomeController : Controller
 
             return LoadPageContent(content);
         }
-        else return NotFound();
+
+        return NotFound();
     }
 
     private ContentResult LoadPageContent(string content)
@@ -94,12 +88,11 @@ public class HomeController : Controller
         var machs = Regex.Matches(content, @"\[(?<name>[^\]]*)\]");
         foreach (Match match in machs)
         {
-            var part = _db.WebsiteOptionsTbls.Where(x => x.OptionKey == $"website_pages__home_theme_part_{match.Groups["name"].Value}");
-            if (part.Any())
-            {
-                content = content.Replace(match.Value, part.First().OptionValue);
-            }
+            var part = _db.WebsiteOptionsTbls.Where(x =>
+                x.OptionKey == $"website_pages__home_theme_part_{match.Groups["name"].Value}");
+            if (part.Any()) content = content.Replace(match.Value, part.First().OptionValue);
         }
+
         return Content(content, "text/html");
     }
 }

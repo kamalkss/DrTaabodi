@@ -11,6 +11,4 @@ public class CreatePostWithCategory
 
     public Guid PstTbleParent { get; set; }
     public Guid PostCategory { get; set; }
-
-
 }

@@ -1,34 +1,34 @@
 ﻿using System;
 using System.Globalization;
 
-namespace DrTaabodi.WebApi
+namespace DrTaabodi.WebApi;
+
+public static class ExtensionMethods
 {
-    public static class ExtensionMethods
+    private static PersianCalendar _persianCalendar;
+
+    private static PersianCalendar GetPersianCalendar
     {
-        static PersianCalendar _persianCalendar = null;
-        static PersianCalendar GetPersianCalendar
+        get
         {
-            get
-            {
-                if (_persianCalendar == null)
-                    _persianCalendar = new PersianCalendar();
-                return _persianCalendar;
-            }
+            if (_persianCalendar == null)
+                _persianCalendar = new PersianCalendar();
+            return _persianCalendar;
         }
+    }
 
 
-        public static string ToPersianCalender(this DateTime dateTime, bool withTime = false)
+    public static string ToPersianCalender(this DateTime dateTime, bool withTime = false)
+    {
+        try
         {
-            try
-            {
-                return $"{_persianCalendar.GetYear(dateTime)}/{_persianCalendar.GetMonth(dateTime)}/{_persianCalendar.GetDayOfMonth(dateTime)}" +
-               (withTime ? dateTime.ToShortTimeString() : "");
-            }
-            catch
-            {
-
-                return "";
-            }
+            return
+                $"{_persianCalendar.GetYear(dateTime)}/{_persianCalendar.GetMonth(dateTime)}/{_persianCalendar.GetDayOfMonth(dateTime)}" +
+                (withTime ? dateTime.ToShortTimeString() : "");
+        }
+        catch
+        {
+            return "";
         }
     }
 }

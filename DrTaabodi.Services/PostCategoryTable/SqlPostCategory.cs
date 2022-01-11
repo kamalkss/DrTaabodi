@@ -27,10 +27,8 @@ public class SqlPostCategory : IPostCategory
         }
         catch (Exception e)
         {
-            
             throw new ArgumentException(e.InnerException.Message);
         }
-        
     }
 
     public async Task<List<PostCategoryTbl>> GetAllPosts()
@@ -89,7 +87,7 @@ public class SqlPostCategory : IPostCategory
             _context.Entry(ChildPostType).CurrentValues.SetValues(postStatus);
             ChildPostType.PostTable.Clear();
             foreach (var item in postStatus.PostTable) ChildPostType.PostTable.Add(item);
-            
+
             await SaveChanges();
             return new ServiceResponse<bool>
             {
