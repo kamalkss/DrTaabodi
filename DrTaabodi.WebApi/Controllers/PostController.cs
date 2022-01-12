@@ -155,6 +155,14 @@ public class PostController : ControllerBase
     {
         _logger.LogInformation("Update Post Status");
         var id = Post.PstId;
+        if (!string.IsNullOrEmpty(Post.PstContent))
+        {
+            var pattern = new Regex(" < img.+? src =[\"'](.+?)[\"'].+?>");
+            var matchString = Regex.Match(Post.PstContent, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase)
+                .Groups[1].Value;
+
+            Post.ImagePath = matchString;
+        }
         var mapPost = _mapper.Map<PstTbl>(Post);
         if (Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
