@@ -33,12 +33,11 @@
   }
 }
 
-.aspect-100 {
-  padding-top: 100%;
-}
-
-.aspect-30 {
-  padding-top: 30%;
+$aspects : 100,70,60,40,50,30;
+@each $aspect in $aspects{
+  .aspect-#{$aspect} {
+    padding-top: #{$aspect+'%'};
+  }
 }
 
 
