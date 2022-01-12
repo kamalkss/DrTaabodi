@@ -36,7 +36,7 @@ public class OptionsController : ControllerBase
     public async Task<ActionResult<IEnumerable<UpdateOption>>> GetAllPosts()
     {
         _logger.LogInformation("read all Posts");
-        var Post = _options.GetWebsiteOptionsAsync();
+        var Post = await _options.GetWebsiteOptionsAsync();
         return Ok(Post);
     }
 

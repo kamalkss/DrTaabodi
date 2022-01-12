@@ -1,7 +1,4 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.Data.ExtraCode;
 using DrTaabodi.Data.Models;
@@ -14,6 +11,9 @@ using DrTaabodi.Services.UserTable;
 using DrTaabodi.WebApi.DTO.Posts;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 
 namespace DrTaabodi.WebApi.Controllers;
 
@@ -99,26 +99,25 @@ public class PostController : ControllerBase
         _logger.LogInformation("CreatePostWithTypeAndCategory");
         if (!string.IsNullOrEmpty(Post.PstContent))
         {
-            Regex pattern = new Regex(" < img.+? src =[\"'](.+?)[\"'].+?>");
-            string matchString = Regex.Match(Post.PstContent, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+            var pattern = new Regex(" < img.+? src =[\"'](.+?)[\"'].+?>");
+            var matchString = Regex.Match(Post.PstContent, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase)
+                .Groups[1].Value;
 
-            if (matchString != null)
-            {
-                Post.ImagePath = matchString;
-            }
+            Post.ImagePath = matchString;
         }
+
         var mapPost = _mapper.Map<PstTbl>(Post);
-        if (Post.User != null && Post.User != Guid.Empty &&
+        if (Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
-        if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
+        if (Post.PstTbleParent != Guid.Empty &&
             Post.PstTbleParent != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.ParentId = Post.PstTbleParent;
 
 
         if (Post.PostCategory != null)
             foreach (var guid in Post.PostCategory)
-                if (guid != null && guid != Guid.Empty &&
+                if (guid != Guid.Empty &&
                     guid != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
                     mapPost.PostCategoryTable.Add(await _CategoryService.GetPostById(guid));
         if (Post.PostType != null)
@@ -157,7 +156,7 @@ public class PostController : ControllerBase
         _logger.LogInformation("Update Post Status");
         var id = Post.PstId;
         var mapPost = _mapper.Map<PstTbl>(Post);
-        if (Post.User != null && Post.User != Guid.Empty &&
+        if (Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))
             mapPost.UserTable.Add(await _UserService.GetUserById(Post.User));
         if (Post.PstTbleParent != null && Post.PstTbleParent != Guid.Empty &&
