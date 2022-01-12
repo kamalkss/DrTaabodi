@@ -180,6 +180,9 @@ namespace DrTaabodi.Data.Migrations
                     b.Property<Guid?>("ParentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string?>("ImagePath")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PstContent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");

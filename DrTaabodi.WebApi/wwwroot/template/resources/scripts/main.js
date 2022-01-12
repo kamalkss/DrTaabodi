@@ -47,7 +47,7 @@ document.addEventListener("click",
         }
     });
 
-new Vue({
+let vue = new Vue({
     el: "#application-scope",
     data: () => ({
         articles: undefined
@@ -63,6 +63,9 @@ new Vue({
                             });
                     }
                 });
+        },
+        getImage(path) {
+            return require(path);
         }
     },
     mounted() {

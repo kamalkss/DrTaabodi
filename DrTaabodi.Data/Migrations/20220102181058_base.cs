@@ -129,6 +129,7 @@ namespace DrTaabodi.Data.Migrations
                     PstContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PstTitle = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     PstDescription = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ImagePath = table.Column<string>(type:"nvarchar(max)",nullable: true),
                     ParentId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>

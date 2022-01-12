@@ -25,6 +25,9 @@ public class PstTbl
     [Required] public string PstContent { get; set; }
     [Required] public string PstTitle { get; set; }
     [Required] public string PstDescription { get; set; }
+
+    public string? ImagePath { get; set; }
+
     public Guid? ParentId { get; set; }
     public virtual PstTbl Parent { get; set; }
     public virtual ICollection<PstTbl> Children { get; set; }

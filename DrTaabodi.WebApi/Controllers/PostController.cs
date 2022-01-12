@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AutoMapper;
 using DrTaabodi.Data.DatabaseContext;
@@ -96,6 +97,16 @@ public class PostController : ControllerBase
         [FromBody] CreatePostWithTypeAndCategory Post)
     {
         _logger.LogInformation("CreatePostWithTypeAndCategory");
+        if (!string.IsNullOrEmpty(Post.PstContent))
+        {
+            Regex pattern = new Regex(" < img.+? src =[\"'](.+?)[\"'].+?>");
+            string matchString = Regex.Match(Post.PstContent, "<img.+?src=[\"'](.+?)[\"'].+?>", RegexOptions.IgnoreCase).Groups[1].Value;
+
+            if (matchString != null)
+            {
+                Post.ImagePath = matchString;
+            }
+        }
         var mapPost = _mapper.Map<PstTbl>(Post);
         if (Post.User != null && Post.User != Guid.Empty &&
             Post.User != Guid.Parse("{00000000-0000-0000-0000-000000000000}"))

@@ -21,13 +21,13 @@ namespace DrTaabodi.WebApi.Controllers;
 [Route("/api/FileProvider")]
 public class FileProviderController : Controller
 {
+    private readonly IHostingEnvironment _environment;
     private readonly IFileProvider _fileProvider;
     private readonly IFileSystemService _fileSystemService;
     private readonly IMapper _mapper;
-    public string _basePath;
-    private readonly IHostingEnvironment _environment;
-    public PhysicalFileProvider _operation;
     private readonly string root = "wwwroot\\Files";
+    public string _basePath;
+    public PhysicalFileProvider _operation;
 
     public FileProviderController(IFileProvider fileProvider, IHostingEnvironment hostingEnvironment, IMapper mapper,
         IFileSystemService fileSystemService)

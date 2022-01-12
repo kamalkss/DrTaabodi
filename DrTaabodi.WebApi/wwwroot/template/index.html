@@ -330,7 +330,9 @@
 
                         <div class="mt-2 text-center">
                             <div class="text-justify text-last-center small mt-1">
-                                {{x.PstContent}}
+                                <img :src="x.imagePath"
+                                     data-editable-image data-aspect="1"
+                                     class="img-cover" />
                             </div>
                             <div class="fw-bolder">
                                 {{x.pstTitle}}
