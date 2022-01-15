@@ -58,7 +58,7 @@ public class HomeController : Controller
         {
             var content = System.IO.File.ReadAllText(path);
             content = content.Replace("[JSON_DATA]", JsonConvert.SerializeObject(_db.QnATbl
-                .Select(x => new {x.Question, x.Answer, x.CreatedDate})
+                .Select(x => new { x.Question, x.Answer, x.CreatedDate })
                 .ToList()));
             return LoadPageContent(content);
         }
@@ -70,6 +70,39 @@ public class HomeController : Controller
                 .ToList()));
             return LoadPageContent(content);
         }
+        return NotFound();
+    }
+
+    [Route("/articles")]
+    [ApiExplorerSettings(IgnoreApi = true)]
+    public IActionResult Articles()
+    {
+        var path = Path.Combine(env.WebRootPath, "template/articles.html");
+        if (System.IO.File.Exists(path))
+        {
+            int page = 0;
+            int.TryParse(Request.Query["page"], out page);
+            page -= 1;
+            if (page <= 0)
+                page = 0;
+
+            int perPage = 0;
+            int.TryParse(Request.Query["per_page"], out perPage);
+            if (perPage <= 0)
+                perPage = 50;
+            double totalPages = Math.Ceiling((double)(_db.PstTbl.Count() / perPage));
+
+            var content = System.IO.File.ReadAllText(path);
+            content = content.Replace("[JSON_DATA]", JsonConvert.SerializeObject(new
+            {
+                contents = _db.PstTbl.Skip(page * perPage).Take(perPage).ToList(),
+                page = page + 1,
+                perPage,
+                totalPages
+            }));
+            return LoadPageContent(content);
+        }
+
         return NotFound();
     }
 
