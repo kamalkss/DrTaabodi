@@ -6,7 +6,9 @@ using DrTaabodi.Data.DatabaseContext;
 using DrTaabodi.WebApi;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting.Internal;
 using Newtonsoft.Json;
+using System.Web;
 
 namespace DrTaabodi.WebControllers;
 
@@ -14,9 +16,11 @@ public class HomeController : Controller
 {
     private readonly DrTaabodiDbContext _db;
     private readonly IWebHostEnvironment env;
+    private readonly IHostingEnvironment _environment;
 
-    public HomeController(DrTaabodiDbContext db, IWebHostEnvironment env)
+    public HomeController(DrTaabodiDbContext db, IWebHostEnvironment env, IHostingEnvironment environment)
     {
+        _environment = environment;
         _db = db;
         this.env = env;
     }
@@ -34,8 +38,11 @@ public class HomeController : Controller
 
 
         var path = Path.Combine(env.WebRootPath, "template/index.html");
+        string path1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\template\\index.html");
         if (System.IO.File.Exists(path))
             return Content(System.IO.File.ReadAllText(path), "text/html");
+        if (System.IO.File.Exists(path1))
+            return Content(System.IO.File.ReadAllText(path1), "text/html");
         return NotFound();
     }
 
@@ -46,6 +53,7 @@ public class HomeController : Controller
     public IActionResult FAQ()
     {
         var path = Path.Combine(env.WebRootPath, "template/faq.html");
+        string path1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\template\\faq.html");
         if (System.IO.File.Exists(path))
         {
             var content = System.IO.File.ReadAllText(path);
@@ -54,7 +62,14 @@ public class HomeController : Controller
                 .ToList()));
             return LoadPageContent(content);
         }
-
+        if (System.IO.File.Exists(path1))
+        {
+            var content = System.IO.File.ReadAllText(path1);
+            content = content.Replace("[JSON_DATA]", JsonConvert.SerializeObject(_db.QnATbl
+                .Select(x => new { x.Question, x.Answer, x.CreatedDate })
+                .ToList()));
+            return LoadPageContent(content);
+        }
         return NotFound();
     }
 
@@ -66,10 +81,24 @@ public class HomeController : Controller
         if (post == null)
             return NotFound();
 
-        var path = Path.Combine(env.WebRootPath, "template/post.html");
+        var path = Path.Combine(env.WebRootPath, "template\\post.html");
+        string path1 = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\template\\post.html");
         if (System.IO.File.Exists(path))
         {
             var content = System.IO.File.ReadAllText(path);
+            content = content.Replace("[title]", post.PstTitle);
+            content = content.Replace("[description]", post.PstDescription);
+            content = content.Replace("[content]", post.PstContent);
+            content = content.Replace("[date]", post.CreatedDate.ToPersianCalender() ?? "---");
+            content = content.Replace("[time]", post.CreatedDate.ToShortTimeString() ?? "---");
+
+
+            return LoadPageContent(content);
+        }
+        
+        else if (System.IO.File.Exists(path1))
+        {
+            var content = System.IO.File.ReadAllText(path1);
             content = content.Replace("[title]", post.PstTitle);
             content = content.Replace("[description]", post.PstDescription);
             content = content.Replace("[content]", post.PstContent);
