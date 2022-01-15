@@ -11,10 +11,10 @@
         integrity="sha384-+qdLaIRZfNu4cVPK/PxJJEy0B0f3Ugv8i482AKY7gwXwhaCroABd086ybrVKTa0q" crossorigin="anonymous"
   >
   <link rel="stylesheet"
-        href="resources/frameworks/fontawesome-free-5.15.4-web/css/all.min.css"
+        href="template/resources/frameworks/fontawesome-free-5.15.4-web/css/all.min.css"
   >
-  <link rel="stylesheet" href="resources/styles/fonts/fonts.css">
-  <link rel="stylesheet" href="resources/styles/template.css">
+  <link rel="stylesheet" href="template/resources/styles/fonts/fonts.css">
+  <link rel="stylesheet" href="template/resources/styles/template.css">
 </head>
 <body>
 
@@ -106,7 +106,7 @@
 
     <div id="landing" class="flex-fill position-relative">
       <div class="abs-fill">
-        <img src="resources/images/index/landing.jpg"
+        <img src="template/resources/images/index/landing.jpg"
              data-editable-image
              class="w-100 h-100 img-cover"
         />
@@ -114,7 +114,7 @@
       <div class="abs-fill row p-lg-5 mx-0 align-items-center justify-content-center">
         <div class="col-sm-6">
           <div class="m-3 p-3 animate__animated animate__fadeInUp"
-               style="background-color: #00000099; color: white;"
+               style="background-color: rgba(0, 0, 153, 0); color: white;"
           >
             <h1 data-editable>نام و نام خانوادگی</h1>
             <p data-editable>عنوان و تخصص و توضیح کوتاه درمورد دکتر</p>
@@ -151,7 +151,7 @@
 
         <div style="max-width: 120px;" class="mx-auto">
           <div class="aspect-100">
-            <img src="resources/images/service-icons/1.svg"
+            <img src="template/resources/images/service-icons/1.svg"
                  data-editable-image data-aspect="1"
             />
           </div>
@@ -175,7 +175,7 @@
 
         <div style="max-width: 120px;" class="mx-auto">
           <div class="aspect-100">
-            <img src="resources/images/service-icons/1.svg"
+            <img src="template/resources/images/service-icons/1.svg"
                  data-editable-image data-aspect="1"
             />
           </div>
@@ -199,7 +199,7 @@
 
         <div style="max-width: 120px;" class="mx-auto">
           <div class="aspect-100">
-            <img src="resources/images/service-icons/1.svg"
+            <img src="template/resources/images/service-icons/1.svg"
                  data-editable-image data-aspect="1"
             />
           </div>
@@ -223,7 +223,7 @@
 
         <div style="max-width: 120px;" class="mx-auto">
           <div class="aspect-100">
-            <img src="resources/images/service-icons/1.svg"
+            <img src="template/resources/images/service-icons/1.svg"
                  data-editable-image data-aspect="1"
             />
           </div>
@@ -254,7 +254,7 @@
         <div class="col-sm mb-3 mb-sm-0" id="about-me-image">
           <div class="mx-auto animate__animated" style="max-width: 100%; min-width: 120px; width: 70%;">
             <div class="aspect-100 rounded-circle shadow">
-              <img src="resources/images/index/profile.webp"
+              <img src="template/resources/images/index/profile.webp"
                    data-editable-image data-aspect="1"
                    class="img-cover"
               />
@@ -322,47 +322,46 @@
   </div>
 
   <template v-if="articles && articles.length >= 0">
-    <div id="latest-articles" class="container py-5">
-      <div class="h3">
-        <span class="fa fa-angle-double-left"></span>
-        <span data-editable>آخرین مقالات</span>
-      </div>
-
-      <div class="mt-4 horizontal-slider">
-        <div class="items-container">
-
-          <a v-for="x in articles" :key="x.pstId" :href="`/article/${x.pstId}`"
-             class="item text-decoration-none text-inherit"
-          >
-            <div class="h-100 bg-light-gray rounded border p-2">
-              <div class="aspect-100 bg-secondary">
-                <img :src="x.imagePath"
-                     data-editable-image data-aspect="1"
-                     class="img-cover"
-                />
+      <div id="latest-articles" class="container py-5">
+          <a href="articles.html">
+              <div class="h3">
+                  <span class="fa fa-angle-double-left"></span>
+                  <span data-editable>آخرین مقالات</span>
               </div>
-
-              <div class="mt-2 text-center">
-                <div class="fw-bolder">
-                  {{x.pstTitle}}
-                </div>
-                <p class="text-justify text-last-center small mt-1">
-                  {{x.pstDescription}}
-                </p>
-              </div>
-            </div>
           </a>
+          <div class="mt-4 horizontal-slider">
+              <div class="items-container">
 
-        </div>
+                  <a v-for="x in articles" :key="x.pstId" :href="`/article/${x.pstId}`"
+                     class="item text-decoration-none text-inherit">
+                      <div class="h-100 bg-light-gray rounded border p-2">
+                          <div class="aspect-100 bg-secondary">
+                              <img :src="x.imagePath"
+                                   data-editable-image data-aspect="1"
+                                   class="img-cover"/>
+                          </div>
 
-        <div class="controller left d-flex align-items-center justify-content-center">
-          <span class="fa fa-angle-left"></span>
-        </div>
-        <div class="controller right d-flex align-items-center justify-content-center">
-          <span class="fa fa-angle-right"></span>
-        </div>
+                          <div class="mt-2 text-center">
+                              <div class="fw-bolder">
+                                  {{x.pstTitle}}
+                              </div>
+                              <p class="text-justify text-last-center small mt-1">
+                                  {{x.pstDescription}}
+                              </p>
+                          </div>
+                      </div>
+                  </a>
+
+              </div>
+
+              <div class="controller left d-flex align-items-center justify-content-center">
+                  <span class="fa fa-angle-left"></span>
+              </div>
+              <div class="controller right d-flex align-items-center justify-content-center">
+                  <span class="fa fa-angle-right"></span>
+              </div>
+          </div>
       </div>
-    </div>
   </template>
 
   <div data-editable-map class="aspect-30 mt-3">
@@ -453,6 +452,6 @@
 <!--product version-->
 <!--<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>-->
 
-<script src="resources/scripts/main.min.js"></script>
+<script src="template/resources/scripts/main.min.js"></script>
 </body>
 </html>
